@@ -512,3 +512,11 @@ tr.ship-new-row td{background:var(--green-soft)!important}
 .ap-spot .ap-role{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#555}
 .ap-spot h3{margin:8px 0 4px;font-size:20px}
 .ap-spot p{font-size:14px;color:var(--ink2)}
+
+/* Marketing pages stay white in both colour schemes (workspace keeps dark mode) */
+@media (prefers-color-scheme: dark){
+  body.marketing{ --bg:#ffffff; --bg2:#f6f6f4; --card:#ffffff; --ink:#0d0d0d; --ink2:#222222; --muted:#393939;
+  --line:#e7e7e2; --line2:#dbdbd5; --green:#1a1a1a; --green2:#141414; --green-soft:#ebebeb;
+  --amber:#b85c14; --amber-soft:#fdf0e2; --red:#b42318; --red-soft:#fdecea; --blue:#1d4e6b; --blue-soft:#e8eff3;
+  --dark:#0c0c0c; --dark2:#111111; --shadow:0 1px 2px rgba(13,13,13,.06),0 12px 32px rgba(13,13,13,.08); }
+}
