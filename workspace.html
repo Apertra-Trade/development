@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Workspace - Apertra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div style="background:#111;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;font-family:inherit">
+  <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.08em">APERTRA <span style="font-weight:400;opacity:.7">Workspace</span></a>
+  <a href="index.html" style="color:#fff;text-decoration:none;opacity:.85">Sign out</a>
+</div>
+<div id="view-app" class="active">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="side-co">
+        <span class="avatar">NF</span>
+        <div><b>Northwind Foods Co.</b><span>Specialty food exporter · Toronto</span></div>
+      </div>
+      <nav class="side-nav" aria-label="Workspace">
+        <button type="button" class="active" data-pane="overview">Overview</button>
+        <button type="button" data-pane="shipments">Shipments <span class="cnt" id="shipments-nav-count">3</span></button>
+        <button type="button" data-pane="products">Products and HS codes</button>
+        <button type="button" data-pane="documents">Documents</button>
+        <button type="button" data-pane="network">Trade Network <span class="cnt">2</span></button>
+        <div class="side-sec">Money</div>
+        <button type="button" data-pane="payments">Payments and escrow</button>
+      </nav>
+      <div class="panel" style="margin-top:20px">
+        <div class="panel-body" style="padding-top:14px">
+          <span style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Compliance health</span>
+          <div class="progress"><i style="width:92%"></i></div>
+          <small style="color:var(--muted);font-size:12.5px">92% · 1 item needs attention before Friday's shipment</small>
+        </div>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <!-- OVERVIEW -->
+      <div class="app-pane active" id="pane-overview">
+        <div class="app-head">
+          <div><h2>Good morning, Maya</h2><p>Tuesday, November 17, 2026 · Scale plan · 5-region network · CA-US live, Europe expanding, AU/NZ Phase 3</p></div>
+          <div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="products">Classify a product</button><button type="button" class="btn btn-primary" data-new-shipment>＋ New shipment</button></div>
+        </div>
+        <div class="kpis">
+          <div class="kpi"><span>Trade volume, YTD</span><b>$412,800</b><small>+18% vs last year</small></div>
+          <div class="kpi"><span>Active shipments</span><b id="kpi-active-shipments">4</b><small>2 in transit, 1 clearing</small></div>
+          <div class="kpi"><span>Held in escrow</span><b>$38,450</b><small>Releases on clearance</small></div>
+          <div class="kpi"><span>FX saved vs bank</span><b>$6,214</b><small class="warn">0.75% spread vs 2.9% bank avg</small></div>
+        </div>
+        <div class="app-grid">
+          <div>
+            <div class="panel">
+              <div class="panel-head"><h3>Shipments needing you</h3><a href="#workspace" data-pane-link="shipments">View all</a></div>
+              <div style="overflow-x:auto">
+              <table class="ship-table">
+                <thead><tr><th>Shipment</th><th>Route</th><th>Value</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td><b>AP-2041</b> · Maple syrup, 1,200 cases</td><td class="mono" style="font-size:12.5px">YYZ → ORD</td><td class="num">$48,200</td><td><span class="status st-amber">Action needed</span></td></tr>
+                  <tr><td><b>AP-2038</b> · Honey jars, 800 cases</td><td class="mono" style="font-size:12.5px">YYZ → RTM</td><td class="num">$31,600</td><td><span class="status st-blue">In transit</span></td></tr>
+                  <tr><td><b>AP-2035</b> · Pantry gift sets</td><td class="mono" style="font-size:12.5px">YUL → LHR</td><td class="num">$22,900</td><td><span class="status st-green">Cleared</span></td></tr>
+                </tbody>
+              </table>
+              </div>
+              <div class="ship-cards" style="padding:0 16px 8px">
+                <div class="ship-card"><b>AP-2041 · Maple syrup</b><div class="sc-row"><span>Toronto to Chicago</span><span>$48,200</span></div><span class="status st-amber">Action needed</span></div>
+                <div class="ship-card"><b>AP-2038 · Honey jars</b><div class="sc-row"><span>Toronto to Rotterdam</span><span>$31,600</span></div><span class="status st-blue">In transit</span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Trade volume by month, CAD</h3></div>
+              <div class="panel-body">
+                <div class="mini-bars">
+                  <div class="mb"><i style="height:38%"></i><span>JUN</span></div>
+                  <div class="mb"><i style="height:46%"></i><span>JUL</span></div>
+                  <div class="mb"><i style="height:52%"></i><span>AUG</span></div>
+                  <div class="mb"><i style="height:64%"></i><span>SEP</span></div>
+                  <div class="mb"><i style="height:78%"></i><span>OCT</span></div>
+                  <div class="mb"><i style="height:92%"></i><span>NOV</span></div>
+                </div>
+                <small style="color:var(--muted)">November is pacing to be the strongest month yet, driven by the Chicago grocery account.</small>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="panel">
+              <div class="panel-head"><h3>Before AP-2041 can ship</h3></div>
+              <div class="panel-body">
+                <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>HS classification confirmed</b><small>1702.20 · Maple syrup · CUSMA duty 0%</small></div></div>
+                <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>CUSMA certificate generated</b><small>Signed November 16, valid for this shipment</small></div></div>
+                <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>FDA prior notice filed</b><small>Confirmation 26-8841 · US Food and Drug Admin.</small></div></div>
+                <div class="check-item"><span class="check-ic ci-todo">!</span><div><b>Nutrition label, US format</b><small>Your Canadian label is missing the US "Added Sugars" line. Upload the revised artwork to clear this.</small></div></div>
+                <button class="btn btn-primary" style="width:100%;margin-top:12px">Upload revised label</button>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Escrow timeline, AP-2035</h3></div>
+              <div class="panel-body">
+                <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>Buyer funded escrow</b><small>$22,900 · November 10</small></div></div>
+                <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>Customs cleared, London</b><small>November 16 · No inspection</small></div></div>
+                <div class="check-item"><span class="check-ic ci-todo">→</span><div><b>Release scheduled</b><small>$22,900 to your account, November 18</small></div></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>New in your network</h3><a href="#workspace" data-pane-link="network">Open network</a></div>
+              <div class="panel-body">
+                <div class="check-item"><span class="check-ic ci-todo">+</span><div><b>2 connection requests waiting</b><small>Midwest Natural Foods (buyer, Chicago) and Sakura Trading Co. (importer, Osaka)</small></div></div>
+                <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>New match: Nordhaus Feinkost</b><small>Buyer in Hamburg · 96% match on honey and mustard</small></div></div>
+                <button class="btn btn-ghost" style="width:100%;margin-top:12px" data-pane-link="network">Review requests and matches</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHIPMENTS -->
+      <div class="app-pane" id="pane-shipments">
+        <div class="app-head"><div><h2>Shipments</h2><p>Every order, its documents, freight and payment state in one row.</p></div><div class="actions"><button type="button" class="btn btn-primary" data-new-shipment>＋ New shipment</button></div></div>
+        <div class="panel"><div style="overflow-x:auto"><table>
+          <thead><tr><th>ID</th><th>Goods</th><th>Route</th><th class="num">Value CAD</th><th>Freight</th><th>Customs</th><th>Payment</th></tr></thead>
+          <tbody id="shipments-tbody">
+            <tr><td class="mono">AP-2041</td><td>Maple syrup, 1,200 cases</td><td>Toronto → Chicago</td><td class="num">48,200</td><td><span class="status st-amber">Hold: label</span></td><td>Docs ready</td><td>Escrow funded</td></tr>
+            <tr><td class="mono">AP-2038</td><td>Honey jars, 800 cases</td><td>Toronto → Rotterdam</td><td class="num">31,600</td><td><span class="status st-blue">In transit</span></td><td>Pre-lodged</td><td>Escrow funded</td></tr>
+            <tr><td class="mono">AP-2035</td><td>Pantry gift sets, 450 units</td><td>Montreal → London</td><td class="num">22,900</td><td><span class="status st-green">Delivered</span></td><td>Cleared Nov 16</td><td>Releasing Nov 18</td></tr>
+            <tr><td class="mono">AP-2031</td><td>Maple syrup, 900 cases</td><td>Toronto → Detroit</td><td class="num">36,400</td><td><span class="status st-green">Delivered</span></td><td>Cleared Nov 8</td><td>Paid Nov 10</td></tr>
+            <tr><td class="mono">AP-2027</td><td>Skincare gift sets (trial)</td><td>Toronto → Hamburg</td><td class="num">14,750</td><td><span class="status st-green">Delivered</span></td><td>Cleared Oct 29</td><td>Paid Oct 31</td></tr>
+          </tbody></table></div></div>
+        <p class="src-note">Demo workspace with illustrative shipments for Northwind Foods Co., a fictional exporter used to show the product flow.</p>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="app-pane" id="pane-products">
+        <div class="app-head"><div><h2>Products and HS codes</h2><p>Classifications are kept with their reasoning, ready for a customs audit for seven years.</p></div><div class="actions"><button class="btn btn-primary">Add product</button></div></div>
+        <div class="panel"><div style="overflow-x:auto"><table>
+          <thead><tr><th>Product</th><th>HS code</th><th>US duty</th><th>EU duty</th><th>UK duty</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>Maple syrup, 500 ml</b><br><small style="color:var(--muted)">Pure, Grade A Amber</small></td><td class="mono">1702.20</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td></tr>
+            <tr><td><b>Wildflower honey, 340 g</b><br><small style="color:var(--muted)">Raw, unfiltered</small></td><td class="mono">0409.00</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td></tr>
+            <tr><td><b>Pantry gift set</b><br><small style="color:var(--muted)">Syrup, honey, mustard</small></td><td class="mono">Mixed</td><td>By component</td><td>By component</td><td>By component</td><td><span class="status st-blue">Reviewed</span></td></tr>
+            <tr><td><b>Maple mustard, 250 ml</b><br><small style="color:var(--muted)">New line, classifying</small></td><td class="mono">2103.30</td><td>Pending</td><td>Pending</td><td>Pending</td><td><span class="status st-amber">Broker review</span></td></tr>
+          </tbody></table></div></div>
+      </div>
+
+      <!-- DOCUMENTS -->
+      <div class="app-pane" id="pane-documents">
+        <div class="app-head"><div><h2>Documents</h2><p>Generated from shipment records. Nothing is retyped, so nothing drifts between forms.</p></div></div>
+        <div class="app-grid"><div class="panel"><div class="panel-head"><h3>AP-2041, Chicago</h3></div><div class="panel-body">
+          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>Commercial invoice</b><small>INV-2041 · Generated Nov 16</small></div><a class="dl" href="#">Download</a></div>
+          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>CUSMA certificate of origin</b><small>Signed · Valid to Nov 2027 blanket</small></div><a class="dl" href="#">Download</a></div>
+          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>Packing list</b><small>1,200 cases · 14,400 kg gross</small></div><a class="dl" href="#">Download</a></div>
+          <div class="doc-row"><span class="doc-ic">FDA</span><div><b>FDA prior notice confirmation</b><small>26-8841 · Filed Nov 16</small></div><a class="dl" href="#">View</a></div>
+        </div></div>
+        <div class="panel"><div class="panel-head"><h3>Audit trail</h3></div><div class="panel-body">
+          <p style="font-size:14px;color:var(--ink2);margin:8px 0">Every classification, certificate and clearance for Northwind Foods is retained and exportable. Retention clock: <b>7 years</b> from clearance date, matching customs requirements in Canada, the US and the EU.</p>
+          <div class="progress"><i style="width:100%"></i></div><small style="color:var(--muted)">214 documents stored · 0 gaps found in the last audit check</small>
+        </div></div></div>
+      </div>
+
+      <!-- PAYMENTS -->
+      <div class="app-pane" id="pane-payments">
+        <div class="app-head"><div><h2>Payments and escrow</h2><p>Funds are held and settled by regulated partners. Apertra never touches client money directly.</p></div></div>
+        <div class="kpis">
+          <div class="kpi"><span>In escrow now</span><b>$38,450</b><small>2 shipments</small></div>
+          <div class="kpi"><span>Settled this month</span><b>$59,300</b><small>3 shipments</small></div>
+          <div class="kpi"><span>FX + escrow, combined</span><b>0.75%</b><small>Bank FX average 2.9% alone</small></div>
+          <div class="kpi"><span>Blended take-rate</span><b>1.25%</b><small>Incl. freight margin</small></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Membership credit, November</h3></div>
+          <div class="panel-body">
+            <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>Scale membership, $749, credited in full</b><small>November trade fees on $59,300 settled are $741 at 1.25%, and $79,800 in funded shipments is accruing more. Your $749 membership is credited against the month's trade fees, so membership adds no extra cost this month.</small></div></div>
+            <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>Buyers and importers on your shipments pay no membership</b><small>Great Lakes Grocery, De Markt BV and Borough Pantry are free members. They pay only their share of escrow and FX inside each trade.</small></div></div>
+          </div>
+        </div>
+        <div class="panel"><div style="overflow-x:auto"><table>
+          <thead><tr><th>Shipment</th><th>Buyer</th><th class="num">Amount</th><th>State</th><th>Release trigger</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">AP-2041</td><td>Great Lakes Grocery, Chicago</td><td class="num">$48,200</td><td><span class="status st-blue">Funded</span></td><td>US customs clearance</td></tr>
+            <tr><td class="mono">AP-2038</td><td>De Markt BV, Rotterdam</td><td class="num">$31,600</td><td><span class="status st-blue">Funded</span></td><td>EU customs clearance</td></tr>
+            <tr><td class="mono">AP-2035</td><td>Borough Pantry, London</td><td class="num">$22,900</td><td><span class="status st-green">Releasing</span></td><td>Cleared, release Nov 18</td></tr>
+          </tbody></table></div></div>
+      </div>
+
+      <!-- NETWORK -->
+      <div class="app-pane" id="pane-network">
+        <div class="app-head"><div><h2>Trade Network</h2><p>Verified buyers, importers, and exporters on the same rails as your shipments, matched across the full mesh: all five regions, all 20 directed corridors, in either direction. Connect once, then trade inside a shared shipment record.</p></div><div class="actions"><button class="btn btn-primary" id="net-invite-btn">Invite a partner</button></div></div>
+        <div class="kpis">
+          <div class="kpi"><span>My connections</span><b id="net-conn-count">4</b><small>Buyers, importers, exporters</small></div>
+          <div class="kpi"><span>Connection requests</span><b id="net-req-count">2</b><small class="warn">Waiting on your reply</small></div>
+          <div class="kpi"><span>New matches</span><b>5</b><small>Based on your catalogue and corridors</small></div>
+          <div class="kpi"><span>Trades via network</span><b>$286,400</b><small>71% of volume this year</small></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><h3>Connection requests</h3></div>
+          <div class="panel-body" id="net-requests">
+            <div class="req-row" data-request data-company="midwest">
+              <img class="req-thumb" src="assets/img-03.jpg" alt="Inside a Midwest Natural Foods store, aisles of natural and organic products">
+              <div><b>Midwest Natural Foods</b> <span class="tag blue">Buyer</span><small>Chicago, US · Wants maple syrup and honey for 22 stores · Verified Nov 2026 · Found you via your HS 1702.20 listing</small></div>
+              <div class="req-actions"><button type="button" class="btn btn-ghost" data-company-preview="midwest">Preview</button><button type="button" class="btn btn-primary" data-req-accept>Accept</button><button type="button" class="btn btn-ghost" data-req-decline>Decline</button></div>
+            </div>
+            <div class="req-row" data-request data-company="sakura">
+              <img class="req-thumb" src="assets/img-04.jpg" alt="Inside a Sakura Trading Co. partner grocery store in Osaka, Japan">
+              <div><b>Sakura Trading Co.</b> <span class="tag blue">Importer</span><small>Osaka, Japan · Importer of record for Canadian specialty foods · Verified Oct 2026 · Note: Japan has no FTA rate on honey, duty shown upfront</small></div>
+              <div class="req-actions"><button type="button" class="btn btn-ghost" data-company-preview="sakura">Preview</button><button type="button" class="btn btn-primary" data-req-accept>Accept</button><button type="button" class="btn btn-ghost" data-req-decline>Decline</button></div>
+            </div>
+            <p id="net-req-empty" style="display:none;font-size:14px;color:var(--muted);margin:10px 0 4px">No pending requests. New requests appear here when a verified business asks to connect.</p>
+          </div>
+        </div>
+
+        <div class="net-toolbar">
+          <div class="net-filters" role="group" aria-label="Filter network by role">
+            <button type="button" class="net-filter active" data-net-filter="all">All</button>
+            <button type="button" class="net-filter" data-net-filter="buyer">Buyers</button>
+            <button type="button" class="net-filter" data-net-filter="importer">Importers</button>
+            <button type="button" class="net-filter" data-net-filter="exporter">Exporters</button>
+            <button type="button" class="net-filter" data-net-filter="connected">My connections</button>
+          </div>
+          <div class="net-search"><input type="search" id="net-search" placeholder="Search by name, city, country, or product" aria-label="Search the trade network"></div>
+        </div>
+
+        <div class="net-grid" id="net-grid">
+          <div class="net-card" data-role="buyer" data-connected="1" data-company="greatlakes" data-search="great lakes grocery chicago united states buyer retailer maple syrup gift sets">
+            <img class="net-thumb" src="assets/img-05.jpg" alt="Inside Great Lakes Grocery, produce aisles and stocked shelves in Chicago">
+            <div><span class="tag amber">Buyer</span> <span class="tag green">Connected</span></div>
+            <h3>Great Lakes Grocery</h3>
+            <p class="net-meta">Chicago, US · Retail buyer · 14 orders on rails</p>
+            <p>Your largest account. Pays in 2 days on average after clearance, maple syrup and gift sets.</p>
+            <ul><li>Credit checked, escrow history clean</li><li>Next order expected early December</li></ul>
+            <div class="net-foot"><span class="match-score">CONNECTED · SINCE MAR 2026</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="greatlakes">View profile</button><button type="button" class="btn btn-ghost" data-pane-link="shipments">View trades</button></span></div>
+          </div>
+
+          <div class="net-card" data-role="importer" data-connected="1" data-company="demarkt" data-search="de markt bv rotterdam netherlands importer distributor honey ceta">
+            <img class="net-thumb" src="assets/img-06.jpg" alt="Inside the De Markt BV food distribution warehouse near Rotterdam, forklift moving palletised produce">
+            <div><span class="tag blue">Importer</span> <span class="tag green">Connected</span></div>
+            <h3>De Markt BV</h3>
+            <p class="net-meta">Rotterdam, Netherlands · Importer and distributor · 6 orders</p>
+            <p>Your first EU account, honey-led. Importer of record for the Netherlands, and has introduced two other Dutch buyers.</p>
+            <ul><li>CETA documentation handled on the shared record</li><li>Growing 30% quarter on quarter</li></ul>
+            <div class="net-foot"><span class="match-score">CONNECTED · SINCE JUN 2026</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="demarkt">View profile</button><button type="button" class="btn btn-ghost" data-pane-link="shipments">View trades</button></span></div>
+          </div>
+
+          <div class="net-card" data-role="buyer" data-connected="1" data-company="borough" data-search="borough pantry london united kingdom buyer gift sets retail">
+            <img class="net-thumb" src="assets/img-07.jpg" alt="Inside Borough Pantry, a small London grocery shop with stocked shelves and fresh produce">
+            <div><span class="tag amber">Buyer</span> <span class="tag green">Connected</span></div>
+            <h3>Borough Pantry</h3>
+            <p class="net-meta">London, UK · Retail buyer · 3 orders so far</p>
+            <p>Gift set specialist with strong December seasonality. Reorders roughly every six weeks.</p>
+            <ul><li>UK TCA preference already claimed</li><li>Repeat rate: every 6 weeks</li></ul>
+            <div class="net-foot"><span class="match-score">CONNECTED · SINCE SEP 2026</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="borough">View profile</button><button type="button" class="btn btn-ghost" data-pane-link="shipments">View trades</button></span></div>
+          </div>
+
+          <div class="net-card" data-role="exporter" data-connected="1" data-company="prairie" data-search="prairie grains co saskatoon canada exporter grains pulses co-packing">
+            <img class="net-thumb" src="assets/img-08.jpg" alt="Prairie Grains Co. grain silos standing in a harvested wheat field near Saskatoon">
+            <div><span class="tag green">Exporter</span> <span class="tag green">Connected</span></div>
+            <h3>Prairie Grains Co.</h3>
+            <p class="net-meta">Saskatoon, Canada · Fellow exporter · Grains and pulses</p>
+            <p>Shares your Chicago freight lane. You split a consolidated truck in October and both saved on the lane rate.</p>
+            <ul><li>Consolidated freight partner, CA to US Midwest</li><li>Introduced you to Great Lakes Grocery</li></ul>
+            <div class="net-foot"><span class="match-score">CONNECTED · SINCE MAY 2026</span><button type="button" class="btn btn-ghost" data-company-preview="prairie" style="margin-left:auto">View profile</button></div>
+          </div>
+
+          <div class="net-card" data-role="buyer" data-connected="0" data-company="nordhaus" data-search="nordhaus feinkost hamburg germany buyer distributor honey mustard pantry">
+            <img class="net-thumb" src="assets/img-09.jpg" alt="The deli counter at Nordhaus Feinkost in Hamburg, stocked with cheeses, cured meats and preserves">
+            <div><span class="tag amber">Buyer</span> <span class="tag">Matched for you</span></div>
+            <h3>Nordhaus Feinkost</h3>
+            <p class="net-meta">Hamburg, Germany · Specialty food distributor</p>
+            <p>Looking for Canadian pantry brands for spring listings. Matched on your honey and mustard lines.</p>
+            <ul><li>Projected first order: $18K to $25K</li><li>Needs EU labelling review, gatekeeper ready</li></ul>
+            <div class="net-foot"><span class="match-score">96% MATCH · PRODUCT + CORRIDOR</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="nordhaus">Preview</button><button type="button" class="btn btn-primary" data-connect>Connect</button></span></div>
+          </div>
+
+          <div class="net-card" data-role="importer" data-connected="0" data-company="pacific" data-search="pacific rim imports los angeles united states importer west coast grocery">
+            <img class="net-thumb" src="assets/img-10.jpg" alt="Inside the Pacific Rim Imports distribution warehouse in Los Angeles, aisles of palletised stock">
+            <div><span class="tag blue">Importer</span> <span class="tag">Matched for you</span></div>
+            <h3>Pacific Rim Imports</h3>
+            <p class="net-meta">Los Angeles, US · Importer of record, West Coast grocery</p>
+            <p>Imports Canadian specialty foods for 40+ West Coast stores. Would be your importer of record for a first California order.</p>
+            <ul><li>FDA facility registration already on file</li><li>Typical first order: $20K to $35K</li></ul>
+            <div class="net-foot"><span class="match-score">93% MATCH · NEW MARKET</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="pacific">Preview</button><button type="button" class="btn btn-primary" data-connect>Connect</button></span></div>
+          </div>
+
+          <div class="net-card" data-role="exporter" data-connected="0" data-company="coastal" data-search="coastal catch seafood halifax canada exporter seafood frozen">
+            <img class="net-thumb" src="assets/img-11.jpg" alt="A worker at Coastal Catch Seafood in Halifax holding a bin of cooked shrimp in the processing area">
+            <div><span class="tag green">Exporter</span> <span class="tag">Matched for you</span></div>
+            <h3>Coastal Catch Seafood</h3>
+            <p class="net-meta">Halifax, Canada · Fellow exporter · Frozen seafood</p>
+            <p>Ships to Rotterdam monthly on the same ocean lane as your honey. A candidate for shared reefer consolidation.</p>
+            <ul><li>Shared lane: Halifax to Rotterdam</li><li>Estimated freight saving if consolidated: 12%</li></ul>
+            <div class="net-foot"><span class="match-score">89% MATCH · SHARED LANE</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="coastal">Preview</button><button type="button" class="btn btn-primary" data-connect>Connect</button></span></div>
+          </div>
+
+          <div class="net-card" data-role="buyer" data-connected="0" data-company="alpine" data-search="alpine provisions denver united states buyer natural foods syrup">
+            <img class="net-thumb" src="assets/img-12.jpg" alt="Inside an Alpine Provisions natural foods store in Denver, wooden shelves of pantry goods">
+            <div><span class="tag amber">Buyer</span> <span class="tag">Matched for you</span></div>
+            <h3>Alpine Provisions</h3>
+            <p class="net-meta">Denver, US · Natural foods buyer · 9 stores</p>
+            <p>Building a Canadian pantry set for the winter season. Matched on maple syrup, with CUSMA duty at 0%.</p>
+            <ul><li>Projected first order: $12K to $18K</li><li>Wants DDP pricing, your calculator already supports it</li></ul>
+            <div class="net-foot"><span class="match-score">91% MATCH · PRODUCT FIT</span><span style="margin-left:auto;display:flex;gap:8px"><button type="button" class="btn btn-ghost" data-company-preview="alpine">Preview</button><button type="button" class="btn btn-primary" data-connect>Connect</button></span></div>
+          </div>
+        </div>
+        <div class="net-empty" id="net-empty">No businesses match that filter. Try a different role or a shorter search.</div>
+        <p class="src-note">Demo network with illustrative businesses. Every business shown as verified has passed identity, trade reference, and banking checks in this concept flow. Contact details are only shared after both sides accept a connection.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== COMPANY PROFILE PREVIEW ==================== --><div class="co-modal" id="co-modal" role="dialog" aria-modal="true" aria-labelledby="co-name" aria-hidden="true">
+  <div class="co-modal-backdrop" data-close-co></div>
+  <div class="co-modal-card">
+    <div class="co-cover-wrap">
+      <img class="co-cover" id="co-cover" src="assets/img-05.jpg" alt="">
+      <button type="button" class="co-close" data-close-co aria-label="Close company profile">&times;</button>
+      <div class="co-cover-cap">
+        <div id="co-tags"></div>
+        <h3 id="co-name">Company</h3>
+        <p id="co-meta"></p>
+      </div>
+    </div>
+    <div class="co-body">
+      <h4>About the business</h4>
+      <p class="co-about" id="co-about"></p>
+      <h4>At a glance</h4>
+      <div class="co-facts" id="co-facts"></div>
+      <h4 id="co-prods-title">Products</h4>
+      <div class="co-prods" id="co-prods"></div>
+      <h4>Verification, checked by Apertra</h4>
+      <div class="co-checks" id="co-checks"></div>
+      <h4 id="co-rel-title">Relationship</h4>
+      <div class="co-trades" id="co-rel"></div>
+    </div>
+    <div class="co-modal-foot">
+      <span class="foot-note" id="co-foot-note"></span>
+      <span id="co-foot-actions" style="display:flex;gap:10px;flex-wrap:wrap"></span>
+    </div>
+  </div>
+</div><div class="ship-modal" id="ship-modal" role="dialog" aria-modal="true" aria-labelledby="ship-modal-title" aria-hidden="true">
+  <div class="ship-modal-backdrop" data-close-ship></div>
+  <div class="ship-modal-card">
+    <div class="ship-modal-head">
+      <div><h3 id="ship-modal-title">Create a shipment</h3><p id="ship-modal-sub">Northwind Foods Co. · Draft saves as you go through each step in this session.</p></div>
+      <button type="button" class="ship-close" data-close-ship aria-label="Close new shipment flow">&times;</button>
+    </div>
+    <div class="ship-steps" id="ship-steps" aria-label="Shipment steps">
+      <div class="ship-step-dot active" data-dot="1">Step 1<b>Buyer &amp; route</b></div>
+      <div class="ship-step-dot" data-dot="2">Step 2<b>Goods</b></div>
+      <div class="ship-step-dot" data-dot="3">Step 3<b>Compliance</b></div>
+      <div class="ship-step-dot" data-dot="4">Step 4<b>Freight &amp; pay</b></div>
+      <div class="ship-step-dot" data-dot="5">Step 5<b>Review</b></div>
+    </div>
+
+    <div class="ship-modal-body">
+      <!-- STEP 1 -->
+      <div class="ship-panel active" data-ship-panel="1">
+        <h4>Who is this for, and where is it going?</h4>
+        <p>Pick a connected buyer or importer from your Trade Network. Their verification, delivery address and payment history are already on file.</p>
+        <div class="ship-form-grid">
+          <div class="ship-field full">
+            <label for="ship-buyer">Buyer / importer</label>
+            <select id="ship-buyer">
+              <option value="greatlakes" data-dest="us" data-city="Chicago">Great Lakes Grocery — Buyer · Chicago, US · Connected</option>
+              <option value="demarkt" data-dest="nl" data-city="Rotterdam">De Markt BV — Importer · Rotterdam, Netherlands · Connected</option>
+              <option value="borough" data-dest="uk" data-city="London">Borough Pantry — Buyer · London, UK · Connected</option>
+              <option value="midwest" data-dest="us" data-city="Chicago">Midwest Natural Foods — Buyer · Chicago, US · New connection</option>
+              <option value="pacific" data-dest="us" data-city="Los Angeles">Pacific Rim Imports — Importer · Los Angeles, US · Matched 93%</option>
+              <option value="nordhaus" data-dest="de" data-city="Hamburg">Nordhaus Feinkost — Buyer · Hamburg, Germany · Matched 96%</option>
+            </select>
+            <small>Only verified network partners appear here. Need someone new? Invite them from Trade Network first.</small>
+            <div class="ship-partner-preview" id="ship-partner-preview">
+              <img id="spp-img" src="assets/img-05.jpg" alt="Photo of the selected partner's business">
+              <div><b id="spp-name">Great Lakes Grocery</b><span id="spp-meta">Chicago, US · Retail buyer · Connected since Mar 2026</span><span id="spp-line">14 orders on rails · Escrow history clean · Pays 2 days after clearance</span></div>
+              <button type="button" class="btn btn-ghost" id="spp-btn">View full profile</button>
+            </div>
+          </div>
+          <div class="ship-field">
+            <label for="ship-origin">Origin</label>
+            <select id="ship-origin"><option value="Toronto">Toronto, Canada (YYZ)</option><option value="Montreal">Montreal, Canada (YUL)</option></select>
+          </div>
+          <div class="ship-field">
+            <label for="ship-dest">Destination</label>
+            <select id="ship-dest"><option value="us">United States</option><option value="nl">Netherlands (EU)</option><option value="uk">United Kingdom</option><option value="de">Germany (EU)</option><option value="jp">Japan</option></select>
+          </div>
+          <div class="ship-field">
+            <label for="ship-dest-city">Destination city</label>
+            <input type="text" id="ship-dest-city" value="Chicago">
+          </div>
+          <div class="ship-field">
+            <label for="ship-terms">Delivery terms</label>
+            <select id="ship-terms"><option value="DAP">DAP — Delivered at place</option><option value="DDP">DDP — Duties paid, buyer door</option><option value="EXW">EXW — Factory gate</option></select>
+            <small id="ship-terms-note">You arrange freight and clearance. Buyer pays on clearance via escrow.</small>
+          </div>
+        </div>
+        <div class="ship-live-box" id="ship-route-box"><b>Route ready:</b> Toronto → Chicago · CUSMA corridor · Typical clearance same day by truck when documents are pre-lodged.</div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="ship-panel" data-ship-panel="2">
+        <h4>What are you shipping?</h4>
+        <p>Choose from your classified catalogue so the HS code, duty rate and documents are correct from the start. No retyping.</p>
+        <div class="ship-form-grid">
+          <div class="ship-field full">
+            <label for="ship-product">Product</label>
+            <select id="ship-product">
+              <option value="maple">Maple syrup, 500 ml — Grade A Amber</option>
+              <option value="honey">Wildflower honey, 340 g — Raw, unfiltered</option>
+              <option value="gift">Pantry gift set — Syrup, honey, mustard</option>
+              <option value="mustard">Maple mustard, 250 ml — New line</option>
+            </select>
+          </div>
+          <div class="ship-field">
+            <label for="ship-qty">Quantity (cases / units)</label>
+            <input type="number" id="ship-qty" min="1" step="1" value="600">
+          </div>
+          <div class="ship-field">
+            <label for="ship-unit">Unit price (CAD)</label>
+            <input type="number" id="ship-unit" min="1" step="0.50" value="40">
+          </div>
+        </div>
+        <div class="ship-live-box" id="ship-goods-box"></div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="ship-panel" data-ship-panel="3">
+        <h4>Compliance check</h4>
+        <p>Apertra runs the gatekeeper for this product and destination before freight can be booked. Anything blocking is flagged here, at your desk, not at the border.</p>
+        <div class="ship-doc-list" id="ship-compliance-list"></div>
+        <div class="ship-form-grid" style="margin-top:16px">
+          <div class="ship-field full">
+            <label for="ship-label-status">US / destination label status</label>
+            <select id="ship-label-status">
+              <option value="ready">Label artwork is destination-ready</option>
+              <option value="needs">Label still needs the destination format (e.g. US Added Sugars line)</option>
+            </select>
+            <small>If the label is not ready, you can still create the shipment as a draft. It will be marked “Hold: label” until the revised artwork is uploaded, exactly like AP-2041.</small>
+          </div>
+        </div>
+        <div class="ship-live-box" id="ship-docs-box"></div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="ship-panel" data-ship-panel="4">
+        <h4>Freight and payment protection</h4>
+        <p>Pick a freight option from aggregated partners, then confirm how the buyer pays. Funds are held by a regulated partner and released on clearance.</p>
+        <div class="freight-options" id="ship-freight-options">
+          <button type="button" class="freight-opt selected" data-freight="standard"><b>Standard</b><span id="freight-standard-meta">Best balance of cost and speed</span><strong id="freight-standard-price">$0</strong></button>
+          <button type="button" class="freight-opt" data-freight="expedited"><b>Expedited</b><span id="freight-expedited-meta">Priority lane, earlier delivery window</span><strong id="freight-expedited-price">$0</strong></button>
+          <button type="button" class="freight-opt" data-freight="consolidated"><b>Consolidated</b><span id="freight-consolidated-meta">Share the lane with another exporter, slower</span><strong id="freight-consolidated-price">$0</strong></button>
+        </div>
+        <div class="ship-doc-list">
+          <div><span class="doc-ic">ESC</span><div><b>Escrow — buyer funds before you ship</b><small id="ship-escrow-line">Buyer funds escrow for the goods value. Release trigger: customs clearance.</small></div><span class="status st-green">Included</span></div>
+          <div><span class="doc-ic">FX</span><div><b>FX + escrow combined at 0.75%</b><small>Charged on settlement, not as a separate invoice fee. Bank FX alone averages 2.9%.</small></div><span class="status st-blue">0.75%</span></div>
+          <div><span class="doc-ic">INS</span><div><b>Cargo insurance at 0.6% of goods value</b><small>Calculated in your landed cost on the next step.</small></div><span class="status st-blue">Included</span></div>
+        </div>
+      </div>
+
+      <!-- STEP 5 REVIEW -->
+      <div class="ship-panel" data-ship-panel="5">
+        <h4>Review and create</h4>
+        <p>Check the full picture. Creating the shipment generates its documents, reserves the freight option, and sends the escrow funding request to the buyer.</p>
+        <div class="review-grid" id="ship-review-grid"></div>
+        <div class="cost-table" id="ship-cost-table"></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 4px;line-height:1.55">By creating this shipment you confirm the classification and values above. The full record, including HS reasoning and certificates, is kept for seven years for customs audit.</p>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="ship-panel" data-ship-panel="6">
+        <div class="ship-success">
+          <div class="ship-success-mark">✓</div>
+          <h4>Shipment created</h4>
+          <div class="ship-success-id" id="ship-success-id">AP-2042</div>
+          <p id="ship-success-text">Your shipment is now in Shipments. Documents have been generated, the buyer has been sent the escrow funding request, and freight is held pending label clearance if needed.</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button type="button" class="btn btn-primary" id="ship-view-btn">View in Shipments</button>
+            <button type="button" class="btn btn-ghost" id="ship-another-btn">Create another</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ship-modal-foot" id="ship-modal-foot">
+      <span class="foot-note" id="ship-foot-note">Step 1 of 5 — You can change any of this before you create the shipment.</span>
+      <button type="button" class="btn btn-ghost" id="ship-back-btn" style="visibility:hidden">Back</button>
+      <button type="button" class="btn btn-primary" id="ship-next-btn">Continue →</button>
+      <button type="button" class="btn btn-primary" id="ship-create-btn" style="display:none">Create shipment</button>
+    </div>
+  </div>
+</div><div hidden aria-hidden="true">
+<input type="range" id="calc-value" value="25000">
+<select id="calc-product"><option value="maple" selected>maple</option></select>
+<select id="calc-dest"><option value="us" selected>us</option></select>
+<select id="calc-terms"><option value="dap" selected>dap</option></select>
+<span id="calc-total"></span><span id="calc-bars"></span><span id="calc-hs"></span><span id="calc-fta"></span><span id="calc-note"></span><span id="calc-val-label"></span>
+<input type="text" id="net-search" value="">
+<button type="button" id="net-invite-btn">invite</button>
+<img id="spp-img" alt=""><span id="spp-name"></span><span id="spp-meta"></span><span id="spp-line"></span>
+<button type="button" id="spp-btn">preview</button>
+<select id="ship-buyer"><option value="northwind" selected>northwind</option></select>
+</div>
+<script src="assets/site.js"></script>
+</body>
+</html>

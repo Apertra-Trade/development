@@ -31,7 +31,16 @@ Hybrid, by design:
 
 ## This repository
 
-`index.html` is the current Apertra marketing site and workspace demo, served with GitHub Pages. It is a self-contained static build: landing page with the working landed-cost calculator and mesh corridor grid, the Trade Network with company previews, and the logged-in workspace with the New Shipment wizard.
+The Apertra site, served with GitHub Pages. It is a multi-page static site, black branding throughout (no green), with shared assets in `assets/` (`site.css`, `site.js`, and the extracted photography):
+
+- `index.html` - Home: hero, working landed-cost calculator, how it works, and links to every section
+- `product.html` - Product: the four frictions and the execution engine
+- `network.html` - Network: the verified Trade Network, with company previews
+- `corridors.html` - Corridors: the five-region mesh, all 20 directed corridors
+- `pricing.html` - Pricing: the hybrid membership and per-trade model
+- `market.html` - Market: sizing and the revenue model
+- `assessment.html` - Assessment: an honest read on the opportunity and risks
+- `workspace.html` - The logged-in workspace demo, reached through Sign in: overview, shipments, products and HS codes, documents, payments and escrow, the Trade Network, and the 5-step New Shipment wizard
 
 ## Status
 
