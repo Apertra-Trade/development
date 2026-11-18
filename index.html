@@ -27,7 +27,7 @@
 <main>
 
   <div class="wrap hero">
-    <div class="hero-grid">
+    <div class="hero-grid" style="grid-template-columns:1fr;max-width:900px">
       <div>
         <p class="kicker">Apertra · Open every market</p>
         <h1>Sell across borders without hiring a <em>trade department.</em></h1>
@@ -44,6 +44,17 @@
       </div>
 
       <!-- Calculator -->
+      
+    </div>
+
+    <figure class="hero-photo" style="margin-left:0;margin-right:0">
+      <img class="ap-hero-img" src="assets/ship-terminal.jpg" alt="Aerial view of a container terminal with gantry cranes loading a container ship">
+      <figcaption><b>Trade, in motion.</b> A container terminal at work. Apertra runs the paperwork, payment protection and tracking behind scenes like this, on all 20 corridors.</figcaption>
+    </figure>
+  </div>
+  <section class="calc-band">
+    <div class="wrap">
+      <div class="sec-head"><h2>Start with the number</h2><p>Every Apertra shipment starts with a true landed cost, calculated before anyone quotes anyone. Try the calculator:</p></div>
       <div class="calc" id="calculator">
         <div class="calc-head">
           <h3>Landed cost calculator</h3>
@@ -91,12 +102,50 @@
         </div>
       </div>
     </div>
+  </section>
 
-    <figure class="hero-photo" style="margin-left:0;margin-right:0">
-      <img src="assets/img-01.jpg" alt="Aerial view of a container ship loaded with shipping containers docked at a busy port">
-      <figcaption><b>One shipment, one screen.</b> Classification, documents, freight and payment tracked together, not across five inboxes.</figcaption>
-    </figure>
-  </div>
+  <section>
+    <div class="wrap">
+      <div class="sec-head"><h2>Follow one shipment, door to door</h2><p>The story of AP-2041: 400 cases of Northwind maple syrup, from a warehouse in Toronto to shelves in Rotterdam. This is what Apertra does on every shipment, on every corridor.</p></div>
+
+      <div class="ap-chapter">
+        <img src="assets/ship-warehouse-dock.jpg" alt="Forklift loading palletised export cartons at a warehouse dock">
+        <div class="ap-ch-text"><span class="ap-ch-num">Chapter 1 · Toronto, Canada</span><h3>Packed, checked, and stopped early</h3><p>Northwind palletises 400 cases of maple syrup. Before anything moves, Apertra runs the compliance checklist for the destination and flags one problem: the nutrition panel does not meet EU labelling rules. The labels are reprinted the same day, in Toronto, instead of being seized in Rotterdam.</p><span class="ap-fact">Caught before departure: EU label format, French and Dutch language requirements</span></div>
+      </div>
+
+      <div class="ap-chapter flip">
+        <img src="assets/ship-port-truck.jpg" alt="Container being loaded onto a truck at a port terminal">
+        <div class="ap-ch-text"><span class="ap-ch-num">Chapter 2 · The paperwork</span><h3>Cleared before it moves</h3><p>From one shipment record, Apertra generates the commercial invoice, the packing list, and the CETA certificate of origin. The HS code, 1702.20, is confirmed by a licensed reviewer, so the shipment enters the EU at the preferential rate.</p><span class="ap-fact">Duty on arrival: 0% under CETA, instead of the standard rate</span></div>
+      </div>
+
+      <div class="ap-chapter">
+        <img src="assets/ship-ocean-ship.jpg" alt="Container ship crossing the Atlantic Ocean">
+        <div class="ap-ch-text"><span class="ap-ch-num">Chapter 3 · Eleven days on the Atlantic</span><h3>On the water, money protected</h3><p>The container trucks to Montreal and sails for Rotterdam. The buyer, De Markt BV, has already funded escrow, so Northwind is not carrying the payment risk of a first order with a new partner, and De Markt is not paying for goods it has not received.</p><span class="ap-fact">Escrow funded before departure, released on customs clearance</span></div>
+      </div>
+
+      <div class="ap-chapter flip">
+        <img src="assets/ship-port-aerial.jpg" alt="Aerial view of cranes unloading a container ship at Rotterdam">
+        <div class="ap-ch-text"><span class="ap-ch-num">Chapter 4 · Rotterdam, Netherlands</span><h3>Customs in hours, not days</h3><p>The entry was pre-filed from the same record, so clearance is a check, not an investigation. The container is released the day it berths, escrow settles to Northwind, and both sides get the complete file.</p><span class="ap-fact">One audit trail, kept for seven years, for both parties</span></div>
+      </div>
+
+      <div class="ap-chapter">
+        <img src="assets/ship-trucks-dusk.jpg" alt="Trucks on the highway at dusk carrying the final delivery">
+        <div class="ap-ch-text"><span class="ap-ch-num">Chapter 5 · On shelves</span><h3>The last mile is the easy part</h3><p>A truck takes the pallets from the terminal to De Markt's distribution centre. Fourteen days after it left Toronto, the syrup is on shelves in the Netherlands, and Northwind has a verified trade history that makes its next match, in any of the five regions, easier to win.</p><span class="ap-fact">Door to door: 14 days, one platform, zero consultants</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head"><h2>Every way freight moves</h2><p>Apertra books and tracks all four modes on the same shipment record, and prices them into the landed cost before you commit.</p></div>
+      <div class="ap-mode-grid">
+        <div class="ap-mode"><img src="assets/ship-trucks-dusk.jpg" alt="Semi trucks on a highway at dusk"><div class="ap-mode-body"><h3>Road</h3><p>The backbone of the Canada-US corridor and every last mile in all five regions. Door to door, no terminal handling.</p><span class="ap-transit">Toronto to Chicago: 2 to 4 days</span></div></div>
+        <div class="ap-mode"><img src="assets/ship-ocean-ship.jpg" alt="Container ship at sea"><div class="ap-mode-body"><h3>Ocean</h3><p>Full and shared containers for the long corridors: to Europe, and between Australia, New Zealand and North America.</p><span class="ap-transit">Montreal to Rotterdam: 10 to 12 days</span></div></div>
+        <div class="ap-mode"><img src="assets/ship-air-cargo.jpg" alt="Cargo containers being loaded into a freighter aircraft"><div class="ap-mode-body"><h3>Air</h3><p>For high-value and perishable goods where a week on the water costs more than the flight. Cold-chain options on food corridors.</p><span class="ap-transit">Toronto to London: 2 to 3 days</span></div></div>
+        <div class="ap-mode"><img src="assets/ship-rail-yard.jpg" alt="Freight train carrying containers through a rail yard"><div class="ap-mode-body"><h3>Rail</h3><p>Intermodal rail for heavy, lower-urgency freight across North America and within Europe, at the lowest cost per kilo.</p><span class="ap-transit">Toronto to Vancouver: 5 to 7 days</span></div></div>
+      </div>
+    </div>
+  </section>
 
   <!-- Friction -->
   <section class="alt" style="padding-top:64px">
@@ -108,7 +157,36 @@
         <div class="step"><span class="n">STEP 3</span><h3>Ship and get paid</h3><p>Book freight in one click. Buyer funds sit in escrow and release when customs clears, with a full audit trail kept for seven years.</p></div>
       </div>
     </div>
-  </section><section>
+  </section>
+  <section>
+    <div class="wrap">
+      <div class="ap-facts">
+        <h2 style="color:#fff;margin-top:0">The trade Apertra is built for</h2>
+        <div class="ap-facts-grid">
+          <div><b>$1T+</b><span>Goods trade between Canada and the US every year, the busiest corridor on the mesh</span></div>
+          <div><b>$134B</b><span>Canada-EU trade in 2024, up 77% since CETA took effect</span></div>
+          <div><b>$2.7T</b><span>Total merchandise trade across the corridors between the five regions</span></div>
+          <div><b>~$1.0T</b><span>Of that trade is SME trade, the part Apertra is built to serve</span></div>
+        </div>
+        <p class="ap-src">Sources: Statistics Canada, Eurostat, US SBA, ABS and MBIE figures, as detailed on the <a href="market.html" style="color:#fff">Market page</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="sec-head"><h2>The biggest movers on the network</h2><p>Apertra partners trade at real scale. A few of the largest importers and exporters on the mesh:</p></div>
+      <div class="ap-spot-grid">
+        <div class="ap-spot"><span class="ap-role">Buyer · Chicago, United States</span><h3>Great Lakes Grocery</h3><span class="ap-vol">$31M</span><p>Annual buying across Canada, Europe and New Zealand: specialty foods, pantry and private label.</p></div>
+        <div class="ap-spot"><span class="ap-role">Importer · Los Angeles, United States</span><h3>Pacific Rim Imports</h3><span class="ap-vol">$24M</span><p>Annual imports from Australia, New Zealand and Canada, mostly food and beverage.</p></div>
+        <div class="ap-spot"><span class="ap-role">Importer · Rotterdam, Netherlands</span><h3>De Markt BV</h3><span class="ap-vol">€18M</span><p>Annual imports into the EU, the receiving partner in the AP-2041 story above.</p></div>
+        <div class="ap-spot"><span class="ap-role">Exporter · Saskatoon, Canada</span><h3>Prairie Grains Co.</h3><span class="ap-vol">$16M</span><p>Annual exports of grains and pulses to Europe and the US.</p></div>
+      </div>
+      <p style="margin-top:18px"><a href="network.html">See the full network and partner spotlight</a></p>
+    </div>
+  </section>
+
+<section>
   <div class="wrap">
     <div class="sec-head"><h2>Explore Apertra</h2><p>Every part of the platform, on its own page.</p></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
@@ -134,11 +212,11 @@
 </div>
 
 <div hidden aria-hidden="true">
-<input type="range" id="calc-value" value="25000">
-<select id="calc-product"><option value="maple" selected>maple</option></select>
-<select id="calc-dest"><option value="us" selected>us</option></select>
-<select id="calc-terms"><option value="dap" selected>dap</option></select>
-<span id="calc-total"></span><span id="calc-bars"></span><span id="calc-hs"></span><span id="calc-fta"></span><span id="calc-note"></span><span id="calc-val-label"></span>
+
+
+
+
+
 <input type="text" id="net-search" value="">
 <button type="button" id="net-invite-btn">invite</button>
 <img id="spp-img" alt=""><span id="spp-name"></span><span id="spp-meta"></span><span id="spp-line"></span>
