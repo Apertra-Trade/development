@@ -656,3 +656,6 @@ body.ws2 .kpi b{font-size:26px}
 .ana-row b{text-align:right}
 .ws-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);background:#17191d;color:#fff;font-size:14.5px;font-weight:600;padding:13px 22px;border-radius:999px;box-shadow:0 12px 34px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:200;max-width:min(92vw,560px);text-align:center}
 .ws-toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* alignment fix: panes sit in .app-main which had its own 30px inset */
+body.ws2 .app-main{padding:8px 0 0;min-width:0}
