@@ -9,27 +9,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=8">
+<link rel="stylesheet" href="assets/site.css?v=9">
 </head>
 <body class="ws2">
-<div style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:11px 24px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
+<div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
 
 <div class="ws-head">
   <div class="ws-head-in">
-    <div>
+    <div class="ws-greet">
       <h1>Good morning, Maya</h1>
       <p>Northwind Foods Co. · Toronto · Scale plan</p>
     </div>
     <div class="ws-search" role="search">
-      <div class="ws-search-f"><b>Shipments</b><span>Search by ID, goods or route</span></div>
+      <label class="ws-search-f grow" id="ws-seg-shipments"><b>Shipments</b><input id="ws-q" type="text" placeholder="Search by ID, goods or route" autocomplete="off"></label>
       <div class="ws-search-sep"></div>
-      <div class="ws-search-f"><b>Partners</b><span>Buyers and importers</span></div>
+      <button type="button" class="ws-search-f ws-cat" data-cat="partners"><b>Partners</b><span>Buyers and importers</span></button>
       <div class="ws-search-sep"></div>
-      <div class="ws-search-f"><b>Corridors</b><span>20 directed routes</span></div>
-      <button type="button" class="ws-search-btn" data-pane-link="shipments" aria-label="Search shipments">Search</button>
+      <button type="button" class="ws-search-f ws-cat" data-cat="corridors"><b>Corridors</b><span>20 directed routes</span></button>
+      <button type="button" class="ws-search-btn" id="ws-go">Search</button>
     </div>
     <button type="button" class="btn btn-primary ws-new" data-new-shipment>+ New shipment</button>
   </div>
+</div>
+<div class="ws-chipsbar">
+  <div class="ws-chipsbar-in">
   <nav class="ws-chips" aria-label="Workspace sections">
     <button type="button" class="ws-chip on" data-pane-link="overview"><span>Overview</span></button>
     <button type="button" class="ws-chip" data-pane-link="shipments"><span>Shipments</span><em>1 needs you</em></button>
@@ -40,7 +43,10 @@
     <button type="button" class="ws-chip" data-pane-link="analytics"><span>Analytics</span></button>
     <button type="button" class="ws-chip" data-pane-link="settings"><span>Settings</span></button>
   </nav>
+  <button type="button" class="btn btn-primary ws-new-mini" data-new-shipment>+ New shipment</button>
+  </div>
 </div>
+
 <div id="view-app" class="active">
   <div class="app-shell">
     <aside class="sidebar">
@@ -229,6 +235,81 @@
       </div>
 
       
+
+<!-- SEARCH RESULTS -->
+<div class="app-pane" id="pane-search">
+  <div class="app-head"><div><h2 id="wsr-title">Explore the network</h2><p id="wsr-sub">Everything you can ship, everyone you can trade with, every corridor you can use.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="overview">Back to overview</button></div></div>
+
+  <div class="wsr-group" data-group="shipments">
+    <h3 class="ws-sec">Shipments <span class="wsr-count"></span></h3>
+    <div class="ws-cards">
+      <article class="ws-card" data-q="ap-2041 maple syrup toronto chicago">
+        <div class="ws-card-img"><img src="assets/ship-port-truck.jpg" alt="Truck leaving a container terminal"><span class="ws-badge warn">Needs your label</span></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>Toronto to Chicago</b><span class="ws-rate">AP-2041</span></div><p>Maple syrup · 1,200 cases</p><p class="ws-price"><b>$48,200</b> · escrow funded</p><p class="ws-note">Blocked on the US nutrition label.</p><button type="button" class="btn btn-primary" data-pane-link="documents">Upload revised label</button></div>
+      </article>
+      <article class="ws-card" data-q="ap-2038 honey jars toronto rotterdam">
+        <div class="ws-card-img"><img src="assets/ship-ocean-ship.jpg" alt="Container ship crossing the Atlantic"><span class="ws-badge">In transit</span></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>Toronto to Rotterdam</b><span class="ws-rate">AP-2038</span></div><p>Honey jars · 800 cases</p><p class="ws-price"><b>$31,600</b> · escrow funded</p><p class="ws-note">Documents pre-lodged with Dutch customs.</p><button type="button" class="btn btn-ghost" data-pane-link="shipments">Track shipment</button></div>
+      </article>
+      <article class="ws-card" data-q="ap-2035 pantry gift sets montreal london">
+        <div class="ws-card-img"><img src="assets/ship-air-cargo.jpg" alt="Cargo plane being loaded at night"><span class="ws-badge good">Cleared</span></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>Montreal to London</b><span class="ws-rate">AP-2035</span></div><p>Pantry gift sets · 450 units</p><p class="ws-price"><b>$22,900</b> · releases Nov 18</p><p class="ws-note">Cleared with no inspection.</p><button type="button" class="btn btn-ghost" data-pane-link="payments">View escrow</button></div>
+      </article>
+    </div>
+  </div>
+
+  <div class="wsr-group" data-group="partners">
+    <h3 class="ws-sec">Partners <span class="wsr-count"></span></h3>
+    <div class="ws-cards">
+      <article class="ws-card" data-q="great lakes grocery chicago buyer">
+        <div class="ws-card-img"><img src="assets/ship-warehouse-dock.jpg" alt="Warehouse loading dock"><span class="ws-badge">Verified buyer</span></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>Great Lakes Grocery</b><span class="ws-rate">$96,400 YTD</span></div><p>Chicago, United States · Grocery retail</p><p class="ws-note">14 trades with you, every one cleared first pass.</p><button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button></div>
+      </article>
+      <article class="ws-card" data-q="de markt rotterdam importer netherlands">
+        <div class="ws-card-img"><img src="assets/ship-terminal.jpg" alt="Container terminal at dusk"><span class="ws-badge">Verified importer</span></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>De Markt BV</b><span class="ws-rate">$71,200 YTD</span></div><p>Rotterdam, Netherlands · Food distribution</p><p class="ws-note">Your Europe volume is up 41% since this connection.</p><button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button></div>
+      </article>
+      <article class="ws-card" data-q="midwest natural foods chicago buyer request">
+        <div class="ws-card-img"><img src="assets/ind-owner.jpg" alt="Business owner in his warehouse"><span class="ws-badge warn">Request waiting</span></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>Midwest Natural Foods</b><span class="ws-rate">New</span></div><p>Chicago, United States · Natural grocery buyer</p><p class="ws-note">Asked to connect this week. Strong match on maple and honey.</p><button type="button" class="btn btn-primary" data-pane-link="network">Review request</button></div>
+      </article>
+    </div>
+  </div>
+
+  <div class="wsr-group" data-group="corridors">
+    <h3 class="ws-sec">Corridors <span class="wsr-count"></span></h3>
+    <div class="panel"><div class="panel-body">
+        <div class="wsr-row" data-q="canada united states toronto chicago new york cusma"><div><b>Canada to United States</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="canada europe rotterdam hamburg ceta"><div><b>Canada to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="canada australia sydney cptpp"><div><b>Canada to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="canada new zealand auckland cptpp"><div><b>Canada to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="united states canada chicago toronto cusma"><div><b>United States to Canada</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="united states europe mfN"><div><b>United States to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="united states australia ausfta"><div><b>United States to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="united states new zealand mfn"><div><b>United States to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="europe canada rotterdam toronto ceta"><div><b>Europe to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="europe united states mfn"><div><b>Europe to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="europe australia mfn"><div><b>Europe to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today, FTA in negotiation</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="europe new zealand fta auckland"><div><b>Europe to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="australia canada sydney toronto cptpp"><div><b>Australia to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="australia united states ausfta"><div><b>Australia to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="australia europe mfn"><div><b>Australia to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="australia new zealand cer auckland sydney"><div><b>Australia to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="new zealand canada auckland cptpp"><div><b>New Zealand to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="new zealand united states mfn"><div><b>New Zealand to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="new zealand europe fta"><div><b>New Zealand to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="new zealand australia cer"><div><b>New Zealand to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+      <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">Duty treatment is indicative for classified food and manufactured goods. Apertra confirms the exact rate per product before you ship.</p>
+    </div></div>
+  </div>
+
+  <div class="wsr-empty" id="wsr-empty" hidden>
+    <h3>Nothing matches that yet</h3>
+    <p>Try a shipment ID like AP-2041, a product like maple syrup, a city like Chicago or Rotterdam, or a corridor like Canada to Europe.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn btn-ghost" data-pane-link="shipments">Browse shipments</button><button type="button" class="btn btn-ghost" data-pane-link="network">Browse partners</button><a class="btn btn-ghost" href="corridors.html">Browse corridors</a></div>
+  </div>
+</div>
+
 <!-- ANALYTICS -->
 <div class="app-pane" id="pane-analytics">
   <div class="app-head"><div><h2>Analytics</h2><p>How the business is trading, corridor by corridor, and what Apertra is costing you.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="shipments">View shipments</button></div></div>
@@ -756,6 +837,51 @@ document.addEventListener('click', function(ev){
   clearTimeout(el._h);
   el._h = setTimeout(function(){ el.classList.remove('show'); }, 3400);
 });
+</script>
+
+<script>
+(function(){
+  var cat = 'all';
+  var cats = document.querySelectorAll('.ws-cat');
+  cats.forEach(function(b){
+    b.addEventListener('click', function(){
+      var c = b.getAttribute('data-cat');
+      if (cat === c) { cat = 'all'; b.classList.remove('on'); }
+      else { cat = c; cats.forEach(function(x){x.classList.remove('on')}); b.classList.add('on'); }
+      runSearch();
+    });
+  });
+  document.getElementById('ws-seg-shipments').addEventListener('click', function(){
+    cat = 'all'; cats.forEach(function(x){x.classList.remove('on')});
+  });
+  function runSearch(){
+    var q = (document.getElementById('ws-q').value || '').trim().toLowerCase();
+    var total = 0, counts = {};
+    document.querySelectorAll('.wsr-group').forEach(function(g){
+      var name = g.getAttribute('data-group');
+      var n = 0;
+      g.querySelectorAll('[data-q]').forEach(function(item){
+        var hit = (q === '' || item.getAttribute('data-q').toLowerCase().indexOf(q) !== -1);
+        item.style.display = hit ? '' : 'none';
+        if (hit) n++;
+      });
+      counts[name] = n;
+      var showGroup = n > 0 && (cat === 'all' || cat === name);
+      g.style.display = showGroup ? '' : 'none';
+      if (showGroup) total += n;
+      var c = g.querySelector('.wsr-count');
+      if (c) c.textContent = n ? '· ' + n : '';
+    });
+    document.getElementById('wsr-empty').hidden = total > 0;
+    document.getElementById('wsr-title').textContent = q ? 'Results for "' + q + '"' : (cat !== 'all' ? 'Explore ' + cat : 'Explore the network');
+    document.getElementById('wsr-sub').textContent = total + ' result' + (total === 1 ? '' : 's') + ' · ' + (counts.shipments || 0) + ' shipments · ' + (counts.partners || 0) + ' partners · ' + (counts.corridors || 0) + ' corridors';
+    showPaneById('search');
+    document.querySelectorAll('.ws-chip').forEach(function(x){ x.classList.remove('on'); });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.getElementById('ws-go').addEventListener('click', runSearch);
+  document.getElementById('ws-q').addEventListener('keydown', function(ev){ if (ev.key === 'Enter') { ev.preventDefault(); runSearch(); } });
+})();
 </script>
 </body>
 </html>

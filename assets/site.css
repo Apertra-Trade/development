@@ -659,3 +659,37 @@ body.ws2 .kpi b{font-size:26px}
 
 /* alignment fix: panes sit in .app-main which had its own 30px inset */
 body.ws2 .app-main{padding:8px 0 0;min-width:0}
+
+/* --- Sticky slim header + wide search + results view --- */
+.ws-topbar{position:sticky;top:0;z-index:95;height:45px}
+.ws-topbar>div{height:45px;padding-top:0;padding-bottom:0}
+body.ws2 .ws-head{position:static;backdrop-filter:none;border-bottom:0}
+.ws-chipsbar{position:sticky;top:45px;z-index:90;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.ws-chipsbar-in{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;align-items:flex-start;gap:18px}
+.ws-chipsbar .ws-chips{padding:12px 0 14px;flex:1;min-width:0}
+.ws-new-mini{margin-top:14px;white-space:nowrap;padding:9px 16px;font-size:14px}
+.ws-head-in{flex-wrap:nowrap}
+.ws-greet{flex:0 0 auto}
+.ws-greet h1{white-space:nowrap}
+.ws-greet p{white-space:nowrap}
+.ws-search{flex:1 1 auto;min-width:0;max-width:none}
+.ws-search-f{white-space:nowrap;min-width:0}
+.ws-search-f span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.ws-search-f.grow{flex:1.35 1 0}
+.ws-search-f input{border:0;background:transparent;font:inherit;font-size:13.5px;color:var(--muted);outline:none;width:100%;padding:0;white-space:nowrap}
+.ws-search-f input::placeholder{color:var(--muted)}
+button.ws-cat{background:none;border:0;font:inherit;text-align:left;cursor:pointer;padding:5px 12px;border-radius:999px;color:inherit}
+button.ws-cat.on{background:var(--bg2)}
+@media(max-width:960px){.ws-head-in{flex-wrap:wrap}.ws-search{order:3;flex-basis:100%}}
+.wsr-count{color:var(--muted);font-size:15px;font-weight:600}
+.wsr-row{display:flex;align-items:center;gap:16px;padding:13px 0;border-top:1px solid var(--line)}
+.wsr-row:first-child{border-top:0;padding-top:2px}
+.wsr-row>div{flex:1;min-width:0}
+.wsr-row b{font-size:15.5px;display:block}
+.wsr-row small{color:var(--muted);font-size:13px;display:block}
+.wsr-agree{font-size:12.5px;font-weight:700;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;white-space:nowrap}
+.wsr-row .btn{white-space:nowrap}
+@media(max-width:720px){.wsr-row{flex-wrap:wrap}}
+.wsr-empty{background:var(--bg2);border-radius:20px;padding:30px;margin-top:10px}
+.wsr-empty h3{margin:0 0 8px;font-size:20px}
+.wsr-empty p{color:var(--ink2);max-width:560px}
