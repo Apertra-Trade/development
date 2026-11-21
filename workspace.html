@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
 <div style="background:#111;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;font-family:inherit">
@@ -31,6 +31,9 @@
         <button type="button" data-pane="network">Trade Network <span class="cnt">2</span></button>
         <div class="side-sec">Money</div>
         <button type="button" data-pane="payments">Payments and escrow</button>
+<button type="button" data-pane="analytics">Analytics</button>
+<div class="side-sec">Account</div>
+<button type="button" data-pane="settings">Settings</button>
       </nav>
       <div class="panel" style="margin-top:20px">
         <div class="panel-body" style="padding-top:14px">
@@ -54,7 +57,16 @@
           <div class="kpi"><span>Held in escrow</span><b>$38,450</b><small>Releases on clearance</small></div>
           <div class="kpi"><span>FX saved vs bank</span><b>$6,214</b><small class="warn">0.75% spread vs 2.9% bank avg</small></div>
         </div>
-        <div class="app-grid">
+        
+<div class="panel apx-today">
+  <div class="panel-head"><h3>Next actions</h3><span style="font-size:13px;color:var(--muted)">3 things need you today</span></div>
+  <div class="apx-actions">
+    <div class="apx-action"><span class="check-ic ci-todo">!</span><div><b>Upload the revised US label for AP-2041</b><small>This one item is holding a $48,200 shipment to Chicago.</small></div><button type="button" class="btn btn-primary" data-pane-link="documents">Fix it</button></div>
+    <div class="apx-action"><span class="check-ic ci-todo">+</span><div><b>Review 2 connection requests</b><small>Midwest Natural Foods (Chicago) and Sakura Trading Co. (Osaka) are waiting.</small></div><button type="button" class="btn btn-ghost" data-pane-link="network">Review</button></div>
+    <div class="apx-action"><span class="check-ic ci-done">$</span><div><b>Escrow release landing tomorrow</b><small>$22,900 from AP-2035 (Borough Pantry) releases to your account on November 18.</small></div><button type="button" class="btn btn-ghost" data-pane-link="payments">View</button></div>
+  </div>
+</div>
+<div class="app-grid">
           <div>
             <div class="panel">
               <div class="panel-head"><h3>Shipments needing you</h3><a href="#workspace" data-pane-link="shipments">View all</a></div>
@@ -119,10 +131,122 @@
         </div>
       </div>
 
-      <!-- SHIPMENTS -->
+      
+<!-- ANALYTICS -->
+<div class="app-pane" id="pane-analytics">
+  <div class="app-head"><div><h2>Analytics</h2><p>How the business is trading, corridor by corridor, and what Apertra is costing you.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="shipments">View shipments</button></div></div>
+  <div class="kpis">
+    <div class="kpi"><span>Trade volume, YTD</span><b>$412,800</b><small>+18% vs last year</small></div>
+    <div class="kpi"><span>Average order value</span><b>$25,800</b><small>16 completed trades</small></div>
+    <div class="kpi"><span>First-pass clearance rate</span><b>96%</b><small>15 of 16 shipments, no inspection</small></div>
+    <div class="kpi"><span>Fees, November</span><b>$0 net</b><small>Scale membership fully credited</small></div>
+  </div>
+  <div class="app-grid">
+    <div>
+      <div class="panel"><div class="panel-head"><h3>Volume by corridor, YTD</h3></div><div class="panel-body">
+        <div class="ana-row"><span>Canada to US</span><div class="ana-bar"><i style="width:100%"></i></div><b>$231,000</b></div>
+        <div class="ana-row"><span>Canada to Europe</span><div class="ana-bar"><i style="width:51%"></i></div><b>$118,000</b></div>
+        <div class="ana-row"><span>Canada to UK</span><div class="ana-bar"><i style="width:28%"></i></div><b>$63,800</b></div>
+        <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">Europe is your fastest growing corridor, up 41% since the De Markt connection in September.</p>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>What Apertra cost in November</h3></div><div class="panel-body">
+        <div class="ana-line"><span>Scale membership</span><b>$749</b></div>
+        <div class="ana-line"><span>Transaction fees on $233,120 traded</span><b>$2,914</b></div>
+        <div class="ana-line"><span>Membership credited against fees</span><b>-$749</b></div>
+        <div class="ana-line total"><span>Total platform cost</span><b>$2,914</b></div>
+        <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">For comparison, bank FX spreads alone on the same volume would have cost about $6,800. Your membership pays for itself in fee credits every month you ship more than about $60,000.</p>
+      </div></div>
+    </div>
+    <div>
+      <div class="panel"><div class="panel-head"><h3>Top partners, YTD</h3><a href="#workspace" data-pane-link="network">Open network</a></div><div class="panel-body">
+        <div class="ana-line"><span>Great Lakes Grocery · Chicago</span><b>$96,400</b></div>
+        <div class="ana-line"><span>De Markt BV · Rotterdam</span><b>$71,200</b></div>
+        <div class="ana-line"><span>Borough Pantry · London</span><b>$48,900</b></div>
+        <div class="ana-line"><span>Nordhaus Feinkost · Hamburg</span><b>$22,300</b></div>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Trade volume by month, CAD</h3></div><div class="panel-body">
+        <div class="mini-bars">
+          <div class="mb"><i style="height:38%"></i><span>JUN</span></div>
+          <div class="mb"><i style="height:46%"></i><span>JUL</span></div>
+          <div class="mb"><i style="height:52%"></i><span>AUG</span></div>
+          <div class="mb"><i style="height:64%"></i><span>SEP</span></div>
+          <div class="mb"><i style="height:78%"></i><span>OCT</span></div>
+          <div class="mb"><i style="height:92%"></i><span>NOV</span></div>
+        </div>
+        <small style="color:var(--muted)">November is pacing to be the strongest month yet, driven by the Chicago grocery account.</small>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div class="app-pane" id="pane-settings">
+  <div class="app-head"><div><h2>Settings</h2><p>Company profile, plan, notifications, team and integrations.</p></div></div>
+  <div class="app-grid">
+    <div>
+      <div class="panel"><div class="panel-head"><h3>Company profile</h3></div><div class="panel-body">
+        <div class="set-grid">
+          <label>Company name<input type="text" value="Northwind Foods Co."></label>
+          <label>Primary contact<input type="text" value="Maya Chen"></label>
+          <label>Email<input type="email" value="maya@northwindfoods.ca"></label>
+          <label>Phone<input type="text" value="+1 416 555 0132"></label>
+          <label class="wide">Warehouse address<input type="text" value="2140 Drew Road, Mississauga, ON"></label>
+          <label>Business number<input type="text" value="BN 74120 8853"></label>
+          <label>Home corridor focus<select><option>Canada to US, Europe, UK</option><option>All 20 corridors</option></select></label>
+        </div>
+        <button type="button" class="btn btn-primary" style="margin-top:14px">Save profile</button>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Team</h3></div><div class="panel-body">
+        <div class="ana-line"><span><b>Maya Chen</b> · Owner</span><span class="status st-green">Admin</span></div>
+        <div class="ana-line"><span><b>Jordan Lee</b> · Operations</span><span class="status st-blue">Shipments</span></div>
+        <div class="ana-line"><span><b>Priya Nair</b> · Finance</span><span class="status st-blue">Payments, view only</span></div>
+        <button type="button" class="btn btn-ghost" style="margin-top:12px">Invite a teammate</button>
+      </div></div>
+    </div>
+    <div>
+      <div class="panel"><div class="panel-head"><h3>Plan and billing</h3></div><div class="panel-body">
+        <p style="margin:0 0 6px"><b>Scale plan</b> · $749 per month</p>
+        <p style="font-size:14px;color:var(--ink2);margin:0">November transaction fees are $2,914, so this month's membership is fully credited and costs you nothing extra. Next billing date: December 1, 2026.</p>
+        <div class="ana-bar" style="margin-top:14px"><i style="width:100%"></i></div>
+        <small style="color:var(--muted)">Membership credit used: $749 of $749</small>
+        <div style="margin-top:14px;display:flex;gap:10px"><button type="button" class="btn btn-ghost">Change plan</button><button type="button" class="btn btn-ghost">Billing history</button></div>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Notifications</h3></div><div class="panel-body">
+        <label class="set-check"><input type="checkbox" checked> Shipment status changes</label>
+        <label class="set-check"><input type="checkbox" checked> Escrow funded and released</label>
+        <label class="set-check"><input type="checkbox" checked> New partner matches and requests</label>
+        <label class="set-check"><input type="checkbox" checked> Compliance items blocking a shipment</label>
+        <label class="set-check"><input type="checkbox"> Product news and corridor openings</label>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Integrations</h3></div><div class="panel-body">
+        <div class="ana-line"><span>Shopify, product catalogue sync</span><span class="status st-green">Connected</span></div>
+        <div class="ana-line"><span>QuickBooks, invoices and fees</span><span class="status st-green">Connected</span></div>
+        <div class="ana-line"><span>Stripe, card payments</span><span class="status st-amber">Not connected</span></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHIPMENTS -->
       <div class="app-pane" id="pane-shipments">
         <div class="app-head"><div><h2>Shipments</h2><p>Every order, its documents, freight and payment state in one row.</p></div><div class="actions"><button type="button" class="btn btn-primary" data-new-shipment>＋ New shipment</button></div></div>
-        <div class="panel"><div style="overflow-x:auto"><table>
+        
+<div class="panel apx-track">
+  <div class="panel-head"><h3>AP-2041 · Toronto to Chicago</h3><span class="status st-amber">Hold: label</span></div>
+  <div class="panel-body">
+    <div class="apx-steps">
+      <div class="apx-step done"><i></i><b>Booked</b><small>Nov 14</small></div>
+      <div class="apx-step done"><i></i><b>Documents ready</b><small>Invoice, packing list, CUSMA</small></div>
+      <div class="apx-step blocked"><i></i><b>Label approval</b><small>US nutrition format needed</small></div>
+      <div class="apx-step"><i></i><b>In transit</b><small>Road, 2 to 4 days</small></div>
+      <div class="apx-step"><i></i><b>Cleared and paid</b><small>Escrow releases on clearance</small></div>
+    </div>
+    <p style="margin:14px 0 0;font-size:14px;color:var(--ink2)">One item is blocking this shipment. Everything else, documents, freight and escrow, is ready to go the moment the label lands.</p>
+    <button type="button" class="btn btn-primary" style="margin-top:12px" data-pane-link="documents">Upload revised label</button>
+  </div>
+</div>
+<div class="apx-chips"><span class="apx-chip on">All shipments · 4</span><span class="apx-chip">Action needed · 1</span><span class="apx-chip">In transit · 1</span><span class="apx-chip">Clearing · 1</span><span class="apx-chip">Completed · 1</span></div>
+<div class="panel"><div style="overflow-x:auto"><table>
           <thead><tr><th>ID</th><th>Goods</th><th>Route</th><th class="num">Value CAD</th><th>Freight</th><th>Customs</th><th>Payment</th></tr></thead>
           <tbody id="shipments-tbody">
             <tr><td class="mono">AP-2041</td><td>Maple syrup, 1,200 cases</td><td>Toronto → Chicago</td><td class="num">48,200</td><td><span class="status st-amber">Hold: label</span></td><td>Docs ready</td><td>Escrow funded</td></tr>
@@ -505,6 +629,6 @@
 <button type="button" id="spp-btn">preview</button>
 <select id="ship-buyer"><option value="northwind" selected>northwind</option></select>
 </div>
-<script src="assets/site.js?v=4"></script>
+<script src="assets/site.js?v=5"></script>
 </body>
 </html>
