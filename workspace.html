@@ -8,13 +8,41 @@
 <title>Workspace - Apertra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css?v=6">
 </head>
-<body>
+<body class="ws2">
 <div style="background:#111;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;font-family:inherit">
   <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.08em">APERTRA <span style="font-weight:400;opacity:.7">Workspace</span></a>
   <a href="index.html" style="color:#fff;text-decoration:none;opacity:.85">Sign out</a>
+</div>
+
+<div class="ws-head">
+  <div class="ws-head-in">
+    <div>
+      <h1>Good morning, Maya</h1>
+      <p>Northwind Foods Co. · Toronto · Scale plan</p>
+    </div>
+    <div class="ws-search" role="search">
+      <div class="ws-search-f"><b>Shipments</b><span>Search by ID, goods or route</span></div>
+      <div class="ws-search-sep"></div>
+      <div class="ws-search-f"><b>Partners</b><span>Buyers and importers</span></div>
+      <div class="ws-search-sep"></div>
+      <div class="ws-search-f"><b>Corridors</b><span>20 directed routes</span></div>
+      <button type="button" class="ws-search-btn" data-pane-link="shipments" aria-label="Search shipments">Search</button>
+    </div>
+    <button type="button" class="btn btn-primary ws-new" data-new-shipment>+ New shipment</button>
+  </div>
+  <nav class="ws-chips" aria-label="Workspace sections">
+    <button type="button" class="ws-chip on" data-pane-link="overview"><span>Overview</span></button>
+    <button type="button" class="ws-chip" data-pane-link="shipments"><span>Shipments</span><em>1 needs you</em></button>
+    <button type="button" class="ws-chip" data-pane-link="products"><span>Products</span></button>
+    <button type="button" class="ws-chip" data-pane-link="documents"><span>Documents</span></button>
+    <button type="button" class="ws-chip" data-pane-link="network"><span>Trade Network</span><em>2 requests</em></button>
+    <button type="button" class="ws-chip" data-pane-link="payments"><span>Payments</span></button>
+    <button type="button" class="ws-chip" data-pane-link="analytics"><span>Analytics</span></button>
+    <button type="button" class="ws-chip" data-pane-link="settings"><span>Settings</span></button>
+  </nav>
 </div>
 <div id="view-app" class="active">
   <div class="app-shell">
@@ -65,6 +93,78 @@
     <div class="apx-action"><span class="check-ic ci-todo">+</span><div><b>Review 2 connection requests</b><small>Midwest Natural Foods (Chicago) and Sakura Trading Co. (Osaka) are waiting.</small></div><button type="button" class="btn btn-ghost" data-pane-link="network">Review</button></div>
     <div class="apx-action"><span class="check-ic ci-done">$</span><div><b>Escrow release landing tomorrow</b><small>$22,900 from AP-2035 (Borough Pantry) releases to your account on November 18.</small></div><button type="button" class="btn btn-ghost" data-pane-link="payments">View</button></div>
   </div>
+</div>
+
+<div class="ws-summary">
+  <div><b>$233,120</b><span>traded in November</span></div>
+  <div><b>$28,900</b><span>sitting in escrow</span></div>
+  <div><b>$0</b><span>net platform cost, membership credited</span></div>
+  <div><b>96%</b><span>first-pass clearance rate</span></div>
+</div>
+
+<h3 class="ws-sec">Your shipments</h3>
+<div class="ws-cards">
+  <article class="ws-card">
+    <div class="ws-card-img"><img src="assets/ship-port-truck.jpg" alt="Truck leaving a container terminal"><span class="ws-badge warn">Needs your label</span></div>
+    <div class="ws-card-body">
+      <div class="ws-card-top"><b>Toronto to Chicago</b><span class="ws-rate">AP-2041</span></div>
+      <p>Maple syrup · 1,200 cases · Road, 2 to 4 days</p>
+      <p class="ws-price"><b>$48,200</b> · escrow funded</p>
+      <p class="ws-note">One thing is holding this: the US nutrition label. Everything else is ready.</p>
+      <button type="button" class="btn btn-primary" data-pane-link="documents">Upload revised label</button>
+    </div>
+  </article>
+  <article class="ws-card">
+    <div class="ws-card-img"><img src="assets/ship-ocean-ship.jpg" alt="Container ship crossing the Atlantic"><span class="ws-badge">In transit</span></div>
+    <div class="ws-card-body">
+      <div class="ws-card-top"><b>Toronto to Rotterdam</b><span class="ws-rate">AP-2038</span></div>
+      <p>Honey jars · 800 cases · Ocean, 10 to 12 days</p>
+      <p class="ws-price"><b>$31,600</b> · escrow funded</p>
+      <p class="ws-note">Documents pre-lodged with Dutch customs. Nothing needed from you.</p>
+      <button type="button" class="btn btn-ghost" data-pane-link="shipments">Track shipment</button>
+    </div>
+  </article>
+  <article class="ws-card">
+    <div class="ws-card-img"><img src="assets/ship-air-cargo.jpg" alt="Cargo plane being loaded at night"><span class="ws-badge good">Cleared</span></div>
+    <div class="ws-card-body">
+      <div class="ws-card-top"><b>Montreal to London</b><span class="ws-rate">AP-2035</span></div>
+      <p>Pantry gift sets · 450 units · Air, 2 to 3 days</p>
+      <p class="ws-price"><b>$22,900</b> · releases Nov 18</p>
+      <p class="ws-note">Cleared in London with no inspection. Payment lands tomorrow.</p>
+      <button type="button" class="btn btn-ghost" data-pane-link="payments">View escrow</button>
+    </div>
+  </article>
+</div>
+
+<h3 class="ws-sec">Partners trading with you</h3>
+<div class="ws-cards">
+  <article class="ws-card">
+    <div class="ws-card-img"><img src="assets/ship-warehouse-dock.jpg" alt="Warehouse loading dock"><span class="ws-badge">Verified buyer</span></div>
+    <div class="ws-card-body">
+      <div class="ws-card-top"><b>Great Lakes Grocery</b><span class="ws-rate">$96,400 YTD</span></div>
+      <p>Chicago, United States · Grocery retail</p>
+      <p class="ws-note">Your biggest account. 14 trades, every one cleared first pass.</p>
+      <button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button>
+    </div>
+  </article>
+  <article class="ws-card">
+    <div class="ws-card-img"><img src="assets/ship-terminal.jpg" alt="Container terminal at dusk"><span class="ws-badge">Verified importer</span></div>
+    <div class="ws-card-body">
+      <div class="ws-card-top"><b>De Markt BV</b><span class="ws-rate">$71,200 YTD</span></div>
+      <p>Rotterdam, Netherlands · Food distribution</p>
+      <p class="ws-note">Growing fast: Europe volume is up 41% since this connection.</p>
+      <button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button>
+    </div>
+  </article>
+  <article class="ws-card">
+    <div class="ws-card-img"><img src="assets/ind-owner.jpg" alt="Business owner in his warehouse"><span class="ws-badge warn">2 requests waiting</span></div>
+    <div class="ws-card-body">
+      <div class="ws-card-top"><b>New connections</b><span class="ws-rate">Network</span></div>
+      <p>Midwest Natural Foods · Sakura Trading Co.</p>
+      <p class="ws-note">Two buyers asked to connect this week. A new match, Nordhaus Feinkost in Hamburg, scores 96%.</p>
+      <button type="button" class="btn btn-primary" data-pane-link="network">Review requests</button>
+    </div>
+  </article>
 </div>
 <div class="app-grid">
           <div>
@@ -630,5 +730,22 @@
 <select id="ship-buyer"><option value="northwind" selected>northwind</option></select>
 </div>
 <script src="assets/site.js?v=5"></script>
+
+<script>
+document.querySelectorAll('.ws-chip').forEach(function(c){
+  c.addEventListener('click', function(){
+    document.querySelectorAll('.ws-chip').forEach(function(x){x.classList.remove('on')});
+    c.classList.add('on');
+  });
+});
+document.querySelectorAll('[data-pane-link]').forEach(function(el){
+  el.addEventListener('click', function(){
+    var id = el.getAttribute('data-pane-link');
+    document.querySelectorAll('.ws-chip').forEach(function(x){
+      x.classList.toggle('on', x.getAttribute('data-pane-link')===id);
+    });
+  });
+});
+</script>
 </body>
 </html>
