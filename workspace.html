@@ -9,13 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=6">
+<link rel="stylesheet" href="assets/site.css?v=7">
 </head>
 <body class="ws2">
-<div style="background:#111;color:#fff;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;font-family:inherit">
-  <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.08em">APERTRA <span style="font-weight:400;opacity:.7">Workspace</span></a>
-  <a href="index.html" style="color:#fff;text-decoration:none;opacity:.85">Sign out</a>
-</div>
+<div style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:11px 24px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
 
 <div class="ws-head">
   <div class="ws-head-in">
@@ -208,7 +205,7 @@
                 <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>CUSMA certificate generated</b><small>Signed November 16, valid for this shipment</small></div></div>
                 <div class="check-item"><span class="check-ic ci-done">✓</span><div><b>FDA prior notice filed</b><small>Confirmation 26-8841 · US Food and Drug Admin.</small></div></div>
                 <div class="check-item"><span class="check-ic ci-todo">!</span><div><b>Nutrition label, US format</b><small>Your Canadian label is missing the US "Added Sugars" line. Upload the revised artwork to clear this.</small></div></div>
-                <button class="btn btn-primary" style="width:100%;margin-top:12px">Upload revised label</button>
+                <button type="button" class="btn btn-primary" style="width:100%;margin-top:12px" data-pane-link="documents">Upload revised label</button>
               </div>
             </div>
             <div class="panel">
@@ -294,13 +291,13 @@
           <label>Business number<input type="text" value="BN 74120 8853"></label>
           <label>Home corridor focus<select><option>Canada to US, Europe, UK</option><option>All 20 corridors</option></select></label>
         </div>
-        <button type="button" class="btn btn-primary" style="margin-top:14px">Save profile</button>
+        <button type="button" class="btn btn-primary" style="margin-top:14px" data-toast="Profile saved. Your team sees the updated details right away.">Save profile</button>
       </div></div>
       <div class="panel"><div class="panel-head"><h3>Team</h3></div><div class="panel-body">
         <div class="ana-line"><span><b>Maya Chen</b> · Owner</span><span class="status st-green">Admin</span></div>
         <div class="ana-line"><span><b>Jordan Lee</b> · Operations</span><span class="status st-blue">Shipments</span></div>
         <div class="ana-line"><span><b>Priya Nair</b> · Finance</span><span class="status st-blue">Payments, view only</span></div>
-        <button type="button" class="btn btn-ghost" style="margin-top:12px">Invite a teammate</button>
+        <button type="button" class="btn btn-ghost" style="margin-top:12px" data-toast="Invite sent. They will get an email to join Northwind Foods Co. on Apertra.">Invite a teammate</button>
       </div></div>
     </div>
     <div>
@@ -309,7 +306,7 @@
         <p style="font-size:14px;color:var(--ink2);margin:0">November transaction fees are $2,914, so this month's membership is fully credited and costs you nothing extra. Next billing date: December 1, 2026.</p>
         <div class="ana-bar" style="margin-top:14px"><i style="width:100%"></i></div>
         <small style="color:var(--muted)">Membership credit used: $749 of $749</small>
-        <div style="margin-top:14px;display:flex;gap:10px"><button type="button" class="btn btn-ghost">Change plan</button><button type="button" class="btn btn-ghost">Billing history</button></div>
+        <div style="margin-top:14px;display:flex;gap:10px"><button type="button" class="btn btn-ghost" data-toast="Plan changes take effect on your next billing date, December 1. Your fee credit carries over.">Change plan</button><button type="button" class="btn btn-ghost" data-toast="Your November statement is being prepared and will land in Documents.">Billing history</button></div>
       </div></div>
       <div class="panel"><div class="panel-head"><h3>Notifications</h3></div><div class="panel-body">
         <label class="set-check"><input type="checkbox" checked> Shipment status changes</label>
@@ -360,7 +357,7 @@
 
       <!-- PRODUCTS -->
       <div class="app-pane" id="pane-products">
-        <div class="app-head"><div><h2>Products and HS codes</h2><p>Classifications are kept with their reasoning, ready for a customs audit for seven years.</p></div><div class="actions"><button class="btn btn-primary">Add product</button></div></div>
+        <div class="app-head"><div><h2>Products and HS codes</h2><p>Classifications are kept with their reasoning, ready for a customs audit for seven years.</p></div><div class="actions"><button type="button" class="btn btn-primary" data-toast="New product started. Add its details and Apertra will suggest an HS code for your review.">Add product</button></div></div>
         <div class="panel"><div style="overflow-x:auto"><table>
           <thead><tr><th>Product</th><th>HS code</th><th>US duty</th><th>EU duty</th><th>UK duty</th><th>Status</th></tr></thead>
           <tbody>
@@ -745,6 +742,19 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
       x.classList.toggle('on', x.getAttribute('data-pane-link')===id);
     });
   });
+});
+</script>
+
+<div class="ws-toast" id="ws-toast" role="status"></div>
+<script>
+document.addEventListener('click', function(ev){
+  var b = ev.target.closest ? ev.target.closest('[data-toast]') : null;
+  if(!b) return;
+  var el = document.getElementById('ws-toast');
+  el.textContent = b.getAttribute('data-toast');
+  el.classList.add('show');
+  clearTimeout(el._h);
+  el._h = setTimeout(function(){ el.classList.remove('show'); }, 3400);
 });
 </script>
 </body>
