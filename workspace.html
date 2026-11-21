@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=9">
+<link rel="stylesheet" href="assets/site.css?v=10">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -28,6 +28,7 @@
       <button type="button" class="ws-search-f ws-cat" data-cat="corridors"><b>Corridors</b><span>20 directed routes</span></button>
       <button type="button" class="ws-search-btn" id="ws-go">Search</button>
     </div>
+    <button type="button" class="btn btn-ghost ws-new" data-buy-open>Request to buy</button>
     <button type="button" class="btn btn-primary ws-new" data-new-shipment>+ New shipment</button>
   </div>
 </div>
@@ -424,6 +425,18 @@
   </div>
 </div>
 <div class="apx-chips"><span class="apx-chip on">All shipments · 4</span><span class="apx-chip">Action needed · 1</span><span class="apx-chip">In transit · 1</span><span class="apx-chip">Clearing · 1</span><span class="apx-chip">Completed · 1</span></div>
+
+<div class="panel" id="buy-requests-panel">
+  <div class="panel-head"><h3>Buying requests</h3><button type="button" class="btn btn-primary" data-buy-open>New request</button></div>
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>Request</th><th>Supplier</th><th>Goods</th><th class="num">Landed total CAD</th><th>Status</th></tr></thead>
+    <tbody id="buy-req-tbody">
+      <tr><td class="mono">RB-1037</td><td>Prairie Grains Co. · Saskatoon</td><td>Rolled oats, 500 bags</td><td class="num">9,858</td><td><span class="status st-blue">Confirmed · ships Nov 24</span></td></tr>
+      <tr><td class="mono">RB-1029</td><td>Coastal Catch Seafood · Halifax</td><td>Atlantic salmon portions, 16 cases</td><td class="num">3,294</td><td><span class="status st-green">Delivered · escrow released</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="panel-body" style="padding-top:10px"><small style="color:var(--muted)">Money for a request sits in escrow and releases to the supplier only when your goods clear customs and arrive. Apertra never holds your funds directly; escrow is held by our regulated payments partner.</small></div>
+</div>
 <div class="panel"><div style="overflow-x:auto"><table>
           <thead><tr><th>ID</th><th>Goods</th><th>Route</th><th class="num">Value CAD</th><th>Freight</th><th>Customs</th><th>Payment</th></tr></thead>
           <tbody id="shipments-tbody">
@@ -491,7 +504,7 @@
 
       <!-- NETWORK -->
       <div class="app-pane" id="pane-network">
-        <div class="app-head"><div><h2>Trade Network</h2><p>Verified buyers, importers, and exporters on the same rails as your shipments, matched across the full mesh: all five regions, all 20 directed corridors, in either direction. Connect once, then trade inside a shared shipment record.</p></div><div class="actions"><button class="btn btn-primary" id="net-invite-btn">Invite a partner</button></div></div>
+        <div class="app-head"><div><h2>Trade Network</h2><p>Verified buyers, importers, and exporters on the same rails as your shipments, matched across the full mesh: all five regions, all 20 directed corridors, in either direction. Connect once, then trade inside a shared shipment record.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-buy-open>Request to buy</button><button class="btn btn-primary" id="net-invite-btn">Invite a partner</button></div></div>
         <div class="kpis">
           <div class="kpi"><span>My connections</span><b id="net-conn-count">4</b><small>Buyers, importers, exporters</small></div>
           <div class="kpi"><span>Connection requests</span><b id="net-req-count">2</b><small class="warn">Waiting on your reply</small></div>
@@ -826,6 +839,112 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
 });
 </script>
 
+
+<div class="ship-modal" id="buy-modal" role="dialog" aria-modal="true" aria-labelledby="buy-modal-title" aria-hidden="true">
+  <div class="ship-modal-backdrop" data-close-buy></div>
+  <div class="ship-modal-card">
+    <div class="ship-modal-head">
+      <div><h3 id="buy-modal-title">Request to buy</h3><p id="buy-modal-sub">Northwind Foods Co. · Buy from a verified supplier, import with Apertra, pay into escrow.</p></div>
+      <button type="button" class="ship-close" data-close-buy aria-label="Close request to buy flow">&times;</button>
+    </div>
+    <div class="ship-steps" aria-label="Request steps">
+      <div class="ship-step-dot active" data-bdot="1">Step 1<b>Supplier &amp; product</b></div>
+      <div class="ship-step-dot" data-bdot="2">Step 2<b>Import details</b></div>
+      <div class="ship-step-dot" data-bdot="3">Step 3<b>Landed cost</b></div>
+      <div class="ship-step-dot" data-bdot="4">Step 4<b>Pay escrow</b></div>
+      <div class="ship-step-dot" data-bdot="5">Step 5<b>Done</b></div>
+    </div>
+    <div class="ship-modal-body">
+
+      <div class="ship-panel active" data-buy-panel="1">
+        <h4>Who are you buying from?</h4>
+        <p>Suppliers are verified exporters on the network. Pick the product and quantity; pricing is the supplier's listed export price.</p>
+        <div class="ship-form-grid">
+          <div class="ship-field full"><label for="buy-supplier">Supplier</label>
+            <select id="buy-supplier">
+              <option value="prairie">Prairie Grains Co. · Saskatoon, Canada · Exporter</option>
+              <option value="coastal">Coastal Catch Seafood · Halifax, Canada · Exporter</option>
+              <option value="alpine">Alpine Pantry GmbH · Munich, Europe · Exporter</option>
+            </select></div>
+          <div class="ship-field full"><label for="buy-product">Product</label><select id="buy-product"></select></div>
+          <div class="ship-field"><label for="buy-qty">Quantity</label><input id="buy-qty" type="number" value="500" min="1" step="1"></div>
+          <div class="ship-field"><label>Unit price</label><div class="ship-live-box" id="buy-unit-box" style="margin:0"></div></div>
+        </div>
+        <div class="ship-live-box" id="buy-supplier-note"></div>
+      </div>
+
+      <div class="ship-panel" data-buy-panel="2">
+        <h4>Where is it coming to?</h4>
+        <p>Apertra arranges the freight, prepares the import documents and lodges the customs entry for this corridor. You see one landed price, no surprises at the border.</p>
+        <div class="ship-form-grid">
+          <div class="ship-field full"><label for="buy-dest">Deliver to</label>
+            <select id="buy-dest">
+              <option value="toronto">Northwind warehouse · 2140 Drew Road, Mississauga (Toronto)</option>
+              <option value="montreal">Northwind partner 3PL · Montreal</option>
+            </select></div>
+          <div class="ship-field"><label for="buy-window">Wanted by</label>
+            <select id="buy-window">
+              <option value="flex">Flexible, best price</option>
+              <option value="2w">Within 2 weeks</option>
+              <option value="1w">Within 1 week, priority</option>
+            </select></div>
+          <div class="ship-field"><label for="buy-terms">Delivery terms</label>
+            <select id="buy-terms">
+              <option value="ddp">DDP · Apertra handles duty and clearance</option>
+              <option value="dap">DAP · You clear customs yourself</option>
+            </select></div>
+        </div>
+        <div class="ship-live-box" id="buy-route-box"></div>
+      </div>
+
+      <div class="ship-panel" data-buy-panel="3">
+        <h4>Your landed cost</h4>
+        <p>Everything it takes to get this to your door, in one number. The quote holds for 48 hours once the supplier confirms.</p>
+        <div class="cost-table" id="buy-cost-table"></div>
+        <div class="ship-live-box" id="buy-duty-note"></div>
+      </div>
+
+      <div class="ship-panel" data-buy-panel="4">
+        <h4>Pay into escrow</h4>
+        <p>Your money is held by Apertra's regulated payments partner, not by the supplier and not by Apertra. It releases only when the goods clear customs and are delivered to you.</p>
+        <div class="ship-form-grid">
+          <div class="ship-field full"><label>Payment method</label>
+            <div class="buy-pay-opts">
+              <label class="buy-pay-opt"><input type="radio" name="buy-pay" checked> Business bank account ··4821 <span>Default · no fee</span></label>
+              <label class="buy-pay-opt"><input type="radio" name="buy-pay"> Business card ··9034 <span>1.9% card fee applies</span></label>
+            </div></div>
+        </div>
+        <div class="cost-table" id="buy-pay-table"></div>
+        <div class="ship-live-box">Release conditions: supplier ships with Apertra documents, customs clears at destination, you confirm delivery (or 48 hours pass after delivery scan). If the supplier never ships, the full amount returns to you automatically.</div>
+      </div>
+
+      <div class="ship-panel" data-buy-panel="5">
+        <div class="ship-success">
+          <div class="ship-success-mark">✓</div>
+          <h4>Request sent and escrow funded</h4>
+          <div class="ship-success-id" id="buy-success-id">RB-1042</div>
+          <p id="buy-success-line"></p>
+          <div class="buy-next-steps">
+            <div><b>1. Supplier confirms</b><span>Within 1 business day. If they decline or the quote changes, your escrow returns in full.</span></div>
+            <div><b>2. Shipment is created</b><span>Apertra books freight, prepares documents and pre-lodges your customs entry.</span></div>
+            <div><b>3. Track it like any shipment</b><span>It appears under Shipments with the same step tracker.</span></div>
+            <div><b>4. Escrow releases on delivery</b><span>Only after clearance and your delivery confirmation.</span></div>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+            <button type="button" class="btn btn-primary" id="buy-view-requests">View buying requests</button>
+            <button type="button" class="btn btn-ghost" data-close-buy>Done</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="buy-nav" id="buy-nav">
+      <button type="button" class="btn btn-ghost" id="buy-back">Back</button>
+      <button type="button" class="btn btn-primary" id="buy-next">Continue</button>
+    </div>
+  </div>
+</div>
+
 <div class="ws-toast" id="ws-toast" role="status"></div>
 <script>
 document.addEventListener('click', function(ev){
@@ -883,5 +1002,6 @@ document.addEventListener('click', function(ev){
   document.getElementById('ws-q').addEventListener('keydown', function(ev){ if (ev.key === 'Enter') { ev.preventDefault(); runSearch(); } });
 })();
 </script>
+<script src="assets/buy.js?v=1"></script>
 </body>
 </html>

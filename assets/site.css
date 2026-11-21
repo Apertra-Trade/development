@@ -693,3 +693,17 @@ button.ws-cat.on{background:var(--bg2)}
 .wsr-empty{background:var(--bg2);border-radius:20px;padding:30px;margin-top:10px}
 .wsr-empty h3{margin:0 0 8px;font-size:20px}
 .wsr-empty p{color:var(--ink2);max-width:560px}
+
+/* --- Request to Buy flow --- */
+.buy-nav{display:flex;justify-content:space-between;gap:12px;padding:16px 22px;border-top:1px solid var(--line)}
+.buy-nav.hide{display:none}
+.buy-pay-opts{display:flex;flex-direction:column;gap:10px}
+.buy-pay-opt{display:flex;gap:10px;align-items:center;border:1px solid var(--line2);border-radius:12px;padding:12px 14px;font-size:14.5px;cursor:pointer}
+.buy-pay-opt span{margin-left:auto;color:var(--muted);font-size:13px}
+.buy-pay-opt input{accent-color:#17191d;width:17px;height:17px}
+.buy-next-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left;margin-top:18px}
+.buy-next-steps div{background:var(--bg2);border-radius:14px;padding:14px 16px}
+.buy-next-steps b{display:block;font-size:14.5px;margin-bottom:4px}
+.buy-next-steps span{font-size:13.5px;color:var(--ink2)}
+@media(max-width:640px){.buy-next-steps{grid-template-columns:1fr}}
+#buy-modal[aria-hidden="true"]{display:none}
