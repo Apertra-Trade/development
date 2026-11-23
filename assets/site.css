@@ -716,3 +716,12 @@ button.ws-cat.on{background:var(--bg2)}
 .ws-chip{position:relative;flex-direction:row;align-items:center;justify-content:center;height:48px;padding:6px 8px 10px;min-height:0}
 .ws-nbadge{position:absolute;top:0;right:-4px;background:#d92d20;color:#fff;border:2px solid #fff;border-radius:999px;min-width:20px;height:20px;padding:0 5px;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.2);pointer-events:none}
 button.dl{background:none;border:0;cursor:pointer;font:inherit;color:inherit}
+
+/* Workspace is a light design since the marketplace redesign: lock the light
+   palette in dark mode too, same treatment as the marketing pages. */
+@media (prefers-color-scheme: dark){
+  body.ws2{ --bg:#ffffff; --bg2:#f6f6f4; --card:#ffffff; --ink:#252a31; --ink2:#3d434d; --muted:#5d646e;
+  --line:#e7e7e2; --line2:#dbdbd5; --green:#1a1a1a; --green2:#141414; --green-soft:#ebebeb;
+  --amber:#b85c14; --amber-soft:#fdf0e2; --red:#b42318; --red-soft:#fdecea; --blue:#1d4e6b; --blue-soft:#e8eff3;
+  --dark:#0c0c0c; --dark2:#111111; --shadow:0 1px 2px rgba(13,13,13,.06),0 12px 32px rgba(13,13,13,.08); }
+}
