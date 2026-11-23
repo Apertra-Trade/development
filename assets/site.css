@@ -707,3 +707,11 @@ button.ws-cat.on{background:var(--bg2)}
 .buy-next-steps span{font-size:13.5px;color:var(--ink2)}
 @media(max-width:640px){.buy-next-steps{grid-template-columns:1fr}}
 #buy-modal[aria-hidden="true"]{display:none}
+
+/* Search pill expanded to full header width */
+.ws-search{flex:1 1 auto;padding:9px 9px 9px 26px}
+.ws-search-f{flex:1 1 0}
+.ws-search-f.grow{flex:1.7 1 0}
+.ws-search-f b{font-size:14.5px}
+.ws-search-f span{font-size:13px}
+.ws-search-f input{font-size:14px}
