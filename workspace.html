@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=16">
+<link rel="stylesheet" href="assets/site.css?v=17">
 </head>
 <body class="ws2">
-<div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
+<div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
 
 <div class="ws-head">
   <div class="ws-head-in">
@@ -41,7 +41,7 @@
     <button type="button" class="ws-chip" data-pane-link="network"><span>Trade Network</span><span class="ws-nbadge">2</span></button>
     <button type="button" class="ws-chip" data-pane-link="payments"><span>Payments</span></button>
     <button type="button" class="ws-chip" data-pane-link="analytics"><span>Analytics</span></button>
-    <button type="button" class="ws-chip" data-pane-link="settings"><span>Settings</span></button>
+    <button type="button" class="ws-chip" data-pane-link="notifications"><span>Notifications</span><span class="ws-nbadge" id="notif-badge">3</span></button><button type="button" class="ws-chip" data-pane-link="reports"><span>Reports</span></button><button type="button" class="ws-chip" data-pane-link="help"><span>Help</span></button><button type="button" class="ws-chip" data-pane-link="settings"><span>Settings</span></button>
   </nav>
   <button type="button" class="btn btn-primary ws-new-mini" data-new-shipment>+ New shipment</button>
   </div>
@@ -237,6 +237,137 @@
       
 
 
+
+<!-- SHIPMENT DETAIL -->
+<div class="app-pane" id="pane-shipment">
+  <div class="app-head"><div><h2 id="sh-title">Shipment</h2><p id="sh-sub"></p></div><div class="actions"><span id="sh-status"></span><button type="button" class="btn btn-ghost" data-pane-link="shipments">Back to shipments</button></div></div>
+  <div class="panel" style="margin-bottom:18px"><div class="panel-body" style="padding-top:16px">
+    <div class="apx-steps" id="sh-steps" style="margin-bottom:14px"></div>
+    <p id="sh-note" style="margin:0;font-size:14.5px;color:var(--ink2)"></p>
+  </div></div>
+  <div class="app-grid">
+    <div class="panel"><div class="panel-head"><h3>Details</h3></div><div class="panel-body" id="sh-fields"></div></div>
+    <div>
+      <div class="panel" style="margin-bottom:18px"><div class="panel-head"><h3>Documents</h3></div><div class="panel-body">
+        <div class="ana-line"><span>Commercial invoice</span><button type="button" class="dl" data-doc="invoice">View</button></div>
+        <div class="ana-line"><span>CUSMA certificate of origin</span><button type="button" class="dl" data-doc="cert">View</button></div>
+        <div class="ana-line"><span>Packing list</span><button type="button" class="dl" data-doc="packing">View</button></div>
+        <div class="ana-line"><span>FDA prior notice 26-8841</span><button type="button" class="dl" data-doc="fda">View</button></div>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Landed cost</h3></div><div class="panel-body"><div class="cost-table" id="sh-costs"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT FORM -->
+<div class="app-pane" id="pane-product-form">
+  <div class="app-head"><div><h2 id="pf-title">Add product</h2><p>Classification is a liability business, so every code keeps its reasoning and a licensed broker reviews changes before they are filed.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="products">Back to products</button></div></div>
+  <div class="panel"><div class="panel-body" style="padding-top:16px">
+    <div class="set-grid">
+      <label>Product name<input id="pf-name" type="text" placeholder="e.g. Maple mustard, 250 ml"></label>
+      <label>Description<input id="pf-desc" type="text" placeholder="Ingredients, grade, packaging"></label>
+      <label>HS code<input id="pf-hs" type="text" placeholder="e.g. 1702.20"></label>
+      <label>Country of origin<select id="pf-origin"><option>Canada</option><option>United States</option><option>Germany</option><option>United Kingdom</option></select></label>
+      <label>Unit price CAD<input id="pf-price" type="text" placeholder="e.g. 42.50"></label>
+      <label>Sold as<select id="pf-unit"><option>Cases</option><option>Units</option><option>Bags</option><option>Pallets</option></select></label>
+    </div>
+    <p id="pf-hs-note" style="font-size:13.5px;color:var(--muted);margin:12px 0 0"></p>
+    <div style="margin-top:16px;display:flex;gap:10px"><button type="button" class="btn btn-primary" id="pf-save">Save product</button><button type="button" class="btn btn-ghost" data-pane-link="products">Cancel</button></div>
+  </div></div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="app-pane" id="pane-notifications">
+  <div class="app-head"><div><h2>Notifications</h2><p>Everything that needs your eyes, newest first.</p></div><div class="actions"><button type="button" class="btn btn-ghost" id="notif-mark-all">Mark all read</button></div></div>
+  <div class="panel">
+    <div class="notif-row unread"><span class="notif-dot"></span><div><b>AP-2041 needs a revised label</b><p>Customs hold: upload the bilingual nutrition label and freight releases automatically.</p><small>Today · Shipments</small></div><button type="button" class="btn btn-ghost" data-shipment="AP-2041">Open</button></div>
+    <div class="notif-row unread"><span class="notif-dot"></span><div><b>Two connection requests</b><p>Great Lakes Grocery and Borough Pantry asked to connect this week.</p><small>Today · Trade Network</small></div><button type="button" class="btn btn-ghost" data-pane-link="network">Review</button></div>
+    <div class="notif-row unread"><span class="notif-dot"></span><div><b>Escrow release scheduled: $22,900</b><p>AP-2035 cleared in London. Funds release to Borough Pantry on November 18.</p><small>Yesterday · Payments</small></div><button type="button" class="btn btn-ghost" data-pane-link="payments">View</button></div>
+    <div class="notif-row"><span class="notif-dot" style="visibility:hidden"></span><div><b>AP-2038 is on the water</b><p>Honey jars left Toronto for Rotterdam, arriving November 28.</p><small>November 21 · Shipments</small></div><button type="button" class="btn btn-ghost" data-shipment="AP-2038">Open</button></div>
+    <div class="notif-row"><span class="notif-dot" style="visibility:hidden"></span><div><b>November statement is ready</b><p>Fees of $2,914 with your $749 membership fully credited.</p><small>November 20 · Billing</small></div><button type="button" class="btn btn-ghost" data-pane-link="billing">View</button></div>
+    <div class="notif-row"><span class="notif-dot" style="visibility:hidden"></span><div><b>RB-1037 confirmed by Prairie Grains Co.</b><p>500 bags of rolled oats ship November 24. Escrow is funded.</p><small>November 19 · Buying</small></div><button type="button" class="btn btn-ghost" data-pane-link="shipments">View</button></div>
+  </div>
+</div>
+
+<!-- REPORTS -->
+<div class="app-pane" id="pane-reports">
+  <div class="app-head"><div><h2>Reports and data export</h2><p>Download anything your accountant, broker or board asks for. Reports generate as CSV files.</p></div><div class="actions"><button type="button" class="btn btn-ghost" id="export-all">Export all data (JSON)</button></div></div>
+  <div class="report-grid">
+    <div class="panel"><div class="panel-body" style="padding-top:16px"><h3 style="margin:0 0 6px">Trade summary</h3><p>Every shipment with route, goods, value and status.</p><button type="button" class="btn btn-primary" data-report="trade">Generate report</button></div></div>
+    <div class="panel"><div class="panel-body" style="padding-top:16px"><h3 style="margin:0 0 6px">Fees and credits</h3><p>Membership, transaction fees and credits by invoice, matching Billing history.</p><button type="button" class="btn btn-primary" data-report="fees">Generate report</button></div></div>
+    <div class="panel"><div class="panel-body" style="padding-top:16px"><h3 style="margin:0 0 6px">Corridor performance</h3><p>Volume and shipment counts by corridor and agreement.</p><button type="button" class="btn btn-primary" data-report="corridors">Generate report</button></div></div>
+    <div class="panel"><div class="panel-body" style="padding-top:16px"><h3 style="margin:0 0 6px">Compliance documents</h3><p>The audit pack: signed invoices, certificates and notices, retained seven years.</p><button type="button" class="btn btn-primary" data-report="compliance">Generate report</button></div></div>
+  </div>
+</div>
+
+<!-- HELP -->
+<div class="app-pane" id="pane-help">
+  <div class="app-head"><div><h2>Help and support</h2><p>Real people, within one business day. Customs questions go to a licensed broker on our team.</p></div></div>
+  <div class="app-grid">
+    <div class="panel"><div class="panel-head"><h3>Common questions</h3></div><div class="panel-body">
+      <details class="faq"><summary>Why is my shipment on hold?</summary><p>Almost always a document: a label, a certificate or a prior notice. The shipment screen names the exact item, and freight releases automatically once it is uploaded.</p></details>
+      <details class="faq"><summary>How does escrow release work?</summary><p>Funds are held by our regulated payments partner and release when the shipment clears customs and is delivered. If a supplier never ships, the full amount returns automatically.</p></details>
+      <details class="faq"><summary>What does Apertra charge?</summary><p>A 1.25% transaction fee embedded in each trade, plus your membership, which is credited against that month's fees. Buyers always join free.</p></details>
+      <details class="faq"><summary>Who is liable if an HS code is wrong?</summary><p>Classifications are prepared with their reasoning and reviewed by a licensed broker before filing, and the full audit trail is kept for seven years.</p></details>
+      <details class="faq"><summary>Can I cancel a buying request?</summary><p>Yes, any time before the supplier ships. Once shipped, the escrow terms on the request apply.</p></details>
+    </div></div>
+    <div>
+      <div class="panel" style="margin-bottom:18px"><div class="panel-head"><h3>Message support</h3></div><div class="panel-body">
+        <div class="set-grid" style="grid-template-columns:1fr">
+          <label>Topic<select id="help-topic"><option>Shipment question</option><option>Documents and customs</option><option>Payments and escrow</option><option>Billing</option><option>Something else</option></select></label>
+          <label>Message<textarea id="help-msg" rows="4" placeholder="Tell us what is happening and the shipment ID if there is one"></textarea></label>
+        </div>
+        <button type="button" class="btn btn-primary" id="help-send" style="margin-top:14px">Send message</button>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Your open case</h3></div><div class="panel-body">
+        <div class="ana-line"><span><b>Case 1182</b> · Label requirements for AP-2041</span><span class="status st-blue">Open</span></div>
+        <p style="font-size:14px;color:var(--ink2);margin:8px 0 0">Broker reply, November 22: the FDA nutrition panel needs the French translation for the Canadian retail cases in the same shipment. One combined label is fine.</p>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div class="app-pane" id="pane-security">
+  <div class="app-head"><div><h2>Password and security</h2><p>For Maya Chen, maya@northwindfoods.ca.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="settings">Back to settings</button></div></div>
+  <div class="app-grid">
+    <div class="panel"><div class="panel-head"><h3>Change password</h3></div><div class="panel-body">
+      <div class="set-grid" style="grid-template-columns:1fr">
+        <label>Current password<input id="pw-current" type="password" autocomplete="current-password"></label>
+        <label>New password<input id="pw-new" type="password" autocomplete="new-password"></label>
+        <label>Confirm new password<input id="pw-confirm" type="password" autocomplete="new-password"></label>
+      </div>
+      <button type="button" class="btn btn-primary" id="pw-save" style="margin-top:14px">Update password</button>
+    </div></div>
+    <div>
+      <div class="panel" style="margin-bottom:18px"><div class="panel-head"><h3>Two-factor authentication</h3></div><div class="panel-body">
+        <label class="set-check"><input type="checkbox" checked> Authenticator app (currently on)</label>
+        <label class="set-check"><input type="checkbox"> Text message codes</label>
+        <p style="font-size:13.5px;color:var(--muted);margin:10px 0 0">Recovery codes were generated on October 3, 2026. Generating new ones replaces the old set.</p>
+        <button type="button" class="btn btn-ghost" style="margin-top:10px" data-toast="New recovery codes generated. The old set no longer works; store the new ones somewhere safe.">Generate new recovery codes</button>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Active sessions</h3></div><div class="panel-body">
+        <div class="ana-line"><span><b>This device</b> · Toronto, just now</span><span class="status st-green">Current</span></div>
+        <div class="ana-line"><span><b>MacBook Pro</b> · Toronto, yesterday</span><button type="button" class="dl" data-revoke>Revoke</button></div>
+        <div class="ana-line"><span><b>iPhone</b> · Toronto, November 18</span><button type="button" class="dl" data-revoke>Revoke</button></div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CORRIDOR DETAIL -->
+<div class="app-pane" id="pane-corridor">
+  <div class="app-head"><div><h2 id="co-title">Corridor</h2><p>One of 20 directed routes on the Apertra mesh. Every member can ship both ways on their corridors.</p></div><div class="actions"><span class="wsr-agree" id="co-agree" style="font-size:13px"></span><button type="button" class="btn btn-ghost" data-pane-link="overview">Back to overview</button></div></div>
+  <div class="ws-summary" id="co-summary"></div>
+  <div class="app-grid">
+    <div class="panel"><div class="panel-head"><h3>What this corridor needs</h3></div><div class="panel-body" id="co-reqs"></div></div>
+    <div class="panel"><div class="panel-head"><h3>Trade on this corridor</h3></div><div class="panel-body">
+      <p style="margin:0 0 12px;font-size:14.5px;color:var(--ink2)">Start a shipment or a buying request on this corridor and Apertra pre-fills the route, the agreement and the document checklist.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn btn-primary" data-new-shipment>New shipment</button><button type="button" class="btn btn-ghost" data-buy-open>Request to buy</button></div>
+    </div></div>
+  </div>
+</div>
+
 <!-- CHANGE PLAN -->
 <div class="app-pane" id="pane-plan">
   <div class="app-head"><div><h2>Change plan</h2><p>Changes take effect on your next billing date, December 1, 2026. Your membership is always credited against that month's transaction fees, and there is no charge today.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="settings">Back to settings</button></div></div>
@@ -336,26 +467,26 @@
   <div class="wsr-group" data-group="corridors">
     <h3 class="ws-sec">Corridors <span class="wsr-count"></span></h3>
     <div class="panel"><div class="panel-body">
-        <div class="wsr-row" data-q="canada united states toronto chicago new york cusma"><div><b>Canada to United States</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="canada europe rotterdam hamburg ceta"><div><b>Canada to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="canada australia sydney cptpp"><div><b>Canada to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="canada new zealand auckland cptpp"><div><b>Canada to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="united states canada chicago toronto cusma"><div><b>United States to Canada</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="united states europe mfN"><div><b>United States to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="united states australia ausfta"><div><b>United States to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="united states new zealand mfn"><div><b>United States to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="europe canada rotterdam toronto ceta"><div><b>Europe to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="europe united states mfn"><div><b>Europe to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="europe australia mfn"><div><b>Europe to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today, FTA in negotiation</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="europe new zealand fta auckland"><div><b>Europe to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="australia canada sydney toronto cptpp"><div><b>Australia to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="australia united states ausfta"><div><b>Australia to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="australia europe mfn"><div><b>Australia to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="australia new zealand cer auckland sydney"><div><b>Australia to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="new zealand canada auckland cptpp"><div><b>New Zealand to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="new zealand united states mfn"><div><b>New Zealand to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="new zealand europe fta"><div><b>New Zealand to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
-        <div class="wsr-row" data-q="new zealand australia cer"><div><b>New Zealand to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><a class="btn btn-ghost" href="corridors.html">View corridor</a></div>
+        <div class="wsr-row" data-q="canada united states toronto chicago new york cusma"><div><b>Canada to United States</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada europe rotterdam hamburg ceta"><div><b>Canada to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada australia sydney cptpp"><div><b>Canada to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada new zealand auckland cptpp"><div><b>Canada to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="united states canada chicago toronto cusma"><div><b>United States to Canada</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="united states europe mfN"><div><b>United States to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="united states australia ausfta"><div><b>United States to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="united states new zealand mfn"><div><b>United States to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="europe canada rotterdam toronto ceta"><div><b>Europe to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="europe united states mfn"><div><b>Europe to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="europe australia mfn"><div><b>Europe to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today, FTA in negotiation</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="europe new zealand fta auckland"><div><b>Europe to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="australia canada sydney toronto cptpp"><div><b>Australia to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="australia united states ausfta"><div><b>Australia to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="australia europe mfn"><div><b>Australia to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="australia new zealand cer auckland sydney"><div><b>Australia to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="new zealand canada auckland cptpp"><div><b>New Zealand to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="new zealand united states mfn"><div><b>New Zealand to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="new zealand europe fta"><div><b>New Zealand to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="new zealand australia cer"><div><b>New Zealand to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
       <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">Duty treatment is indicative for classified food and manufactured goods. Apertra confirms the exact rate per product before you ship.</p>
     </div></div>
   </div>
@@ -435,7 +566,7 @@
         <div class="ana-line"><span><b>Maya Chen</b> · Owner</span><span class="status st-green">Admin</span></div>
         <div class="ana-line"><span><b>Jordan Lee</b> · Operations</span><span class="status st-blue">Shipments</span></div>
         <div class="ana-line"><span><b>Priya Nair</b> · Finance</span><span class="status st-blue">Payments, view only</span></div>
-        <button type="button" class="btn btn-ghost" style="margin-top:12px" data-toast="Invite sent. They will get an email to join Northwind Foods Co. on Apertra.">Invite a teammate</button>
+        <button type="button" class="btn btn-ghost" style="margin-top:12px" data-invite-open>Invite a teammate</button>
       </div></div>
     </div>
     <div>
@@ -459,6 +590,13 @@
         <label class="set-check"><input type="checkbox" checked> New partner matches and requests</label>
         <label class="set-check"><input type="checkbox" checked> Compliance items blocking a shipment</label>
         <label class="set-check"><input type="checkbox"> Product news and corridor openings</label>
+        <button type="button" class="btn btn-ghost" style="margin-top:12px" data-pane-link="notifications">Open notification centre</button>
+      </div></div>
+      <div class="panel"><div class="panel-head"><h3>Security</h3></div><div class="panel-body">
+        <div class="ana-line"><span>Password</span><span class="status st-green">Set</span></div>
+        <div class="ana-line"><span>Two-factor authentication</span><span class="status st-green">On</span></div>
+        <div class="ana-line"><span>Active sessions</span><b>2 devices</b></div>
+        <button type="button" class="btn btn-ghost" style="margin-top:12px" data-pane-link="security">Password and security</button>
       </div></div>
       <div class="panel"><div class="panel-head"><h3>Integrations</h3></div><div class="panel-body">
         <div class="ana-line"><span>Shopify, product catalogue sync</span><span class="status st-green">Connected</span></div>
@@ -501,27 +639,27 @@
   <div class="panel-body" style="padding-top:10px"><small style="color:var(--muted)">Money for a request sits in escrow and releases to the supplier only when your goods clear customs and arrive. Apertra never holds your funds directly; escrow is held by our regulated payments partner.</small></div>
 </div>
 <div class="panel"><div style="overflow-x:auto"><table>
-          <thead><tr><th>ID</th><th>Goods</th><th>Route</th><th class="num">Value CAD</th><th>Freight</th><th>Customs</th><th>Payment</th></tr></thead>
+          <thead><tr><th>ID</th><th>Goods</th><th>Route</th><th class="num">Value CAD</th><th>Freight</th><th>Customs</th><th>Payment</th><th></th></tr></thead>
           <tbody id="shipments-tbody">
-            <tr><td class="mono">AP-2041</td><td>Maple syrup, 1,200 cases</td><td>Toronto → Chicago</td><td class="num">48,200</td><td><span class="status st-amber">Hold: label</span></td><td>Docs ready</td><td>Escrow funded</td></tr>
-            <tr><td class="mono">AP-2038</td><td>Honey jars, 800 cases</td><td>Toronto → Rotterdam</td><td class="num">31,600</td><td><span class="status st-blue">In transit</span></td><td>Pre-lodged</td><td>Escrow funded</td></tr>
-            <tr><td class="mono">AP-2035</td><td>Pantry gift sets, 450 units</td><td>Montreal → London</td><td class="num">22,900</td><td><span class="status st-green">Delivered</span></td><td>Cleared Nov 16</td><td>Releasing Nov 18</td></tr>
-            <tr><td class="mono">AP-2031</td><td>Maple syrup, 900 cases</td><td>Toronto → Detroit</td><td class="num">36,400</td><td><span class="status st-green">Delivered</span></td><td>Cleared Nov 8</td><td>Paid Nov 10</td></tr>
-            <tr><td class="mono">AP-2027</td><td>Skincare gift sets (trial)</td><td>Toronto → Hamburg</td><td class="num">14,750</td><td><span class="status st-green">Delivered</span></td><td>Cleared Oct 29</td><td>Paid Oct 31</td></tr>
+            <tr><td class="mono">AP-2041</td><td>Maple syrup, 1,200 cases</td><td>Toronto → Chicago</td><td class="num">48,200</td><td><span class="status st-amber">Hold: label</span></td><td>Docs ready</td><td>Escrow funded</td><td><button type="button" class="dl" data-shipment="AP-2041">View</button></td></tr>
+            <tr><td class="mono">AP-2038</td><td>Honey jars, 800 cases</td><td>Toronto → Rotterdam</td><td class="num">31,600</td><td><span class="status st-blue">In transit</span></td><td>Pre-lodged</td><td>Escrow funded</td><td><button type="button" class="dl" data-shipment="AP-2038">View</button></td></tr>
+            <tr><td class="mono">AP-2035</td><td>Pantry gift sets, 450 units</td><td>Montreal → London</td><td class="num">22,900</td><td><span class="status st-green">Delivered</span></td><td>Cleared Nov 16</td><td>Releasing Nov 18</td><td><button type="button" class="dl" data-shipment="AP-2035">View</button></td></tr>
+            <tr><td class="mono">AP-2031</td><td>Maple syrup, 900 cases</td><td>Toronto → Detroit</td><td class="num">36,400</td><td><span class="status st-green">Delivered</span></td><td>Cleared Nov 8</td><td>Paid Nov 10</td><td><button type="button" class="dl" data-shipment="AP-2031">View</button></td></tr>
+            <tr><td class="mono">AP-2027</td><td>Skincare gift sets (trial)</td><td>Toronto → Hamburg</td><td class="num">14,750</td><td><span class="status st-green">Delivered</span></td><td>Cleared Oct 29</td><td>Paid Oct 31</td><td><button type="button" class="dl" data-shipment="AP-2027">View</button></td></tr>
           </tbody></table></div></div>
         <p class="src-note">Demo workspace with illustrative shipments for Northwind Foods Co., a fictional exporter used to show the product flow.</p>
       </div>
 
       <!-- PRODUCTS -->
       <div class="app-pane" id="pane-products">
-        <div class="app-head"><div><h2>Products and HS codes</h2><p>Classifications are kept with their reasoning, ready for a customs audit for seven years.</p></div><div class="actions"><button type="button" class="btn btn-primary" data-toast="New product started. Add its details and Apertra will suggest an HS code for your review.">Add product</button></div></div>
+        <div class="app-head"><div><h2>Products and HS codes</h2><p>Classifications are kept with their reasoning, ready for a customs audit for seven years.</p></div><div class="actions"><button type="button" class="btn btn-primary" data-product-new>Add product</button></div></div>
         <div class="panel"><div style="overflow-x:auto"><table>
-          <thead><tr><th>Product</th><th>HS code</th><th>US duty</th><th>EU duty</th><th>UK duty</th><th>Status</th></tr></thead>
+          <thead><tr><th>Product</th><th>HS code</th><th>US duty</th><th>EU duty</th><th>UK duty</th><th>Status</th><th></th></tr></thead>
           <tbody>
-            <tr><td><b>Maple syrup, 500 ml</b><br><small style="color:var(--muted)">Pure, Grade A Amber</small></td><td class="mono">1702.20</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td></tr>
-            <tr><td><b>Wildflower honey, 340 g</b><br><small style="color:var(--muted)">Raw, unfiltered</small></td><td class="mono">0409.00</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td></tr>
-            <tr><td><b>Pantry gift set</b><br><small style="color:var(--muted)">Syrup, honey, mustard</small></td><td class="mono">Mixed</td><td>By component</td><td>By component</td><td>By component</td><td><span class="status st-blue">Reviewed</span></td></tr>
-            <tr><td><b>Maple mustard, 250 ml</b><br><small style="color:var(--muted)">New line, classifying</small></td><td class="mono">2103.30</td><td>Pending</td><td>Pending</td><td>Pending</td><td><span class="status st-amber">Broker review</span></td></tr>
+            <tr><td><b>Maple syrup, 500 ml</b><br><small style="color:var(--muted)">Pure, Grade A Amber</small></td><td class="mono">1702.20</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Wildflower honey, 340 g</b><br><small style="color:var(--muted)">Raw, unfiltered</small></td><td class="mono">0409.00</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Pantry gift set</b><br><small style="color:var(--muted)">Syrup, honey, mustard</small></td><td class="mono">Mixed</td><td>By component</td><td>By component</td><td>By component</td><td><span class="status st-blue">Reviewed</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Maple mustard, 250 ml</b><br><small style="color:var(--muted)">New line, classifying</small></td><td class="mono">2103.30</td><td>Pending</td><td>Pending</td><td>Pending</td><td><span class="status st-amber">Broker review</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
           </tbody></table></div></div>
       </div>
 
@@ -529,10 +667,10 @@
       <div class="app-pane" id="pane-documents">
         <div class="app-head"><div><h2>Documents</h2><p>Generated from shipment records. Nothing is retyped, so nothing drifts between forms.</p></div></div>
         <div class="app-grid"><div class="panel"><div class="panel-head"><h3>AP-2041, Chicago</h3></div><div class="panel-body">
-          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>Commercial invoice</b><small>INV-2041 · Generated Nov 16</small></div><button type="button" class="dl" data-toast="Preparing your download: the signed commercial invoice PDF.">Download</button></div>
-          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>CUSMA certificate of origin</b><small>Signed · Valid to Nov 2027 blanket</small></div><button type="button" class="dl" data-toast="Preparing your download: the signed CUSMA certificate of origin PDF.">Download</button></div>
-          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>Packing list</b><small>1,200 cases · 14,400 kg gross</small></div><button type="button" class="dl" data-toast="Preparing your download: the signed packing list PDF.">Download</button></div>
-          <div class="doc-row"><span class="doc-ic">FDA</span><div><b>FDA prior notice confirmation</b><small>26-8841 · Filed Nov 16</small></div><button type="button" class="dl" data-toast="Opening the FDA prior notice confirmation, 26-8841.">View</button></div>
+          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>Commercial invoice</b><small>INV-2041 · Generated Nov 16</small></div><button type="button" class="dl" data-doc="invoice">View</button></div>
+          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>CUSMA certificate of origin</b><small>Signed · Valid to Nov 2027 blanket</small></div><button type="button" class="dl" data-doc="cert">View</button></div>
+          <div class="doc-row"><span class="doc-ic">PDF</span><div><b>Packing list</b><small>1,200 cases · 14,400 kg gross</small></div><button type="button" class="dl" data-doc="packing">View</button></div>
+          <div class="doc-row"><span class="doc-ic">FDA</span><div><b>FDA prior notice confirmation</b><small>26-8841 · Filed Nov 16</small></div><button type="button" class="dl" data-doc="fda">View</button></div>
         </div></div>
         <div class="panel"><div class="panel-head"><h3>Audit trail</h3></div><div class="panel-body">
           <p style="font-size:14px;color:var(--ink2);margin:8px 0">Every classification, certificate and clearance for Northwind Foods is retained and exportable. Retention clock: <b>7 years</b> from clearance date, matching customs requirements in Canada, the US and the EU.</p>
@@ -689,6 +827,31 @@
       </div>
 
     </div>
+  </div>
+</div>
+
+
+<!-- DOCUMENT VIEWER -->
+<div class="ship-modal" id="doc-modal" role="dialog" aria-modal="true">
+  <div class="ship-modal-card">
+    <div class="ship-modal-head"><h3 id="doc-title">Document</h3><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
+    <div class="ship-modal-body"><div class="doc-paper" id="doc-paper"></div></div>
+    <div class="ship-modal-foot"><span class="foot-note">Preview. The signed original is retained in your compliance vault for seven years.</span><button type="button" class="btn btn-ghost" data-modal-close>Close</button><button type="button" class="btn btn-primary" data-toast="Preparing your download: the signed PDF.">Download PDF</button></div>
+  </div>
+</div>
+
+<!-- INVITE -->
+<div class="ship-modal" id="invite-modal" role="dialog" aria-modal="true">
+  <div class="ship-modal-card">
+    <div class="ship-modal-head"><h3>Invite a teammate</h3><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
+    <div class="ship-modal-body">
+      <div class="set-grid" style="grid-template-columns:1fr">
+        <label>Work email<input id="invite-email" type="email" placeholder="name@northwindfoods.ca"></label>
+        <label>Role<select id="invite-role"><option>Shipments</option><option>Payments, view only</option><option>Payments</option><option>Admin</option></select></label>
+      </div>
+      <p style="font-size:13.5px;color:var(--muted);margin:12px 0 4px">They get an email invite and join Northwind Foods Co. with the role you pick. You can change or remove access any time in Settings.</p>
+    </div>
+    <div class="ship-modal-foot"><span class="foot-note"></span><button type="button" class="btn btn-ghost" data-modal-close>Cancel</button><button type="button" class="btn btn-primary" id="invite-send">Send invite</button></div>
   </div>
 </div>
 
@@ -896,7 +1059,7 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
   el.addEventListener('click', function(){
     var id = el.getAttribute('data-pane-link');
     document.querySelectorAll('.ws-chip').forEach(function(x){
-      x.classList.toggle('on', x.getAttribute('data-pane-link')===((id==='plan'||id==='billing')?'settings':id));
+      x.classList.toggle('on', x.getAttribute('data-pane-link')===({'plan':'settings','billing':'settings','security':'settings','shipment':'shipments','product-form':'products','corridor':'network'}[id]||id));
     });
   });
 });
@@ -1113,5 +1276,6 @@ document.addEventListener('click', function(ev){
   });
 })();
 </script>
+<script src="assets/screens.js?v=1"></script>
 </body>
 </html>
