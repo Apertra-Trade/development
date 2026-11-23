@@ -775,3 +775,11 @@ body.ws2.ws-dark .plan-card.current{border-color:var(--ink)}
 body.ws2.ws-dark .plan-card.picked{outline-color:var(--ink)}
 body.ws2.ws-dark .ws-toast{background:#f4f4f2;color:#141414}
 body.ws2.ws-dark .ship-success-id{color:var(--ink)}
+
+/* Dark appearance fixes: page background follows the theme variable,
+   header bars go solid dark, checkbox states read correctly on dark cards. */
+body.ws2{background:var(--bg)}
+body.ws2.ws-dark .ws-head,body.ws2.ws-dark .ws-chipsbar{background:#0d0e10}
+body.ws2.ws-dark .set-check input{border-color:#4a4e59}
+body.ws2.ws-dark .set-check input:checked{background:#2a2c33;border-color:#5a5e69}
+body.ws2.ws-dark .set-check input::before{background:#ffffff}
