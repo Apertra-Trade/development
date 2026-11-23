@@ -824,3 +824,5 @@ body.ws2.ws-dark .net-filter.active{background:#f4f4f2;border-color:#f4f4f2;colo
 .invite-sub{margin:3px 0 0;font-size:13.5px;color:var(--muted)}
 .invite-card .ship-modal-head{align-items:flex-start}
 .invite-card .ship-modal-foot{justify-content:flex-end}
+
+.pf-photo img[hidden]{display:none}
