@@ -725,3 +725,53 @@ button.dl{background:none;border:0;cursor:pointer;font:inherit;color:inherit}
   --amber:#b85c14; --amber-soft:#fdf0e2; --red:#b42318; --red-soft:#fdecea; --blue:#1d4e6b; --blue-soft:#e8eff3;
   --dark:#0c0c0c; --dark2:#111111; --shadow:0 1px 2px rgba(13,13,13,.06),0 12px 32px rgba(13,13,13,.08); }
 }
+
+/* --- Settings batch: spacing, sleek badges, chevrons, checkboxes, appearance, plans --- */
+.ws-head-in{padding-bottom:16px}
+.ws-chipsbar .ws-chips{padding-top:19px}
+.ws-new-mini{margin-top:20px}
+.ws-nbadge{min-width:17px;height:17px;padding:0 4px;font-size:10.5px;font-weight:700;border-width:1.5px;box-shadow:none;top:-1px;right:-2px;background:#e5484d}
+body.ws2 select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%235d646e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
+.set-check input{appearance:none;-webkit-appearance:none;width:19px;height:19px;flex:0 0 auto;border:1.5px solid var(--line2);border-radius:6px;background:transparent;display:inline-grid;place-content:center;cursor:pointer;margin:0}
+.set-check input::before{content:"";width:11px;height:11px;transform:scale(0);transition:transform .12s;background:#ffffff;clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0%,43% 62%)}
+.set-check input:checked{background:#17191d;border-color:#17191d}
+.set-check input:checked::before{transform:scale(1)}
+.appr-toggle{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+.appr-opt{border:0;background:transparent;font:inherit;font-weight:600;font-size:14px;padding:8px 22px;border-radius:999px;cursor:pointer;color:var(--ink2)}
+.appr-opt.on{background:#17191d;color:#fff}
+.plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+@media(max-width:1100px){.plan-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.plan-grid{grid-template-columns:1fr}}
+.plan-card{border:1px solid var(--line);border-radius:18px;padding:20px;background:var(--card);display:flex;flex-direction:column}
+.plan-card.current{border-color:#17191d;border-width:1.5px}
+.plan-card.picked{outline:2px solid #17191d;outline-offset:2px}
+.plan-card h3{margin:0 0 6px;font-size:18px}
+.plan-price{margin:0 0 12px}
+.plan-price b{font-size:27px}
+.plan-price span{color:var(--muted);font-size:14px}
+.plan-card ul{margin:0 0 16px;padding-left:18px;font-size:14px;color:var(--ink2);line-height:1.65;flex:1}
+.plan-card .btn{align-self:flex-start}
+/* Workspace dark appearance (Settings > Appearance). Marketing pages never use ws2/ws-dark. */
+body.ws2.ws-dark{--bg:#0d0e10;--bg2:#16171b;--card:#17181d;--ink:#f4f4f2;--ink2:#cfd2d8;--muted:#9ba1ab;--line:#26282f;--line2:#34373f;--green:#f4f4f2;--green2:#e8e8e6;--green-soft:#23242a;--amber:#e8933c;--amber-soft:#2b2118;--red:#f0837c;--red-soft:#2c1b1a;--blue:#7fb3cc;--blue-soft:#1b2730;--dark:#000000;--dark2:#0a0a0b;--shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.45)}
+body.ws2.ws-dark h1,body.ws2.ws-dark h2,body.ws2.ws-dark h3{color:#f4f4f2}
+body.ws2.ws-dark .ws-head{background:rgba(13,14,16,.92)}
+body.ws2.ws-dark .ws-chipsbar{background:rgba(13,14,16,.95)}
+body.ws2.ws-dark .ws-search{background:var(--card);box-shadow:none}
+body.ws2.ws-dark .ws-card{background:var(--card)}
+body.ws2.ws-dark .ws-search-btn{background:#f4f4f2;color:#111214}
+body.ws2.ws-dark .btn-primary{background:#f4f4f2;color:#141414;border-color:#f4f4f2}
+body.ws2.ws-dark .ws-chip.on{color:#f4f4f2;border-bottom-color:#f4f4f2}
+body.ws2.ws-dark .ws-nbadge{border-color:#0d0e10}
+body.ws2.ws-dark .ws-badge{background:#23242a;color:#f4f4f2}
+body.ws2.ws-dark .ws-badge.warn{background:var(--amber-soft);color:var(--amber)}
+body.ws2.ws-dark .ws-badge.good{background:var(--green-soft);color:var(--ink)}
+body.ws2.ws-dark .apx-chip.on{background:#f4f4f2;color:#141414;border-color:#f4f4f2}
+body.ws2.ws-dark .ana-bar i,body.ws2.ws-dark .apx-step.done i{background:#f4f4f2}
+body.ws2.ws-dark .appr-opt.on{background:#f4f4f2;color:#141414}
+body.ws2.ws-dark .set-check input:checked{background:var(--ink);border-color:var(--ink)}
+body.ws2.ws-dark .set-check input::before{background:#101114}
+body.ws2.ws-dark select{background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%239ba1ab' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+body.ws2.ws-dark .plan-card.current{border-color:var(--ink)}
+body.ws2.ws-dark .plan-card.picked{outline-color:var(--ink)}
+body.ws2.ws-dark .ws-toast{background:#f4f4f2;color:#141414}
+body.ws2.ws-dark .ship-success-id{color:var(--ink)}

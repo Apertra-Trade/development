@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=14">
+<link rel="stylesheet" href="assets/site.css?v=15">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -236,6 +236,63 @@
 
       
 
+
+<!-- CHANGE PLAN -->
+<div class="app-pane" id="pane-plan">
+  <div class="app-head"><div><h2>Change plan</h2><p>Changes take effect on your next billing date, December 1, 2026. Your membership is always credited against that month's transaction fees, and there is no charge today.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="settings">Back to settings</button></div></div>
+  <div class="plan-grid">
+    <div class="plan-card" data-plan-card="starter">
+      <h3>Starter</h3><p class="plan-price"><b>Free</b></p>
+      <ul><li>List products and get discovered</li><li>1 corridor</li><li>First shipment included</li><li>1.25% transaction fee on trades</li></ul>
+      <button type="button" class="btn btn-ghost" data-plan="Starter" data-price="Free">Choose Starter</button>
+    </div>
+    <div class="plan-card" data-plan-card="growth">
+      <h3>Growth</h3><p class="plan-price"><b>$299</b><span>/month</span></p>
+      <ul><li>3 corridors</li><li>Compliance vault and HS library</li><li>Unlimited documents</li><li>Membership credited against fees</li></ul>
+      <button type="button" class="btn btn-ghost" data-plan="Growth" data-price="$299/month">Choose Growth</button>
+    </div>
+    <div class="plan-card current" data-plan-card="scale">
+      <h3>Scale</h3><p class="plan-price"><b>$749</b><span>/month</span></p>
+      <ul><li>All 20 corridors</li><li>Priority clearance and audit trail</li><li>Verified Supplier ranking</li><li>Membership credited against fees</li></ul>
+      <button type="button" class="btn btn-ghost" disabled>Current plan</button>
+    </div>
+    <div class="plan-card" data-plan-card="enterprise">
+      <h3>Enterprise</h3><p class="plan-price"><b>$1,500</b><span>/month</span></p>
+      <ul><li>Everything in Scale</li><li>Dedicated compliance review</li><li>Broker line and custom corridors</li><li>Higher device and team allowances</li></ul>
+      <button type="button" class="btn btn-ghost" data-plan="Enterprise" data-price="$1,500/month">Choose Enterprise</button>
+    </div>
+  </div>
+  <div class="panel" id="plan-confirm" hidden>
+    <div class="panel-body" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+      <div style="flex:1;min-width:260px"><b id="plan-confirm-title">Switch plan</b><p id="plan-confirm-text" style="margin:4px 0 0;font-size:14px;color:var(--ink2)"></p></div>
+      <button type="button" class="btn btn-ghost" id="plan-cancel">Keep Scale</button>
+      <button type="button" class="btn btn-primary" id="plan-apply">Confirm change</button>
+    </div>
+  </div>
+</div>
+
+<!-- BILLING HISTORY -->
+<div class="app-pane" id="pane-billing">
+  <div class="app-head"><div><h2>Billing history</h2><p>Every membership and transaction fee, with the membership credit applied. Amounts in CAD.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="settings">Back to settings</button></div></div>
+  <div class="ws-summary">
+    <div><b>Dec 1, 2026</b><span>next billing date</span></div>
+    <div><b>$749</b><span>Scale membership, credited against December fees</span></div>
+    <div><b>Bank ··4821</b><span>payment method on file</span></div>
+    <div><b>$2,914</b><span>paid in November, fees after credit</span></div>
+  </div>
+  <div class="panel"><div style="overflow-x:auto"><table>
+    <thead><tr><th>Invoice</th><th>Period</th><th>Membership</th><th>Transaction fees</th><th>Credit applied</th><th class="num">Total paid</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <tr><td class="mono">INV-2026-11</td><td>November 2026</td><td>$749</td><td>$2,914</td><td>-$749</td><td class="num">$2,914</td><td><span class="status st-green">Paid</span></td><td><button type="button" class="dl" data-toast="Preparing your download: invoice INV-2026-11 PDF.">Download</button></td></tr>
+      <tr><td class="mono">INV-2026-10</td><td>October 2026</td><td>$749</td><td>$2,952</td><td>-$749</td><td class="num">$2,952</td><td><span class="status st-green">Paid</span></td><td><button type="button" class="dl" data-toast="Preparing your download: invoice INV-2026-10 PDF.">Download</button></td></tr>
+      <tr><td class="mono">INV-2026-09</td><td>September 2026</td><td>$749</td><td>$2,613</td><td>-$749</td><td class="num">$2,613</td><td><span class="status st-green">Paid</span></td><td><button type="button" class="dl" data-toast="Preparing your download: invoice INV-2026-09 PDF.">Download</button></td></tr>
+      <tr><td class="mono">INV-2026-08</td><td>August 2026</td><td>$749</td><td>$2,161</td><td>-$749</td><td class="num">$2,161</td><td><span class="status st-green">Paid</span></td><td><button type="button" class="dl" data-toast="Preparing your download: invoice INV-2026-08 PDF.">Download</button></td></tr>
+    </tbody>
+  </table></div>
+  <div class="panel-body" style="padding-top:10px"><small style="color:var(--muted)">Transaction fees are 1.25% of traded value, embedded in the FX, escrow and freight of each trade. Your membership is credited against them every month, so in any month you trade more than about $60,000 the membership costs you nothing extra.</small></div>
+  </div>
+</div>
+
 <!-- SEARCH RESULTS -->
 <div class="app-pane" id="pane-search">
   <div class="app-head"><div><h2 id="wsr-title">Explore the network</h2><p id="wsr-sub">Everything you can ship, everyone you can trade with, every corridor you can use.</p></div><div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="overview">Back to overview</button></div></div>
@@ -382,12 +439,19 @@
       </div></div>
     </div>
     <div>
+      <div class="panel"><div class="panel-head"><h3>Appearance</h3></div><div class="panel-body">
+        <p style="margin:0 0 12px;font-size:14px;color:var(--ink2)">Choose how the workspace looks on this device. This applies only to the signed-in workspace; the public Apertra site always stays light.</p>
+        <div class="appr-toggle" role="group" aria-label="Appearance">
+          <button type="button" class="appr-opt on" data-appearance="light">Light</button>
+          <button type="button" class="appr-opt" data-appearance="dark">Dark</button>
+        </div>
+      </div></div>
       <div class="panel"><div class="panel-head"><h3>Plan and billing</h3></div><div class="panel-body">
         <p style="margin:0 0 6px"><b>Scale plan</b> · $749 per month</p>
         <p style="font-size:14px;color:var(--ink2);margin:0">November transaction fees are $2,914, so this month's membership is fully credited and costs you nothing extra. Next billing date: December 1, 2026.</p>
         <div class="ana-bar" style="margin-top:14px"><i style="width:100%"></i></div>
         <small style="color:var(--muted)">Membership credit used: $749 of $749</small>
-        <div style="margin-top:14px;display:flex;gap:10px"><button type="button" class="btn btn-ghost" data-toast="Plan changes take effect on your next billing date, December 1. Your fee credit carries over.">Change plan</button><button type="button" class="btn btn-ghost" data-toast="Your November statement is being prepared and will land in Documents.">Billing history</button></div>
+        <div style="margin-top:14px;display:flex;gap:10px"><button type="button" class="btn btn-ghost" data-pane-link="plan">Change plan</button><button type="button" class="btn btn-ghost" data-pane-link="billing">Billing history</button></div>
       </div></div>
       <div class="panel"><div class="panel-head"><h3>Notifications</h3></div><div class="panel-body">
         <label class="set-check"><input type="checkbox" checked> Shipment status changes</label>
@@ -832,7 +896,7 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
   el.addEventListener('click', function(){
     var id = el.getAttribute('data-pane-link');
     document.querySelectorAll('.ws-chip').forEach(function(x){
-      x.classList.toggle('on', x.getAttribute('data-pane-link')===id);
+      x.classList.toggle('on', x.getAttribute('data-pane-link')===((id==='plan'||id==='billing')?'settings':id));
     });
   });
 });
@@ -1002,5 +1066,52 @@ document.addEventListener('click', function(ev){
 })();
 </script>
 <script src="assets/buy.js?v=1"></script>
+
+<script>
+(function(){
+  function applyAppearance(mode){
+    document.body.classList.toggle('ws-dark', mode === 'dark');
+    document.querySelectorAll('[data-appearance]').forEach(function(b){
+      b.classList.toggle('on', b.getAttribute('data-appearance') === mode);
+    });
+    try { localStorage.setItem('apertra-appearance', mode); } catch (e) {}
+  }
+  var saved = 'light';
+  try { saved = localStorage.getItem('apertra-appearance') || 'light'; } catch (e) {}
+  applyAppearance(saved === 'dark' ? 'dark' : 'light');
+  document.querySelectorAll('[data-appearance]').forEach(function(b){
+    b.addEventListener('click', function(){ applyAppearance(b.getAttribute('data-appearance')); });
+  });
+
+  var picked = null;
+  document.querySelectorAll('[data-plan]').forEach(function(b){
+    b.addEventListener('click', function(){
+      picked = { name: b.getAttribute('data-plan'), price: b.getAttribute('data-price') };
+      document.querySelectorAll('.plan-card').forEach(function(c){ c.classList.remove('picked'); });
+      b.closest('.plan-card').classList.add('picked');
+      document.getElementById('plan-confirm-title').textContent = 'Switch to ' + picked.name + ' on December 1';
+      document.getElementById('plan-confirm-text').textContent = 'Your plan becomes ' + picked.name + ' (' + picked.price + ') from December 1, 2026. The new membership is still credited against that month\'s transaction fees. No charge today, and you can undo this any time before December 1.';
+      var bar = document.getElementById('plan-confirm');
+      bar.hidden = false;
+      bar.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+  document.getElementById('plan-cancel').addEventListener('click', function(){
+    document.getElementById('plan-confirm').hidden = true;
+    document.querySelectorAll('.plan-card').forEach(function(c){ c.classList.remove('picked'); });
+    picked = null;
+  });
+  document.getElementById('plan-apply').addEventListener('click', function(){
+    if (!picked) return;
+    document.getElementById('plan-confirm').hidden = true;
+    var toast = document.getElementById('ws-toast');
+    toast.textContent = 'Plan change scheduled. You move to ' + picked.name + ' on December 1, 2026. No charge today.';
+    toast.classList.add('show');
+    clearTimeout(toast._h);
+    toast._h = setTimeout(function(){ toast.classList.remove('show'); }, 3600);
+    picked = null;
+  });
+})();
+</script>
 </body>
 </html>
