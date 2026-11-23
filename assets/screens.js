@@ -55,6 +55,12 @@
     document.getElementById('pf-name').value = row ? row.querySelector('td b').textContent : '';
     document.getElementById('pf-desc').value = row ? (row.querySelector('td small') ? row.querySelector('td small').textContent : '') : '';
     document.getElementById('pf-hs').value = row ? row.querySelector('td.mono').textContent.replace('Mixed', '') : '';
+    var av = row ? row.querySelector('.prod-avail') : null;
+    var qm = av ? av.textContent.match(/[\d,]+/) : null;
+    document.getElementById('pf-qty').value = qm ? qm[0].replace(/,/g, '') : '';
+    if (window._pfPhotoReset) window._pfPhotoReset();
+    var ex = row ? row.querySelector('.prod-thumb') : null;
+    if (ex) { var pi = document.getElementById('pf-photo-preview'); pi.src = ex.src; pi.hidden = false; }
     document.getElementById('pf-hs-note').textContent = row ? 'Classification on file, with its reasoning kept for audit.' : 'Leave the HS code blank and Apertra will suggest one from the name and description for your review. Nothing is filed without your approval.';
     go('product-form');
   };
@@ -82,11 +88,23 @@
       var sm = editingRow.querySelector('td small');
       if (sm) sm.textContent = document.getElementById('pf-desc').value;
       if (hs) editingRow.querySelector('td.mono').textContent = hs;
+      var qv = document.getElementById('pf-qty').value;
+      var avc = editingRow.querySelector('.prod-avail');
+      if (avc && qv !== '') avc.textContent = Number(qv).toLocaleString('en-CA') + ' ' + document.getElementById('pf-unit').value.toLowerCase();
+      var pd = window._pfPhoto ? window._pfPhoto() : null;
+      if (pd) {
+        var cell = editingRow.querySelector('td');
+        var th = cell.querySelector('.prod-thumb');
+        if (!th) { th = document.createElement('img'); th.className = 'prod-thumb'; th.alt = ''; cell.insertBefore(th, cell.firstChild); }
+        th.src = pd;
+      }
       toast('Product saved. ' + name + ' is updated in your catalogue.');
     } else {
       var tb = document.querySelector('#pane-products tbody');
       var tr = document.createElement('tr');
-      tr.innerHTML = '<td><b>' + esc(name) + '</b><br><small style="color:var(--muted)">' + esc(document.getElementById('pf-desc').value) + '</small></td><td class="mono">' + (hs ? esc(hs) : 'Classifying') + '</td><td>To confirm</td><td>To confirm</td><td>To confirm</td><td><span class="status st-blue">Classifying</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td>';
+      var qv2 = document.getElementById('pf-qty').value;
+      var pd2 = window._pfPhoto ? window._pfPhoto() : null;
+      tr.innerHTML = '<td>' + (pd2 ? '<img class="prod-thumb" alt="" src="' + pd2 + '">' : '') + '<b>' + esc(name) + '</b><br><small style="color:var(--muted)">' + esc(document.getElementById('pf-desc').value) + '</small></td><td class="mono">' + (hs ? esc(hs) : 'Classifying') + '</td><td>To confirm</td><td>To confirm</td><td>To confirm</td><td class="prod-avail">' + (qv2 !== '' ? Number(qv2).toLocaleString('en-CA') + ' ' + document.getElementById('pf-unit').value.toLowerCase() : 'Ask') + '</td><td><span class="status st-blue">Classifying</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td>';
       tb.insertBefore(tr, tb.firstChild);
       toast(hs ? 'Product added with HS code ' + hs + '.' : 'Product added. Apertra is suggesting an HS code for your review.');
     }
@@ -207,3 +225,69 @@
     });
   });
 })();
+
+  /* Search: placeholder follows the chosen category */
+  var PLACEHOLDERS = { shipments: 'Search by ID, goods or route', partners: 'Search partners by name, city or product', corridors: 'Search corridors, e.g. rotterdam or CETA' };
+  document.querySelectorAll('.ws-cat').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var q = document.getElementById('ws-q');
+      if (q) { q.placeholder = PLACEHOLDERS[b.getAttribute('data-cat')] || PLACEHOLDERS.shipments; q.focus(); }
+    });
+  });
+  var seg = document.getElementById('ws-seg-shipments');
+  if (seg) seg.addEventListener('click', function () {
+    var q = document.getElementById('ws-q');
+    if (q) q.placeholder = PLACEHOLDERS.shipments;
+  });
+
+  /* Product photo picker */
+  var pfPhotoData = null;
+  var pfPhoto = document.getElementById('pf-photo');
+  if (pfPhoto) pfPhoto.addEventListener('change', function () {
+    var f = pfPhoto.files && pfPhoto.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      pfPhotoData = r.result;
+      var img = document.getElementById('pf-photo-preview');
+      img.src = pfPhotoData; img.hidden = false;
+    };
+    r.readAsDataURL(f);
+  });
+  window._pfPhoto = function () { return pfPhotoData; };
+  window._pfPhotoReset = function () {
+    pfPhotoData = null;
+    var img = document.getElementById('pf-photo-preview');
+    if (img) { img.hidden = true; img.removeAttribute('src'); }
+    if (pfPhoto) pfPhoto.value = '';
+  };
+
+  /* Company media: photos + hosted video embed */
+  var coInput = document.getElementById('co-photo-input');
+  if (coInput) coInput.addEventListener('change', function () {
+    var grid = document.getElementById('co-photos');
+    Array.prototype.forEach.call(coInput.files || [], function (f) {
+      var r = new FileReader();
+      r.onload = function () {
+        var fig = document.createElement('figure');
+        fig.innerHTML = '<img alt="Company photo"><figcaption>New photo</figcaption>';
+        fig.querySelector('img').src = r.result;
+        grid.appendChild(fig);
+      };
+      r.readAsDataURL(f);
+    });
+    if (coInput.files && coInput.files.length) toast('Photos added to your company profile.');
+  });
+  var coAdd = document.getElementById('co-video-add');
+  if (coAdd) coAdd.addEventListener('click', function () {
+    var url = document.getElementById('co-video-url').value.trim();
+    var embed = null;
+    var my = url.match(/[?&]v=([\w-]{6,})/) || url.match(/youtu\.be\/([\w-]{6,})/);
+    var mv = url.match(/vimeo\.com\/(\d+)/);
+    if (my) embed = 'https://www.youtube.com/embed/' + my[1];
+    else if (mv) embed = 'https://player.vimeo.com/video/' + mv[1];
+    if (!embed) { toast('Paste a YouTube or Vimeo link and the video will embed here.'); return; }
+    document.getElementById('co-video-frame').src = embed;
+    document.getElementById('co-video-wrap').hidden = false;
+    toast('Video added. It plays from its host, nothing is stored on Apertra.');
+  });

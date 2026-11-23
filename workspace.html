@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=17">
+<link rel="stylesheet" href="assets/site.css?v=18">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -28,6 +28,7 @@
       <button type="button" class="ws-search-f ws-cat" data-cat="corridors"><b>Corridors</b><span>20 directed routes</span></button>
       <button type="button" class="ws-search-btn" id="ws-go">Search</button>
     </div>
+    <p class="ws-search-hint">Type what you are looking for, then press Search. Pick Shipments, Partners or Corridors first to narrow it down, or leave it on Shipments to search everything.</p>
     
   </div>
 </div>
@@ -269,7 +270,16 @@
       <label>HS code<input id="pf-hs" type="text" placeholder="e.g. 1702.20"></label>
       <label>Country of origin<select id="pf-origin"><option>Canada</option><option>United States</option><option>Germany</option><option>United Kingdom</option></select></label>
       <label>Unit price CAD<input id="pf-price" type="text" placeholder="e.g. 42.50"></label>
+      <label>Quantity available for new orders<input id="pf-qty" type="number" min="0" placeholder="e.g. 850"></label>
       <label>Sold as<select id="pf-unit"><option>Cases</option><option>Units</option><option>Bags</option><option>Pallets</option></select></label>
+    </div>
+    <div class="pf-photo">
+      <img id="pf-photo-preview" alt="" hidden>
+      <div>
+        <label class="btn btn-ghost" for="pf-photo" style="cursor:pointer">Add a product photo</label>
+        <input id="pf-photo" type="file" accept="image/*" hidden>
+        <p style="margin:8px 0 0;font-size:13px;color:var(--muted)">Buyers see this photo on your product in the Trade Network and in search.</p>
+      </div>
     </div>
     <p id="pf-hs-note" style="font-size:13.5px;color:var(--muted);margin:12px 0 0"></p>
     <div style="margin-top:16px;display:flex;gap:10px"><button type="button" class="btn btn-primary" id="pf-save">Save product</button><button type="button" class="btn btn-ghost" data-pane-link="products">Cancel</button></div>
@@ -562,6 +572,21 @@
         </div>
         <button type="button" class="btn btn-primary" style="margin-top:14px" data-toast="Profile saved. Your team sees the updated details right away.">Save profile</button>
       </div></div>
+      <div class="panel"><div class="panel-head"><h3>Company photos and video</h3></div><div class="panel-body">
+        <p style="margin:0 0 12px;font-size:14px;color:var(--ink2)">Partners see these on your company profile in the Trade Network. Show the warehouse, the line, the people.</p>
+        <div class="co-media-grid" id="co-photos">
+          <figure><img src="assets/ind-factory.jpg" alt="Production floor"><figcaption>Production floor</figcaption></figure>
+          <figure><img src="assets/ship-terminal.jpg" alt="Loading dock"><figcaption>Loading dock</figcaption></figure>
+        </div>
+        <label class="btn btn-ghost" for="co-photo-input" style="cursor:pointer;margin-top:12px">Add photos</label>
+        <input id="co-photo-input" type="file" accept="image/*" multiple hidden>
+        <div class="set-grid" style="grid-template-columns:1fr;margin-top:16px">
+          <label>Warehouse video (YouTube or Vimeo link)<input id="co-video-url" type="url" placeholder="https://www.youtube.com/watch?v=..."></label>
+        </div>
+        <button type="button" class="btn btn-ghost" id="co-video-add" style="margin-top:10px">Add video</button>
+        <div class="co-video-wrap" id="co-video-wrap" hidden><iframe id="co-video-frame" title="Warehouse video" allowfullscreen loading="lazy"></iframe></div>
+        <p style="font-size:13px;color:var(--muted);margin:10px 0 0">Videos stay hosted on YouTube or Vimeo and are only embedded here, so nothing heavy is stored on Apertra.</p>
+      </div></div>
       <div class="panel"><div class="panel-head"><h3>Team</h3></div><div class="panel-body">
         <div class="ana-line"><span><b>Maya Chen</b> · Owner</span><span class="status st-green">Admin</span></div>
         <div class="ana-line"><span><b>Jordan Lee</b> · Operations</span><span class="status st-blue">Shipments</span></div>
@@ -654,12 +679,12 @@
       <div class="app-pane" id="pane-products">
         <div class="app-head"><div><h2>Products and HS codes</h2><p>Classifications are kept with their reasoning, ready for a customs audit for seven years.</p></div><div class="actions"><button type="button" class="btn btn-primary" data-product-new>Add product</button></div></div>
         <div class="panel"><div style="overflow-x:auto"><table>
-          <thead><tr><th>Product</th><th>HS code</th><th>US duty</th><th>EU duty</th><th>UK duty</th><th>Status</th><th></th></tr></thead>
+          <thead><tr><th>Product</th><th>HS code</th><th>US duty</th><th>EU duty</th><th>UK duty</th><th>Available</th><th>Status</th><th></th></tr></thead>
           <tbody>
-            <tr><td><b>Maple syrup, 500 ml</b><br><small style="color:var(--muted)">Pure, Grade A Amber</small></td><td class="mono">1702.20</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
-            <tr><td><b>Wildflower honey, 340 g</b><br><small style="color:var(--muted)">Raw, unfiltered</small></td><td class="mono">0409.00</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td><span class="status st-green">Verified</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
-            <tr><td><b>Pantry gift set</b><br><small style="color:var(--muted)">Syrup, honey, mustard</small></td><td class="mono">Mixed</td><td>By component</td><td>By component</td><td>By component</td><td><span class="status st-blue">Reviewed</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
-            <tr><td><b>Maple mustard, 250 ml</b><br><small style="color:var(--muted)">New line, classifying</small></td><td class="mono">2103.30</td><td>Pending</td><td>Pending</td><td>Pending</td><td><span class="status st-amber">Broker review</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Maple syrup, 500 ml</b><br><small style="color:var(--muted)">Pure, Grade A Amber</small></td><td class="mono">1702.20</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td class="prod-avail">850 cases</td><td><span class="status st-green">Verified</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Wildflower honey, 340 g</b><br><small style="color:var(--muted)">Raw, unfiltered</small></td><td class="mono">0409.00</td><td>0% CUSMA</td><td>0% CETA</td><td>0% TCA</td><td class="prod-avail">640 cases</td><td><span class="status st-green">Verified</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Pantry gift set</b><br><small style="color:var(--muted)">Syrup, honey, mustard</small></td><td class="mono">Mixed</td><td>By component</td><td>By component</td><td>By component</td><td class="prod-avail">300 units</td><td><span class="status st-blue">Reviewed</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
+            <tr><td><b>Maple mustard, 250 ml</b><br><small style="color:var(--muted)">New line, classifying</small></td><td class="mono">2103.30</td><td>Pending</td><td>Pending</td><td>Pending</td><td class="prod-avail">In production</td><td><span class="status st-amber">Broker review</span></td><td><button type="button" class="dl" data-product-edit>Edit</button></td></tr>
           </tbody></table></div></div>
       </div>
 
@@ -842,16 +867,13 @@
 
 <!-- INVITE -->
 <div class="ship-modal" id="invite-modal" role="dialog" aria-modal="true">
-  <div class="ship-modal-card">
-    <div class="ship-modal-head"><h3>Invite a teammate</h3><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
+  <div class="ship-modal-card invite-card">
+    <div class="ship-modal-head"><div><h3>Invite a teammate</h3><p class="invite-sub">They join Northwind Foods Co. with the role you pick.</p></div><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
     <div class="ship-modal-body">
-      <div class="set-grid" style="grid-template-columns:1fr">
-        <label>Work email<input id="invite-email" type="email" placeholder="name@northwindfoods.ca"></label>
-        <label>Role<select id="invite-role"><option>Shipments</option><option>Payments, view only</option><option>Payments</option><option>Admin</option></select></label>
-      </div>
-      <p style="font-size:13.5px;color:var(--muted);margin:12px 0 4px">They get an email invite and join Northwind Foods Co. with the role you pick. You can change or remove access any time in Settings.</p>
+      <div class="ship-field" style="margin-bottom:16px"><label for="invite-email">Work email</label><input id="invite-email" type="email" placeholder="name@northwindfoods.ca" autocomplete="email"></div>
+      <div class="ship-field"><label for="invite-role">Role</label><select id="invite-role"><option>Shipments</option><option>Payments, view only</option><option>Payments</option><option>Admin</option></select><small>Admins can change plans and invite others. You can change or remove access any time in Settings.</small></div>
     </div>
-    <div class="ship-modal-foot"><span class="foot-note"></span><button type="button" class="btn btn-ghost" data-modal-close>Cancel</button><button type="button" class="btn btn-primary" id="invite-send">Send invite</button></div>
+    <div class="ship-modal-foot"><button type="button" class="btn btn-ghost" data-modal-close>Cancel</button><button type="button" class="btn btn-primary" id="invite-send">Send invite</button></div>
   </div>
 </div>
 
@@ -1276,6 +1298,6 @@ document.addEventListener('click', function(ev){
   });
 })();
 </script>
-<script src="assets/screens.js?v=1"></script>
+<script src="assets/screens.js?v=2"></script>
 </body>
 </html>
