@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=20">
+<link rel="stylesheet" href="assets/site.css?v=21">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -101,7 +101,7 @@
 <div class="ws-summary">
   <div><b>$233,120</b><span>traded in November</span></div>
   <div><b>$28,900</b><span>sitting in escrow</span></div>
-  <div><b>$0</b><span>platform cost after credits</span></div>
+  <div><b>$0</b><span>membership cost after credit</span></div>
   <div><b>96%</b><span>first-pass clearance rate</span></div>
 </div>
 
@@ -291,7 +291,7 @@
   <div class="panel">
     <div class="notif-row unread"><span class="notif-dot"></span><div><b>AP-2041 needs a revised label</b><p>Customs hold: upload the bilingual nutrition label and freight releases automatically.</p><small>Today · Shipments</small></div><button type="button" class="btn btn-ghost" data-shipment="AP-2041">Open</button></div>
     <div class="notif-row unread"><span class="notif-dot"></span><div><b>Two connection requests</b><p>Great Lakes Grocery and Borough Pantry asked to connect this week.</p><small>Today · Trade Network</small></div><button type="button" class="btn btn-ghost" data-pane-link="network">Review</button></div>
-    <div class="notif-row unread"><span class="notif-dot"></span><div><b>Escrow release scheduled: $22,900</b><p>AP-2035 cleared in London. Funds release to Borough Pantry on November 18.</p><small>Yesterday · Payments</small></div><button type="button" class="btn btn-ghost" data-pane-link="payments">View</button></div>
+    <div class="notif-row unread"><span class="notif-dot"></span><div><b>Escrow release scheduled: $22,900</b><p>AP-2035 cleared in London. Funds release to you on November 18.</p><small>Yesterday · Payments</small></div><button type="button" class="btn btn-ghost" data-pane-link="payments">View</button></div>
     <div class="notif-row"><span class="notif-dot" style="visibility:hidden"></span><div><b>AP-2038 is on the water</b><p>Honey jars left Toronto for Rotterdam, arriving November 28.</p><small>November 21 · Shipments</small></div><button type="button" class="btn btn-ghost" data-shipment="AP-2038">Open</button></div>
     <div class="notif-row"><span class="notif-dot" style="visibility:hidden"></span><div><b>November statement is ready</b><p>Fees of $2,914 with your $749 membership fully credited.</p><small>November 20 · Billing</small></div><button type="button" class="btn btn-ghost" data-pane-link="billing">View</button></div>
     <div class="notif-row"><span class="notif-dot" style="visibility:hidden"></span><div><b>RB-1037 confirmed by Prairie Grains Co.</b><p>500 bags of rolled oats ship November 24. Escrow is funded.</p><small>November 19 · Buying</small></div><button type="button" class="btn btn-ghost" data-pane-link="shipments">View</button></div>
@@ -929,12 +929,12 @@
           <div class="ship-field full">
             <label for="ship-buyer">Buyer / importer</label>
             <select id="ship-buyer">
-              <option value="greatlakes" data-dest="us" data-city="Chicago">Great Lakes Grocery — Buyer · Chicago, US · Connected</option>
-              <option value="demarkt" data-dest="nl" data-city="Rotterdam">De Markt BV — Importer · Rotterdam, Netherlands · Connected</option>
-              <option value="borough" data-dest="uk" data-city="London">Borough Pantry — Buyer · London, UK · Connected</option>
-              <option value="midwest" data-dest="us" data-city="Chicago">Midwest Natural Foods — Buyer · Chicago, US · New connection</option>
-              <option value="pacific" data-dest="us" data-city="Los Angeles">Pacific Rim Imports — Importer · Los Angeles, US · Matched 93%</option>
-              <option value="nordhaus" data-dest="de" data-city="Hamburg">Nordhaus Feinkost — Buyer · Hamburg, Germany · Matched 96%</option>
+              <option value="greatlakes" data-dest="us" data-city="Chicago">Great Lakes Grocery · Buyer · Chicago, US · Connected</option>
+              <option value="demarkt" data-dest="nl" data-city="Rotterdam">De Markt BV · Importer · Rotterdam, Netherlands · Connected</option>
+              <option value="borough" data-dest="uk" data-city="London">Borough Pantry · Buyer · London, UK · Connected</option>
+              <option value="midwest" data-dest="us" data-city="Chicago">Midwest Natural Foods · Buyer · Chicago, US · New connection</option>
+              <option value="pacific" data-dest="us" data-city="Los Angeles">Pacific Rim Imports · Importer · Los Angeles, US · Matched 93%</option>
+              <option value="nordhaus" data-dest="de" data-city="Hamburg">Nordhaus Feinkost · Buyer · Hamburg, Germany · Matched 96%</option>
             </select>
             <small>Only verified network partners appear here. Need someone new? Invite them from Trade Network first.</small>
             <div class="ship-partner-preview" id="ship-partner-preview">
@@ -957,7 +957,7 @@
           </div>
           <div class="ship-field">
             <label for="ship-terms">Delivery terms</label>
-            <select id="ship-terms"><option value="DAP">DAP — Delivered at place</option><option value="DDP">DDP — Duties paid, buyer door</option><option value="EXW">EXW — Factory gate</option></select>
+            <select id="ship-terms"><option value="DAP">DAP · Delivered at place</option><option value="DDP">DDP · Duties paid, buyer door</option><option value="EXW">EXW · Factory gate</option></select>
             <small id="ship-terms-note">You arrange freight and clearance. Buyer pays on clearance via escrow.</small>
           </div>
         </div>
@@ -972,10 +972,10 @@
           <div class="ship-field full">
             <label for="ship-product">Product</label>
             <select id="ship-product">
-              <option value="maple">Maple syrup, 500 ml — Grade A Amber</option>
-              <option value="honey">Wildflower honey, 340 g — Raw, unfiltered</option>
-              <option value="gift">Pantry gift set — Syrup, honey, mustard</option>
-              <option value="mustard">Maple mustard, 250 ml — New line</option>
+              <option value="maple">Maple syrup, 500 ml · Grade A Amber</option>
+              <option value="honey">Wildflower honey, 340 g · Raw, unfiltered</option>
+              <option value="gift">Pantry gift set · Syrup, honey, mustard</option>
+              <option value="mustard">Maple mustard, 250 ml · New line</option>
             </select>
           </div>
           <div class="ship-field">
@@ -1018,7 +1018,7 @@
           <button type="button" class="freight-opt" data-freight="consolidated"><b>Consolidated</b><span id="freight-consolidated-meta">Share the lane with another exporter, slower</span><strong id="freight-consolidated-price">$0</strong></button>
         </div>
         <div class="ship-doc-list">
-          <div><span class="doc-ic">ESC</span><div><b>Escrow — buyer funds before you ship</b><small id="ship-escrow-line">Buyer funds escrow for the goods value. Release trigger: customs clearance.</small></div><span class="status st-green">Included</span></div>
+          <div><span class="doc-ic">ESC</span><div><b>Escrow · buyer funds before you ship</b><small id="ship-escrow-line">Buyer funds escrow for the goods value. Release trigger: customs clearance.</small></div><span class="status st-green">Included</span></div>
           <div><span class="doc-ic">FX</span><div><b>FX + escrow combined at 0.75%</b><small>Charged on settlement, not as a separate invoice fee. Bank FX alone averages 2.9%.</small></div><span class="status st-blue">0.75%</span></div>
           <div><span class="doc-ic">INS</span><div><b>Cargo insurance at 0.6% of goods value</b><small>Calculated in your landed cost on the next step.</small></div><span class="status st-blue">Included</span></div>
         </div>
@@ -1049,7 +1049,7 @@
     </div>
 
     <div class="ship-modal-foot" id="ship-modal-foot">
-      <span class="foot-note" id="ship-foot-note">Step 1 of 5 — You can change any of this before you create the shipment.</span>
+      <span class="foot-note" id="ship-foot-note">Step 1 of 5 · You can change any of this before you create the shipment.</span>
       <button type="button" class="btn btn-ghost" id="ship-back-btn" style="visibility:hidden">Back</button>
       <button type="button" class="btn btn-primary" id="ship-next-btn">Continue →</button>
       <button type="button" class="btn btn-primary" id="ship-create-btn" style="display:none">Create shipment</button>
@@ -1061,11 +1061,11 @@
 <select id="calc-dest"><option value="us" selected>us</option></select>
 <select id="calc-terms"><option value="dap" selected>dap</option></select>
 <span id="calc-total"></span><span id="calc-bars"></span><span id="calc-hs"></span><span id="calc-fta"></span><span id="calc-note"></span><span id="calc-val-label"></span>
-<input type="text" id="net-search" value="">
-<button type="button" id="net-invite-btn">invite</button>
-<img id="spp-img" alt=""><span id="spp-name"></span><span id="spp-meta"></span><span id="spp-line"></span>
-<button type="button" id="spp-btn">preview</button>
-<select id="ship-buyer"><option value="northwind" selected>northwind</option></select>
+
+
+
+
+
 </div>
 <script src="assets/site.js?v=5"></script>
 
@@ -1297,6 +1297,6 @@ document.addEventListener('click', function(ev){
   });
 })();
 </script>
-<script src="assets/screens.js?v=2"></script>
+<script src="assets/screens.js?v=3"></script>
 </body>
 </html>

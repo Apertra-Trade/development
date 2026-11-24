@@ -29,7 +29,7 @@
     document.getElementById('sh-sub').textContent = s.goods + ' · ' + s.route;
     document.getElementById('sh-status').innerHTML = '<span class="status ' + (s.step >= 4 ? 'st-green' : (s.status === 'Action needed' ? 'st-amber' : 'st-blue')) + '">' + s.status + '</span>';
     document.getElementById('sh-steps').innerHTML = STEPS.map(function (label, i) {
-      return '<div class="apx-step' + (i < s.step ? ' done' : (i === s.step ? ' done' : '')) + '"><i></i><span>' + label + '</span></div>';
+      return '<div class="apx-step' + (i <= s.step ? ' done' : '') + '"><i></i><span>' + label + '</span></div>';
     }).join('<div class="apx-link"></div>');
     document.getElementById('sh-note').textContent = s.note;
     document.getElementById('sh-fields').innerHTML =
@@ -129,8 +129,8 @@
   /* ---------------- Corridor detail ---------------- */
   var CORRIDORS = {
     'Canada to United States': { duty: '0% under CUSMA for most food and farm goods', transit: '2 to 6 days, road and rail', volume: '$231,000 in November', count: '14 shipments this quarter', reqs: ['CUSMA certificate of origin', 'FDA prior notice for food shipments', 'Bilingual labels for retail goods'] },
-    'Canada to Netherlands': { duty: '0% under CETA for most food and farm goods', transit: '9 to 14 days, ocean', volume: '$74,500 in November', count: '6 shipments this quarter', reqs: ['CETA origin declaration', 'EU importer of record', 'Phytosanitary certificate for plant products'] },
-    'Canada to United Kingdom': { duty: '0% under the Canada-UK TCA for qualifying goods', transit: '8 to 12 days, ocean and air', volume: '$63,800 in November', count: '5 shipments this quarter', reqs: ['TCA origin declaration', 'UK EORI number for the importer', 'Goods vehicle movement reference for road legs'] }
+    'Canada to Europe': { duty: '0% under CETA for most food and farm goods', transit: '9 to 14 days, ocean', volume: '$118,000 in November', count: '11 shipments this quarter', reqs: ['CETA origin declaration', 'EU importer of record', 'Phytosanitary certificate for plant products'] },
+    'Canada to Australia': { duty: '0% under CPTPP for most food and farm goods', transit: '14 to 21 days, ocean', volume: 'No volume yet this quarter', count: 'New corridor for Northwind', reqs: ['CPTPP origin declaration', 'Australian importer of record and ABN', 'Biosecurity inspection on arrival for food products'] }
   };
   window.openCorridor = function (btn) {
     var row = btn.closest('.wsr-row');

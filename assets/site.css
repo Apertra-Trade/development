@@ -730,7 +730,6 @@ button.dl{background:none;border:0;cursor:pointer;font:inherit;color:inherit}
 .ws-head-in{padding-bottom:16px}
 .ws-chipsbar .ws-chips{padding-top:19px}
 .ws-new-mini{margin-top:20px}
-.ws-nbadge{min-width:17px;height:17px;padding:0 4px;font-size:10.5px;font-weight:700;border-width:1.5px;box-shadow:none;top:-1px;right:-2px;background:#e5484d}
 body.ws2 select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%235d646e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
 .set-check input{appearance:none;-webkit-appearance:none;width:19px;height:19px;flex:0 0 auto;border:1.5px solid var(--line2);border-radius:6px;background:transparent;display:inline-grid;place-content:center;cursor:pointer;margin:0}
 .set-check input::before{content:"";width:11px;height:11px;transform:scale(0);transition:transform .12s;background:#ffffff;clip-path:polygon(14% 44%,0 65%,50% 100%,100% 16%,80% 0%,43% 62%)}
@@ -768,7 +767,6 @@ body.ws2.ws-dark .ws-badge.good{background:var(--green-soft);color:var(--ink)}
 body.ws2.ws-dark .apx-chip.on{background:#f4f4f2;color:#141414;border-color:#f4f4f2}
 body.ws2.ws-dark .ana-bar i,body.ws2.ws-dark .apx-step.done i{background:#f4f4f2}
 body.ws2.ws-dark .appr-opt.on{background:#f4f4f2;color:#141414}
-body.ws2.ws-dark .set-check input:checked{background:var(--ink);border-color:var(--ink)}
 body.ws2.ws-dark .set-check input::before{background:#101114}
 body.ws2.ws-dark select{background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%239ba1ab' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 body.ws2.ws-dark .plan-card.current{border-color:var(--ink)}
