@@ -208,6 +208,36 @@
     document.getElementById('invite-modal').classList.remove('open');
     toast('Invite sent. They will get an email to join Northwind Foods Co. on Apertra.');
   });
+  var pinv = document.getElementById('pinv-send');
+  if (pinv) pinv.addEventListener('click', function () {
+    var name = document.getElementById('pinv-name');
+    var email = document.getElementById('pinv-email');
+    if (!name.value.trim()) { toast('Add the business name first.'); return; }
+    if (!email.value.trim() || email.value.indexOf('@') < 0) { toast('Enter the contact email for the invite.'); return; }
+    var country = document.getElementById('pinv-country').value;
+    var roleSel = document.getElementById('pinv-role');
+    var role = roleSel.value;
+    var roleLabel = role === 'buyer' ? 'Buyer' : (role === 'importer' ? 'Importer' : 'Exporter');
+    var roleClass = role === 'buyer' ? 'amber' : (role === 'importer' ? 'blue' : 'green');
+    var grid = document.getElementById('net-grid');
+    if (grid) {
+      var card = document.createElement('div');
+      card.className = 'net-card';
+      card.setAttribute('data-role', role);
+      card.setAttribute('data-connected', '0');
+      card.setAttribute('data-search', (name.value.trim() + ' ' + country + ' ' + roleLabel + ' invite pending').toLowerCase());
+      card.innerHTML = '<img class="net-thumb" src="assets/img-01.jpg" alt="Photo representing ' + esc(name.value.trim()) + ', invited to Apertra">' +
+        '<div><span class="tag ' + roleClass + '">' + roleLabel + '</span> <span class="tag">Invite sent</span></div>' +
+        '<h3>' + esc(name.value.trim()) + '</h3>' +
+        '<p class="net-meta">' + esc(country) + ' · Invited by email</p>' +
+        '<p>Invitation sent to ' + esc(email.value.trim()) + '. When they join Apertra and complete verification, they become a connection and you can trade on shared shipment records.</p>' +
+        '<div class="net-foot"><span class="match-score">INVITE PENDING</span></div>';
+      grid.insertBefore(card, grid.firstChild);
+    }
+    document.getElementById('pinvite-modal').classList.remove('open');
+    toast('Invite sent to ' + name.value.trim() + '. They appear in your network as a pending invite.');
+    name.value = ''; email.value = ''; document.getElementById('pinv-note').value = '';
+  });
   var pw = document.getElementById('pw-save');
   if (pw) pw.addEventListener('click', function () {
     var n = document.getElementById('pw-new').value, c = document.getElementById('pw-confirm').value;

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=23">
+<link rel="stylesheet" href="assets/site.css?v=24">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -651,8 +651,20 @@
 </div>
 <div class="apx-chips"><span class="apx-chip on">All shipments · 4</span><span class="apx-chip">Action needed · 1</span><span class="apx-chip">In transit · 1</span><span class="apx-chip">Clearing · 1</span><span class="apx-chip">Completed · 1</span></div>
 
+<div class="panel" id="incoming-requests-panel">
+  <div class="panel-head"><h3>Requests from buyers</h3><span class="status st-amber" id="incoming-count">2 waiting on you</span></div>
+  <div class="panel-body" style="padding-bottom:4px"><p style="margin:0;font-size:14px;color:var(--ink2)">This is how orders start on Apertra. A buyer sends you a request and funds escrow up front. Your only job is to create the shipment for the request: the buyer, goods and delivery location are already filled in, and the documents, freight and clearance are generated from it. Nothing to retype, nothing to chase.</p></div>
+  <div style="overflow-x:auto"><table>
+    <thead><tr><th>Request</th><th>Buyer</th><th>Goods</th><th class="num">Escrow funded CAD</th><th>Wanted by</th><th>Status</th><th></th></tr></thead>
+    <tbody id="incoming-req-tbody">
+      <tr data-incoming><td class="mono">RB-1043</td><td>Great Lakes Grocery · Chicago</td><td>Maple syrup, 500 ml · 900 cases</td><td class="num">36,000</td><td>Dec 12</td><td><span class="status st-amber inc-status">New request · create the shipment</span></td><td><button type="button" class="btn btn-primary inc-create" data-buyer="greatlakes" data-product="maple" data-qty="900" data-req="RB-1043">Create shipment</button></td></tr>
+      <tr data-incoming><td class="mono">RB-1044</td><td>Borough Pantry · London</td><td>Pantry gift sets · 600 units</td><td class="num">30,540</td><td>Dec 18</td><td><span class="status st-amber inc-status">New request · create the shipment</span></td><td><button type="button" class="btn btn-primary inc-create" data-buyer="borough" data-product="gift" data-qty="600" data-req="RB-1044">Create shipment</button></td></tr>
+    </tbody>
+  </table></div>
+</div>
 <div class="panel" id="buy-requests-panel">
-  <div class="panel-head"><h3>Buying requests</h3><button type="button" class="btn btn-primary" data-buy-open>Request to buy</button></div>
+  <div class="panel-head"><h3>Buying requests · sent by you</h3><button type="button" class="btn btn-primary" data-buy-open>Request to buy</button></div>
+  <div class="panel-body" style="padding-bottom:4px"><p style="margin:0;font-size:14px;color:var(--ink2)">When you buy, you send the request and fund escrow. The supplier confirms it and creates the shipment; it then shows in your shipments table with documents and tracking. You never arrange freight or customs on a buying request.</p></div>
   <div style="overflow-x:auto"><table>
     <thead><tr><th>Request</th><th>Supplier</th><th>Goods</th><th class="num">Landed total CAD</th><th>Status</th></tr></thead>
     <tbody id="buy-req-tbody">
@@ -876,6 +888,21 @@
   </div>
 </div>
 
+<!-- PARTNER INVITE -->
+<div class="ship-modal" id="pinvite-modal" role="dialog" aria-modal="true">
+  <div class="ship-modal-card invite-card">
+    <div class="ship-modal-head"><div><h3>Invite a partner</h3><p class="invite-sub">Invite a business to join Apertra and connect with Northwind Foods Co. They verify once, then you can trade on shared shipment records.</p></div><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
+    <div class="ship-modal-body">
+      <div class="ship-field" style="margin-bottom:16px"><label for="pinv-name">Business name</label><input id="pinv-name" type="text" placeholder="e.g. Lakeside Foods Inc." autocomplete="organization"></div>
+      <div class="ship-field" style="margin-bottom:16px"><label for="pinv-email">Contact email</label><input id="pinv-email" type="email" placeholder="name@theirbusiness.com" autocomplete="email"></div>
+      <div class="ship-field" style="margin-bottom:16px"><label for="pinv-country">Their country</label><select id="pinv-country"><option>Canada</option><option>United States</option><option>United Kingdom</option><option>Netherlands</option><option>Germany</option><option>Australia</option><option>New Zealand</option><option>Japan</option><option>Other</option></select></div>
+      <div class="ship-field" style="margin-bottom:16px"><label for="pinv-role">They are a</label><select id="pinv-role"><option value="buyer">Buyer · they purchase goods</option><option value="importer">Importer · importer of record</option><option value="exporter">Exporter · they sell and ship goods</option></select><small>A buyer purchases; an importer is the importer of record who takes goods through customs. Many partners are both.</small></div>
+      <div class="ship-field"><label for="pinv-note">Note (optional)</label><input id="pinv-note" type="text" placeholder="e.g. We met at the Toronto food expo"></div>
+    </div>
+    <div class="ship-modal-foot"><button type="button" class="btn btn-ghost" data-modal-close>Cancel</button><button type="button" class="btn btn-primary" id="pinv-send">Send invite</button></div>
+  </div>
+</div>
+
 <!-- ==================== COMPANY PROFILE PREVIEW ==================== --><div class="co-modal" id="co-modal" role="dialog" aria-modal="true" aria-labelledby="co-name" aria-hidden="true">
   <div class="co-modal-backdrop" data-close-co></div>
   <div class="co-modal-card">
@@ -923,6 +950,7 @@
     <div class="ship-modal-body">
       <!-- STEP 1 -->
       <div class="ship-panel active" data-ship-panel="1">
+        <div class="ship-live-box" id="ship-req-banner" style="display:none;margin-bottom:14px"></div>
         <h4>Who is this for, and where is it going?</h4>
         <p>Pick a connected buyer or importer from your Trade Network. Their verification, delivery address and payment history are already on file.</p>
         <div class="ship-form-grid">
@@ -936,20 +964,28 @@
               <option value="pacific" data-dest="us" data-city="Los Angeles">Pacific Rim Imports · Importer · Los Angeles, US · Matched 93%</option>
               <option value="nordhaus" data-dest="de" data-city="Hamburg">Nordhaus Feinkost · Buyer · Hamburg, Germany · Matched 96%</option>
             </select>
-            <small>Only verified network partners appear here. Need someone new? Invite them from Trade Network first.</small>
+            <small id="ship-buyer-note">Only verified network partners appear here. Need someone new? Invite them from Trade Network first.</small> <button type="button" class="dl" id="ship-buyer-unlock" style="display:none">Change buyer</button>
             <div class="ship-partner-preview" id="ship-partner-preview">
               <img id="spp-img" src="assets/img-05.jpg" alt="Photo of the selected partner's business">
               <div><b id="spp-name">Great Lakes Grocery</b><span id="spp-meta">Chicago, US · Retail buyer · Connected since Mar 2026</span><span id="spp-line">14 orders on rails · Escrow history clean · Pays 2 days after clearance</span></div>
               <button type="button" class="btn btn-ghost" id="spp-btn">View full profile</button>
             </div>
           </div>
+          <div class="ship-field full" id="ship-loc-field">
+            <label id="ship-loc-label">Delivery location</label>
+            <select id="ship-loc-select" style="display:none" aria-label="Delivery location"></select>
+            <div class="ship-live-box" id="ship-loc-static" style="margin:0"></div>
+            <small id="ship-loc-note">Taken from the buyer's profile, so it is always the address they gave Apertra.</small>
+          </div>
           <div class="ship-field">
-            <label for="ship-origin">Origin</label>
-            <select id="ship-origin"><option value="Toronto">Toronto, Canada (YYZ)</option><option value="Montreal">Montreal, Canada (YUL)</option></select>
+            <label for="ship-origin">Origin · your ship-from location</label>
+            <select id="ship-origin"><option value="Toronto">Toronto, Canada · Head office and warehouse (default)</option><option value="Ottawa">Ottawa, Canada · Fulfilment centre</option><option value="Montreal">Montreal, Canada · Partner 3PL</option></select>
+            <small id="ship-origin-note">Pre-filled with your default location from your profile. Change it only when the goods are leaving from another of your sites.</small>
           </div>
           <div class="ship-field">
             <label for="ship-dest">Destination</label>
             <select id="ship-dest"><option value="us">United States</option><option value="nl">Netherlands (EU)</option><option value="uk">United Kingdom</option><option value="de">Germany (EU)</option><option value="jp">Japan</option></select>
+            <small>Set by the delivery location above.</small>
           </div>
           <div class="ship-field">
             <label for="ship-dest-city">Destination city</label>
@@ -1067,7 +1103,7 @@
 
 
 </div>
-<script src="assets/site.js?v=5"></script>
+<script src="assets/site.js?v=6"></script>
 
 <script>
 document.querySelectorAll('.ws-chip').forEach(function(c){
@@ -1105,7 +1141,7 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
 
       <div class="ship-panel active" data-buy-panel="1">
         <h4>Who are you buying from?</h4>
-        <p>Suppliers are verified exporters on the network. Pick the product and quantity; pricing is the supplier's listed export price.</p>
+        <p>Suppliers are verified exporters on the network. Pick the product and quantity; pricing is the supplier's listed export price. Once you send the request and fund escrow, the supplier confirms it and creates the shipment. That is their only step, and the shipment then appears in your Shipments with documents and tracking.</p>
         <div class="ship-form-grid">
           <div class="ship-field full"><label for="buy-supplier">Supplier</label>
             <select id="buy-supplier">
@@ -1249,7 +1285,7 @@ document.addEventListener('click', function(ev){
   document.getElementById('ws-q').addEventListener('keydown', function(ev){ if (ev.key === 'Enter') { ev.preventDefault(); runSearch(); } });
 })();
 </script>
-<script src="assets/buy.js?v=1"></script>
+<script src="assets/buy.js?v=2"></script>
 
 <script>
 (function(){
@@ -1297,6 +1333,6 @@ document.addEventListener('click', function(ev){
   });
 })();
 </script>
-<script src="assets/screens.js?v=3"></script>
+<script src="assets/screens.js?v=4"></script>
 </body>
 </html>

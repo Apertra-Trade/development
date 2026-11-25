@@ -138,7 +138,7 @@ document.querySelectorAll('[data-req-decline]').forEach(function(btn){
   });
 });
 document.getElementById('net-invite-btn').addEventListener('click', function(){
-  var s=document.getElementById('net-search'); if(s){ s.focus(); s.placeholder='Type a business name, city, or product to find them first'; }
+  var m=document.getElementById('pinvite-modal'); if(m){ m.classList.add('open'); m.setAttribute('aria-hidden','false'); }
 });
 document.querySelectorAll('[data-goto-network]').forEach(function(el){
   el.addEventListener('click', function(){ showPaneById('network'); });
@@ -215,7 +215,7 @@ function renderCoFoot(id){
       var act=b.getAttribute('data-co-act');
       if(act==='close'){ closeCompany(); }
       else if(act==='trades'){ closeCompany(); showPaneById('shipments'); }
-      else if(act==='ship'){ closeCompany(); var sel=document.getElementById('ship-buyer'); if(sel){ for(var i=0;i<sel.options.length;i++){ if(sel.options[i].value===id){ sel.selectedIndex=i; var opt=sel.options[i]; var dk=opt.getAttribute('data-dest'); var city=opt.getAttribute('data-city'); if(dk) document.getElementById('ship-dest').value=dk; if(city) document.getElementById('ship-dest-city').value=city; break; } } } openShipFlow(); }
+      else if(act==='ship'){ closeCompany(); openShipFlow({partner:id}); }
       else if(act==='connect'){ var card=document.querySelector('.net-card[data-company="'+id+'"]'); var cb=card?card.querySelector('[data-connect]'):null; if(cb && !cb.disabled) cb.click(); renderCoFoot(id); document.getElementById('co-tags').innerHTML='<span class="tag '+COMPANIES[id].roleClass+'">'+COMPANIES[id].role+'</span> '+coStatusTag(id); }
       else if(act==='accept'){ var row=document.querySelector('.req-row[data-company="'+id+'"]'); var ab=row?row.querySelector('[data-req-accept]'):null; if(ab) ab.click(); renderCoFoot(id); document.getElementById('co-tags').innerHTML='<span class="tag '+COMPANIES[id].roleClass+'">'+COMPANIES[id].role+'</span> '+coStatusTag(id); }
       else if(act==='decline'){ var row2=document.querySelector('.req-row[data-company="'+id+'"]'); var db=row2?row2.querySelector('[data-req-decline]'):null; if(db) db.click(); closeCompany(); }
@@ -242,6 +242,63 @@ function updateShipPartnerPreview(){
 }
 document.getElementById('spp-btn').addEventListener('click', function(){ openCompany(document.getElementById('ship-buyer').value); });
 document.getElementById('ship-buyer').addEventListener('change', updateShipPartnerPreview);
+
+/* ---- Partner delivery locations and own ship-from locations ----
+   Locations live on each partner's profile. The wizard pre-fills from
+   them: the buyer is locked when you start from their profile, the
+   delivery location is a picker only when they have more than one,
+   and origin is pre-filled with your default ship-from location. */
+var PARTNER_LOCS={
+  greatlakes:[{label:'Chicago, IL · Distribution centre',dest:'us',city:'Chicago'},{label:'Milwaukee, WI · Store hub',dest:'us',city:'Milwaukee'}],
+  demarkt:[{label:'Rotterdam, Netherlands · Warehouse',dest:'nl',city:'Rotterdam'}],
+  borough:[{label:'London, UK · Store and stockroom',dest:'uk',city:'London'}],
+  midwest:[{label:'Chicago, IL · Distribution centre',dest:'us',city:'Chicago'}],
+  pacific:[{label:'Los Angeles, CA · Warehouse',dest:'us',city:'Los Angeles'},{label:'Seattle, WA · Store hub',dest:'us',city:'Seattle'}],
+  nordhaus:[{label:'Hamburg, Germany · Warehouse',dest:'de',city:'Hamburg'}]
+};
+var MY_LOCS=[
+  {city:'Toronto',label:'Toronto, Canada · Head office and warehouse (default)'},
+  {city:'Ottawa',label:'Ottawa, Canada · Fulfilment centre'},
+  {city:'Montreal',label:'Montreal, Canada · Partner 3PL'}
+];
+var shipRequestRow=null;
+function currentShipLoc(){
+  var sel=document.getElementById('ship-buyer'); if(!sel) return null;
+  var locs=PARTNER_LOCS[sel.value]||[];
+  if(!locs.length) return null;
+  var ls=document.getElementById('ship-loc-select');
+  var idx=(ls && ls.style.display!=='none') ? (parseInt(ls.value,10)||0) : 0;
+  return locs[Math.min(idx,locs.length-1)];
+}
+function applyShipBuyer(){
+  var sel=document.getElementById('ship-buyer'); if(!sel) return;
+  var locs=PARTNER_LOCS[sel.value]||[];
+  var ls=document.getElementById('ship-loc-select'), st=document.getElementById('ship-loc-static'), note=document.getElementById('ship-loc-note');
+  if(locs.length>1){
+    ls.innerHTML=locs.map(function(l,i){return '<option value="'+i+'">'+l.label+'</option>';}).join('');
+    ls.style.display=''; st.style.display='none';
+    note.textContent='This partner has '+locs.length+' locations on their profile. Pick where this shipment goes.';
+  } else if(locs.length===1){
+    ls.style.display='none'; st.style.display='';
+    st.innerHTML='<b>'+locs[0].label+'</b> · Their only location on file';
+    note.textContent='Taken from the buyer\u2019s profile, so it is always the address they gave Apertra.';
+  }
+  var loc=currentShipLoc();
+  if(loc){ document.getElementById('ship-dest').value=loc.dest; document.getElementById('ship-dest-city').value=loc.city; }
+  document.getElementById('ship-dest').disabled=true;
+  document.getElementById('ship-dest-city').disabled=true;
+  updateShipPartnerPreview();
+  if(typeof updateShipLive==='function') updateShipLive();
+}
+function setShipBuyerLock(locked, partnerName){
+  var sel=document.getElementById('ship-buyer'); if(!sel) return;
+  sel.disabled=locked;
+  var un=document.getElementById('ship-buyer-unlock'); if(un) un.style.display=locked?'':'none';
+  var note=document.getElementById('ship-buyer-note');
+  if(note) note.textContent=locked
+    ? 'Pre-filled from '+(partnerName||'this partner')+'\u2019s profile and locked, because you started from their page.'
+    : 'Only verified network partners appear here. Need someone new? Invite them from Trade Network first.';
+}
 
 /* ---- New Shipment Flow ---- */
 var shipStep=1, shipFreight='standard', shipCreated=0, lastCreatedId='';
@@ -281,7 +338,9 @@ function updateShipLive(){
   document.querySelectorAll('#ship-freight-options .freight-opt').forEach(function(b){b.classList.toggle('selected',b.getAttribute('data-freight')===shipFreight);});
 }
 function renderShipReview(){
-  var buyerText=shipEl('ship-buyer').options[shipEl('ship-buyer').selectedIndex].text.split(' — ')[0];
+  var buyerCo=COMPANIES[shipEl('ship-buyer').value];
+  var buyerLoc=currentShipLoc();
+  var buyerText=(buyerCo?buyerCo.name:shipEl('ship-buyer').options[shipEl('ship-buyer').selectedIndex].text)+(buyerLoc?' · '+buyerLoc.label:'');
   var p=SHIP_PROD[shipEl('ship-product').value];var qty=shipEl('ship-qty').value;var d=SHIP_DEST[shipEl('ship-dest').value];
   var origin=shipEl('ship-origin').value;var city=shipEl('ship-dest-city').value;
   var needsLabel=shipEl('ship-label-status').value==='needs';
@@ -312,9 +371,28 @@ function setShipStep(n){
   if(n===5) renderShipReview();
   var body=document.querySelector('.ship-modal-body');if(body)body.scrollTop=0;
 }
-function openShipFlow(){
-  shipStep=1;shipFreight='standard';
+function openShipFlow(opts){
+  opts=opts||{};
+  shipStep=1;shipFreight='standard';shipRequestRow=null;
   document.querySelectorAll('#ship-freight-options .freight-opt').forEach(function(b){b.classList.toggle('selected',b.getAttribute('data-freight')==='standard');});
+  var banner=shipEl('ship-req-banner'); banner.style.display='none'; banner.innerHTML='';
+  setShipBuyerLock(false);
+  if(opts.partner){
+    var sel=shipEl('ship-buyer'); sel.value=opts.partner;
+    applyShipBuyer();
+    setShipBuyerLock(true, COMPANIES[opts.partner]?COMPANIES[opts.partner].name:'this partner');
+  }
+  if(opts.request){
+    shipRequestRow=opts.row||null;
+    if(opts.buyer){ shipEl('ship-buyer').value=opts.buyer; applyShipBuyer(); setShipBuyerLock(true, COMPANIES[opts.buyer]?COMPANIES[opts.buyer].name:'the buyer'); }
+    if(opts.product){ shipEl('ship-product').value=opts.product; shipEl('ship-unit').value=SHIP_PROD[opts.product].unit; }
+    if(opts.qty){ shipEl('ship-qty').value=opts.qty; }
+    var bn=COMPANIES[opts.buyer]?COMPANIES[opts.buyer].name:'The buyer';
+    banner.innerHTML='<b>Request '+opts.request+' · '+bn+'</b> asked for these goods and has already funded escrow. Your only job is to create the shipment: buyer, goods and delivery location are filled in from the request. Documents, freight and clearance generate when you create it.';
+    banner.style.display='';
+  }
+  shipEl('ship-origin').value='Toronto';
+  applyShipBuyer();
   updateShipLive();setShipStep(1);
   shipEl('ship-modal').classList.add('open');shipEl('ship-modal').setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
@@ -331,10 +409,18 @@ shipEl('ship-next-btn').addEventListener('click',function(){
   if(shipStep<5)setShipStep(shipStep+1);
 });
 shipEl('ship-back-btn').addEventListener('click',function(){if(shipStep>1)setShipStep(shipStep-1);});
-shipEl('ship-buyer').addEventListener('change',function(){
-  var opt=shipEl('ship-buyer').options[shipEl('ship-buyer').selectedIndex];
-  var dk=opt.getAttribute('data-dest');var city=opt.getAttribute('data-city');
-  if(dk)shipEl('ship-dest').value=dk;if(city)shipEl('ship-dest-city').value=city;updateShipLive();
+shipEl('ship-buyer').addEventListener('change',function(){ applyShipBuyer(); });
+shipEl('ship-loc-select').addEventListener('change',function(){
+  var loc=currentShipLoc();
+  if(loc){ shipEl('ship-dest').value=loc.dest; shipEl('ship-dest-city').value=loc.city; }
+  updateShipLive();
+});
+shipEl('ship-buyer-unlock').addEventListener('click',function(){ setShipBuyerLock(false); shipEl('ship-buyer').focus(); });
+document.querySelectorAll('.inc-create').forEach(function(b){
+  b.addEventListener('click',function(){
+    var row=b.closest('[data-incoming]');
+    openShipFlow({request:b.getAttribute('data-req'), buyer:b.getAttribute('data-buyer'), product:b.getAttribute('data-product'), qty:b.getAttribute('data-qty'), row:row});
+  });
 });
 ['ship-dest','ship-origin','ship-terms','ship-label-status'].forEach(function(id){shipEl(id).addEventListener('change',updateShipLive);});
 shipEl('ship-dest-city').addEventListener('input',updateShipLive);
@@ -363,11 +449,22 @@ shipEl('ship-create-btn').addEventListener('click',function(){
   var kpi=shipEl('kpi-active-shipments');if(kpi)kpi.textContent=String(parseInt(kpi.textContent,10)+1);
   var navCnt=shipEl('shipments-nav-count');if(navCnt)navCnt.textContent=String(parseInt(navCnt.textContent,10)+1);
   shipEl('ship-success-id').textContent=lastCreatedId;
-  shipEl('ship-success-text').textContent='Shipment '+lastCreatedId+' for '+p.short+' ('+shipMoney(goods)+') to '+city+' is now at the top of Shipments. Documents have been generated, the buyer has been sent the '+shipMoney(goods)+' escrow funding request, and freight is '+(needsLabel?'on hold until the revised label is uploaded.':'booked on the '+shipFreight+' option.');
+  shipEl('ship-success-text').textContent='Shipment '+lastCreatedId+' for '+p.short+' ('+shipMoney(goods)+') to '+city+' is now at the top of Shipments. Documents have been generated, '+(shipRequestRow?'escrow was already funded by the buyer with their request':'the buyer has been sent the '+shipMoney(goods)+' escrow funding request')+', and freight is '+(needsLabel?'on hold until the revised label is uploaded.':'booked on the '+shipFreight+' option.');
+  if(shipRequestRow){
+    var st=shipRequestRow.querySelector('.inc-status');
+    if(st){ st.textContent='Shipment '+lastCreatedId+' created'; st.className='status st-green inc-status'; }
+    var cb=shipRequestRow.querySelector('.inc-create');
+    if(cb){ cb.disabled=true; cb.textContent='Shipment created'; }
+    var left=document.querySelectorAll('#incoming-req-tbody .inc-create:not([disabled])').length;
+    var cnt=shipEl('incoming-count');
+    if(cnt) cnt.textContent=left? left+' waiting on you' : 'All caught up';
+    shipRequestRow=null;
+  }
   setShipStep(6);
 });
 shipEl('ship-view-btn').addEventListener('click',function(){closeShipFlow();showPaneById('shipments');});
 shipEl('ship-another-btn').addEventListener('click',function(){openShipFlow();});
+applyShipBuyer();
 updateShipLive();
 updateShipPartnerPreview();
 

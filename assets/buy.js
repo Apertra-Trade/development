@@ -136,7 +136,7 @@
       btn.disabled = false;
       submitted = true;
       el('buy-success-id').textContent = id;
-      el('buy-success-line').textContent = money(t.total) + ' is now held in escrow for ' + pr.label + ' × ' + t.qty.toLocaleString('en-CA') + ' from ' + s.name + '. The request is with the supplier for confirmation.';
+      el('buy-success-line').textContent = money(t.total) + ' is now held in escrow for ' + pr.label + ' × ' + t.qty.toLocaleString('en-CA') + ' from ' + s.name + '. What happens next: ' + s.name + ' confirms the request and creates the shipment for it. It appears in your Shipments with documents and tracking, and escrow releases to them only after the goods clear customs and are delivered to you.';
       var tb = el('buy-req-tbody');
       if (tb) {
         var tr = document.createElement('tr');
