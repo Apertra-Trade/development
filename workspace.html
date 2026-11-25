@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=25">
+<link rel="stylesheet" href="assets/site.css?v=26">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -1023,6 +1023,7 @@
             <input type="number" id="ship-unit" min="1" step="0.50" value="40">
           </div>
         </div>
+        <p id="ship-goods-note" style="display:none;font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.5">Locked from the buyer's request: they asked for exactly this and funded it in escrow, so the product, quantity and price cannot be changed here.</p>
         <div class="ship-live-box" id="ship-goods-box"></div>
       </div>
 
@@ -1033,7 +1034,7 @@
         <div class="ship-doc-list" id="ship-compliance-list"></div>
         <div class="ship-form-grid" style="margin-top:16px">
           <div class="ship-field full">
-            <label for="ship-label-status">US / destination label status</label>
+            <label for="ship-label-status">Destination label status</label>
             <select id="ship-label-status">
               <option value="ready">Label artwork is destination-ready</option>
               <option value="needs">Label still needs the destination format (e.g. US Added Sugars line)</option>
@@ -1103,7 +1104,7 @@
 
 
 </div>
-<script src="assets/site.js?v=7"></script>
+<script src="assets/site.js?v=8"></script>
 
 <script>
 document.querySelectorAll('.ws-chip').forEach(function(c){

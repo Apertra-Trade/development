@@ -302,6 +302,19 @@ function setShipBuyerLock(locked, partnerName){
     ? 'Pre-filled from '+(partnerName||'this partner')+'\u2019s profile and locked, because you started from their page.'
     : 'Only verified network partners appear here. Need someone new? Invite them from Trade Network first.';
 }
+function setShipGoodsLock(locked){
+  /* On a buyer's request the goods, quantity and price are what the buyer
+     asked for and already funded in escrow, so the exporter cannot edit
+     them while creating the shipment. Shown full strength, not editable. */
+  var prod=shipEl('ship-product');
+  prod.classList.toggle('locked-field',locked);
+  if(locked){ prod.setAttribute('tabindex','-1'); prod.setAttribute('aria-readonly','true'); }
+  else { prod.removeAttribute('tabindex'); prod.removeAttribute('aria-readonly'); }
+  shipEl('ship-qty').readOnly=locked;
+  shipEl('ship-unit').readOnly=locked;
+  var note=shipEl('ship-goods-note');
+  if(note) note.style.display=locked?'':'none';
+}
 
 /* ---- New Shipment Flow ---- */
 var shipStep=1, shipFreight='standard', shipCreated=0, lastCreatedId='';
@@ -380,6 +393,7 @@ function openShipFlow(opts){
   document.querySelectorAll('#ship-freight-options .freight-opt').forEach(function(b){b.classList.toggle('selected',b.getAttribute('data-freight')==='standard');});
   var banner=shipEl('ship-req-banner'); banner.style.display='none'; banner.innerHTML='';
   setShipBuyerLock(false);
+  setShipGoodsLock(false);
   if(opts.partner){
     var sel=shipEl('ship-buyer'); sel.value=opts.partner;
     applyShipBuyer();
@@ -390,6 +404,7 @@ function openShipFlow(opts){
     if(opts.buyer){ shipEl('ship-buyer').value=opts.buyer; applyShipBuyer(); setShipBuyerLock(true, COMPANIES[opts.buyer]?COMPANIES[opts.buyer].name:'the buyer'); }
     if(opts.product){ shipEl('ship-product').value=opts.product; shipEl('ship-unit').value=SHIP_PROD[opts.product].unit; }
     if(opts.qty){ shipEl('ship-qty').value=opts.qty; }
+    setShipGoodsLock(true);
     var bn=COMPANIES[opts.buyer]?COMPANIES[opts.buyer].name:'The buyer';
     banner.innerHTML='<b>Request '+opts.request+' · '+bn+'</b> asked for these goods and has already funded escrow. Your only job is to create the shipment: buyer, goods and delivery location are filled in from the request. Documents, freight and clearance generate when you create it.';
     banner.style.display='';
