@@ -383,7 +383,9 @@ function setShipStep(n){
   shipEl('ship-next-btn').style.display=(n>=5)?'none':'';
   shipEl('ship-create-btn').style.display=n===5?'':'none';
   shipEl('ship-modal-foot').style.display=n===6?'none':'flex';
-  shipEl('ship-foot-note').textContent=n===5?'Step 5 of 5 — Creating generates documents and sends the escrow request.':('Step '+n+' of 5 — You can change any of this before you create the shipment.');
+  shipEl('ship-foot-note').textContent=shipRequestRow
+    ? (n===5?'Step 5 of 5 · Creating generates the documents and books the freight. Escrow is already funded by the buyer.':('Step '+n+' of 5 · Buyer, goods and price are locked from the request; the rest is yours to set.'))
+    : (n===5?'Step 5 of 5 · Creating generates documents and sends the escrow request.':('Step '+n+' of 5 · You can change any of this before you create the shipment.'));
   if(n===5) renderShipReview();
   var body=document.querySelector('.ship-modal-body');if(body)body.scrollTop=0;
 }
