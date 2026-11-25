@@ -285,14 +285,17 @@ function applyShipBuyer(){
   }
   var loc=currentShipLoc();
   if(loc){ document.getElementById('ship-dest').value=loc.dest; document.getElementById('ship-dest-city').value=loc.city; }
-  document.getElementById('ship-dest').disabled=true;
-  document.getElementById('ship-dest-city').disabled=true;
+  var destSel=document.getElementById('ship-dest');
+  destSel.classList.add('locked-field'); destSel.setAttribute('tabindex','-1'); destSel.setAttribute('aria-readonly','true');
+  document.getElementById('ship-dest-city').readOnly=true;
   updateShipPartnerPreview();
   if(typeof updateShipLive==='function') updateShipLive();
 }
 function setShipBuyerLock(locked, partnerName){
   var sel=document.getElementById('ship-buyer'); if(!sel) return;
-  sel.disabled=locked;
+  sel.classList.toggle('locked-field',locked);
+  if(locked){ sel.setAttribute('tabindex','-1'); sel.setAttribute('aria-readonly','true'); }
+  else { sel.removeAttribute('tabindex'); sel.removeAttribute('aria-readonly'); }
   var un=document.getElementById('ship-buyer-unlock'); if(un) un.style.display=locked?'':'none';
   var note=document.getElementById('ship-buyer-note');
   if(note) note.textContent=locked
