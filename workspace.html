@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=27">
+<link rel="stylesheet" href="assets/site.css?v=28">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -1105,7 +1105,7 @@
 
 
 </div>
-<script src="assets/site.js?v=10"></script>
+<script src="assets/site.js?v=11"></script>
 
 <script>
 document.querySelectorAll('.ws-chip').forEach(function(c){
@@ -1230,6 +1230,19 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
   </div>
 </div>
 
+<div class="ship-modal" id="reqpick-modal" role="dialog" aria-modal="true" aria-labelledby="reqpick-title" aria-hidden="true">
+  <div class="ship-modal-backdrop" data-reqpick-close></div>
+  <div class="ship-modal-card" style="max-width:580px">
+    <div class="ship-modal-head"><div><h3 id="reqpick-title">Create a shipment</h3><p class="invite-sub">Shipments start from funded buy requests. Pick the request you are fulfilling and everything fills in from it: buyer, goods, delivery terms and freight, locked to what the buyer paid for.</p></div><button type="button" class="ship-x" data-reqpick-close aria-label="Close">✕</button></div>
+    <div style="padding:6px 22px 20px">
+      <div id="reqpick-list"></div>
+      <div id="reqpick-empty" style="display:none">
+        <p style="font-size:14.5px;color:var(--ink2);line-height:1.6;margin:8px 0 14px">No open buy requests right now, so there is nothing to create a shipment against. When a buyer sends you a request and funds escrow, it lands here and under Requests from buyers in Shipments.</p>
+        <button type="button" class="btn btn-primary" data-reqpick-network>Browse the Trade Network</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="ws-toast" id="ws-toast" role="status"></div>
 <script>
 document.addEventListener('click', function(ev){

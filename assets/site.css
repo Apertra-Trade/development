@@ -838,6 +838,11 @@ body.ws2 .ws-chip .ws-nbadge{width:20px;height:20px;min-width:20px;flex:0 0 auto
    other field, in light and dark mode; they simply do not accept input. */
 body.ws2 .ship-field select.locked-field{pointer-events:none}
 body.ws2 .freight-options.locked{pointer-events:none}
+/* Request picker rows (request-only shipment creation) */
+body.ws2 .reqpick-row{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+body.ws2 .reqpick-row:last-child{border-bottom:0}
+body.ws2 .reqpick-row small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px;line-height:1.45}
+body.ws2 .reqpick-row .num{margin-left:auto;font-weight:700;white-space:nowrap;font-size:14px}
 body.ws2 .btn:disabled{opacity:.55;cursor:default}
 /* Compliance "done" icons: in dark mode --green is near-white, which made the
    white check on the disc read as a plain white blob. Flip the glyph dark. */

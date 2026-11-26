@@ -198,7 +198,7 @@ function renderCoFoot(id){
   var st=CO_STATE[id], box=document.getElementById('co-foot-actions'), html='';
   var inWizard=['greatlakes','demarkt','borough','midwest','pacific','nordhaus'].indexOf(id)!==-1;
   if(st==='connected'){
-    if(inWizard) html+='<button type="button" class="btn btn-primary" data-co-act="ship">New shipment with this partner</button>';
+    if(inWizard) html+='<button type="button" class="btn btn-primary" data-co-act="ship">Create shipment for their request</button>';
     html+='<button type="button" class="btn btn-ghost" data-co-act="trades">View trades</button>';
   } else if(st==='matched'){
     html+='<button type="button" class="btn btn-primary" data-co-act="connect">Connect</button>';
@@ -215,7 +215,13 @@ function renderCoFoot(id){
       var act=b.getAttribute('data-co-act');
       if(act==='close'){ closeCompany(); }
       else if(act==='trades'){ closeCompany(); showPaneById('shipments'); }
-      else if(act==='ship'){ closeCompany(); openShipFlow({partner:id}); }
+      else if(act==='ship'){
+        closeCompany();
+        var reqBtn=null;
+        document.querySelectorAll('#incoming-req-tbody .inc-create[data-buyer="'+id+'"]').forEach(function(x){ if(!reqBtn&&!x.disabled) reqBtn=x; });
+        if(reqBtn){ reqBtn.click(); }
+        else shipToast((COMPANIES[id]?COMPANIES[id].name:'This partner')+' has no open buy request to you. Shipments start from funded buy requests, so there is nothing to create yet.');
+      }
       else if(act==='connect'){ var card=document.querySelector('.net-card[data-company="'+id+'"]'); var cb=card?card.querySelector('[data-connect]'):null; if(cb && !cb.disabled) cb.click(); renderCoFoot(id); document.getElementById('co-tags').innerHTML='<span class="tag '+COMPANIES[id].roleClass+'">'+COMPANIES[id].role+'</span> '+coStatusTag(id); }
       else if(act==='accept'){ var row=document.querySelector('.req-row[data-company="'+id+'"]'); var ab=row?row.querySelector('[data-req-accept]'):null; if(ab) ab.click(); renderCoFoot(id); document.getElementById('co-tags').innerHTML='<span class="tag '+COMPANIES[id].roleClass+'">'+COMPANIES[id].role+'</span> '+coStatusTag(id); }
       else if(act==='decline'){ var row2=document.querySelector('.req-row[data-company="'+id+'"]'); var db=row2?row2.querySelector('[data-req-decline]'):null; if(db) db.click(); closeCompany(); }
@@ -315,6 +321,48 @@ function setShipGoodsLock(locked){
   shipEl('ship-unit').readOnly=locked;
   var note=shipEl('ship-goods-note');
   if(note) note.style.display=locked?'':'none';
+}
+function shipToast(msg){
+  var t=document.getElementById('ws-toast');
+  if(!t) return;
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._h); t._h=setTimeout(function(){t.classList.remove('show');},3600);
+}
+/* ---- Request-only shipment creation ----
+   Shipments exist only against funded buy requests. Every "New shipment"
+   entry point opens this picker; there is no blank-form path. The list is
+   read live from the Requests panel, so a request leaves the picker the
+   moment its shipment is created. */
+function openShipPicker(){
+  var list=shipEl('reqpick-list'), empty=shipEl('reqpick-empty');
+  if(!list||!empty) return;
+  list.innerHTML='';
+  var count=0;
+  document.querySelectorAll('#incoming-req-tbody .inc-create').forEach(function(b){
+    if(b.disabled) return;
+    var tr=b.closest('tr'); if(!tr) return;
+    var tds=tr.querySelectorAll('td');
+    var co=COMPANIES[b.getAttribute('data-buyer')];
+    var row=document.createElement('div'); row.className='reqpick-row';
+    var left=document.createElement('div');
+    left.innerHTML='<b>'+b.getAttribute('data-req')+' · '+(co?co.name:'Buyer')+'</b><small>'+(tds[2]?tds[2].textContent:'')+' · Wanted by '+(b.getAttribute('data-wanted')||(tds[4]?tds[4].textContent:''))+'</small>';
+    var amt=document.createElement('span'); amt.className='num'; amt.textContent='$'+(tds[3]?tds[3].textContent.trim():'')+' escrow';
+    var btn=document.createElement('button'); btn.type='button'; btn.className='btn btn-primary inc-create'; btn.textContent='Create shipment';
+    ['data-buyer','data-product','data-qty','data-req','data-freight','data-terms','data-wanted'].forEach(function(a){ var v=b.getAttribute(a); if(v) btn.setAttribute(a,v); });
+    row.appendChild(left); row.appendChild(amt); row.appendChild(btn);
+    list.appendChild(row);
+    count++;
+  });
+  list.style.display=count?'':'none';
+  empty.style.display=count?'none':'';
+  var m=shipEl('reqpick-modal'); m.classList.add('open'); m.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeShipPicker(){
+  var m=shipEl('reqpick-modal'); if(!m) return;
+  m.classList.remove('open'); m.setAttribute('aria-hidden','true');
+  var wiz=shipEl('ship-modal');
+  if(!wiz||!wiz.classList.contains('open')) document.body.style.overflow='';
 }
 function setShipTermsLock(locked){
   /* Delivery terms are part of the funded deal on a request: who arranges
@@ -476,7 +524,11 @@ function closeShipFlow(){
   shipEl('ship-modal').classList.remove('open');shipEl('ship-modal').setAttribute('aria-hidden','true');
   document.body.style.overflow='';
 }
-document.querySelectorAll('[data-new-shipment]').forEach(function(b){b.addEventListener('click',function(ev){ev.preventDefault();openShipFlow();});});
+document.querySelectorAll('[data-new-shipment]').forEach(function(b){b.addEventListener('click',function(ev){ev.preventDefault();openShipPicker();});});
+document.querySelectorAll('[data-reqpick-close]').forEach(function(el){el.addEventListener('click',closeShipPicker);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeShipPicker();});
+var rpNet=document.querySelector('[data-reqpick-network]');
+if(rpNet) rpNet.addEventListener('click',function(){closeShipPicker();showPaneById('network');});
 document.querySelectorAll('[data-close-ship]').forEach(function(el){el.addEventListener('click',closeShipFlow);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&shipEl('ship-modal').classList.contains('open'))closeShipFlow();});
 shipEl('ship-next-btn').addEventListener('click',function(){
@@ -491,11 +543,15 @@ shipEl('ship-loc-select').addEventListener('change',function(){
   updateShipLive();
 });
 shipEl('ship-buyer-unlock').addEventListener('click',function(){ setShipBuyerLock(false); shipEl('ship-buyer').focus(); });
-document.querySelectorAll('.inc-create').forEach(function(b){
-  b.addEventListener('click',function(){
-    var row=b.closest('[data-incoming]');
-    openShipFlow({request:b.getAttribute('data-req'), buyer:b.getAttribute('data-buyer'), product:b.getAttribute('data-product'), qty:b.getAttribute('data-qty'), row:row, freight:b.getAttribute('data-freight')||'', terms:b.getAttribute('data-terms')||'', wanted:b.getAttribute('data-wanted')||''});
-  });
+/* Delegated: covers both the Requests panel buttons and the picker's. */
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('.inc-create');
+  if(!b||b.disabled) return;
+  var reqId=b.getAttribute('data-req');
+  var canon=document.querySelector('#incoming-req-tbody .inc-create[data-req="'+reqId+'"]');
+  var row=canon?canon.closest('[data-incoming]'):null;
+  closeShipPicker();
+  openShipFlow({request:reqId, buyer:b.getAttribute('data-buyer'), product:b.getAttribute('data-product'), qty:b.getAttribute('data-qty'), row:row, freight:b.getAttribute('data-freight')||'', terms:b.getAttribute('data-terms')||'', wanted:b.getAttribute('data-wanted')||''});
 });
 ['ship-dest','ship-origin','ship-terms','ship-label-status'].forEach(function(id){shipEl(id).addEventListener('change',updateShipLive);});
 shipEl('ship-dest-city').addEventListener('input',updateShipLive);
@@ -538,7 +594,7 @@ shipEl('ship-create-btn').addEventListener('click',function(){
   setShipStep(6);
 });
 shipEl('ship-view-btn').addEventListener('click',function(){closeShipFlow();showPaneById('shipments');});
-shipEl('ship-another-btn').addEventListener('click',function(){openShipFlow();});
+shipEl('ship-another-btn').addEventListener('click',function(){closeShipFlow();openShipPicker();});
 applyShipBuyer();
 updateShipLive();
 updateShipPartnerPreview();
