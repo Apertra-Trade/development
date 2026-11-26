@@ -262,6 +262,7 @@ var MY_LOCS=[
   {city:'Montreal',label:'Montreal, Canada · Partner 3PL'}
 ];
 var shipRequestRow=null;
+var shipRequestFreight='', shipRequestWanted='';
 function currentShipLoc(){
   var sel=document.getElementById('ship-buyer'); if(!sel) return null;
   var locs=PARTNER_LOCS[sel.value]||[];
@@ -315,6 +316,15 @@ function setShipGoodsLock(locked){
   var note=shipEl('ship-goods-note');
   if(note) note.style.display=locked?'':'none';
 }
+function setShipTermsLock(locked){
+  /* Delivery terms are part of the funded deal on a request: who arranges
+     and who pays was settled when the buyer funded escrow, so the exporter
+     cannot re-pick them in the wizard. */
+  var t=shipEl('ship-terms');
+  t.classList.toggle('locked-field',locked);
+  if(locked){ t.setAttribute('tabindex','-1'); t.setAttribute('aria-readonly','true'); }
+  else { t.removeAttribute('tabindex'); t.removeAttribute('aria-readonly'); }
+}
 
 /* ---- New Shipment Flow ---- */
 var shipStep=1, shipFreight='standard', shipCreated=0, lastCreatedId='';
@@ -350,7 +360,38 @@ function updateShipLive(){
   shipEl('freight-standard-price').textContent=shipMoney(fp.standard);shipEl('freight-standard-meta').textContent=d.days+' · Standard partner lane';
   shipEl('freight-expedited-price').textContent=shipMoney(fp.expedited);shipEl('freight-expedited-meta').textContent='Priority · Earlier window on the same lane';
   shipEl('freight-consolidated-price').textContent=shipMoney(fp.consolidated);shipEl('freight-consolidated-meta').textContent='Shared lane · +2 to 4 days, lower cost';
-  shipEl('ship-escrow-line').textContent='Buyer funds escrow for '+shipMoney(goods)+' before you ship. Release trigger: customs clearance in '+ (city||d.label)+'.';
+  var buyerCo2=COMPANIES[shipEl('ship-buyer').value];
+  var buyerName=buyerCo2?buyerCo2.name:'The buyer';
+  var escT=shipEl('ship-escrow-title');
+  if(shipRequestRow){
+    if(escT) escT.textContent='Escrow · already funded by the buyer';
+    shipEl('ship-escrow-line').textContent=buyerName+' funded '+shipMoney(goods)+' into escrow with their request. Release trigger: customs clearance in '+(city||d.label)+'.';
+  } else {
+    if(escT) escT.textContent='Escrow · buyer funds before you ship';
+    shipEl('ship-escrow-line').textContent='Creating this shipment sends '+buyerName+' a request to fund '+shipMoney(goods)+' into escrow. Freight books once they fund. Release trigger: customs clearance in '+(city||d.label)+'.';
+  }
+  /* Terms note: say plainly what the selected delivery terms mean here. */
+  var tn=shipEl('ship-terms-note');
+  if(tn){
+    if(shipRequestRow) tn.textContent='Set by '+buyerName+' in their request and funded in escrow. Terms are part of the funded deal, so they cannot change here.';
+    else if(shipEl('ship-terms').value==='EXW') tn.textContent='Factory gate: the buyer arranges and pays their own freight and clearance from your door, so the freight options in Step 4 do not apply.';
+    else if(shipEl('ship-terms').value==='DDP') tn.textContent='Duties paid: freight, clearance and destination duty are all inside the total the buyer funds in escrow. They just receive the goods.';
+    else tn.textContent='Delivered at place: you arrange freight and clearance through Apertra partners; the cost sits in the total the buyer funds in escrow.';
+  }
+  /* Freight: on a request the buyer chose the speed and funded it, so the
+     options are a summary, not a choice. Under EXW there is no freight to
+     book. Otherwise the exporter picks, and the buyer funds the pick. */
+  var fOpts=shipEl('ship-freight-options'), fNote=shipEl('ship-freight-note'), intro4=shipEl('ship-step4-intro');
+  var fLock=!!shipRequestRow||shipEl('ship-terms').value==='EXW';
+  if(fOpts) fOpts.classList.toggle('locked',fLock);
+  if(fNote){
+    if(shipRequestRow){ fNote.style.display=''; fNote.innerHTML='<b>Chosen and funded by the buyer:</b> '+buyerName+' picked <b>'+shipFreight+' freight</b>'+(shipRequestWanted?' · wanted by '+shipRequestWanted:'')+' and paid for it in escrow. Nothing to choose and nothing for you to pay; just hand the goods to the carrier in time.'; }
+    else if(shipEl('ship-terms').value==='EXW'){ fNote.style.display=''; fNote.textContent='Under EXW the buyer arranges and pays their own freight from your door, so no freight is booked here.'; }
+    else fNote.style.display='none';
+  }
+  if(intro4) intro4.textContent=shipRequestRow
+    ? 'The buyer picked the freight speed and funded it in escrow with their request, and the payment protection is already in place. This step is a summary, not a choice.'
+    : 'Pick a freight option from aggregated partners, then confirm how the buyer pays. Funds are held by a regulated partner and released on clearance.';
   document.querySelectorAll('#ship-freight-options .freight-opt').forEach(function(b){b.classList.toggle('selected',b.getAttribute('data-freight')===shipFreight);});
 }
 function renderShipReview(){
@@ -396,6 +437,16 @@ function openShipFlow(opts){
   var banner=shipEl('ship-req-banner'); banner.style.display='none'; banner.innerHTML='';
   setShipBuyerLock(false);
   setShipGoodsLock(false);
+  setShipTermsLock(false);
+  shipRequestFreight=''; shipRequestWanted='';
+  /* Full reset: a fresh open never inherits values from a previous wizard
+     session. Request figures were leaking into brand-new shipments. */
+  shipEl('ship-buyer').value='greatlakes';
+  shipEl('ship-product').value='maple';
+  shipEl('ship-qty').value='600';
+  shipEl('ship-unit').value=SHIP_PROD['maple'].unit;
+  shipEl('ship-terms').value='DAP';
+  shipEl('ship-label-status').value='ready';
   if(opts.partner){
     var sel=shipEl('ship-buyer'); sel.value=opts.partner;
     applyShipBuyer();
@@ -407,8 +458,12 @@ function openShipFlow(opts){
     if(opts.product){ shipEl('ship-product').value=opts.product; shipEl('ship-unit').value=SHIP_PROD[opts.product].unit; }
     if(opts.qty){ shipEl('ship-qty').value=opts.qty; }
     setShipGoodsLock(true);
+    if(opts.terms){ shipEl('ship-terms').value=opts.terms; }
+    setShipTermsLock(true);
+    if(opts.freight){ shipFreight=opts.freight; shipRequestFreight=opts.freight; }
+    shipRequestWanted=opts.wanted||'';
     var bn=COMPANIES[opts.buyer]?COMPANIES[opts.buyer].name:'The buyer';
-    banner.innerHTML='<b>Request '+opts.request+' · '+bn+'</b> asked for these goods and has already funded escrow. Your only job is to create the shipment: buyer, goods and delivery location are filled in from the request. Documents, freight and clearance generate when you create it.';
+    banner.innerHTML='<b>Request '+opts.request+' · '+bn+'</b> asked for these goods and has already funded escrow, freight included. Your only job is to create the shipment: buyer, goods, delivery location, delivery terms and freight are filled in from the request and locked to it. Documents and clearance generate when you create it.';
     banner.style.display='';
   }
   shipEl('ship-origin').value='Toronto';
@@ -439,7 +494,7 @@ shipEl('ship-buyer-unlock').addEventListener('click',function(){ setShipBuyerLoc
 document.querySelectorAll('.inc-create').forEach(function(b){
   b.addEventListener('click',function(){
     var row=b.closest('[data-incoming]');
-    openShipFlow({request:b.getAttribute('data-req'), buyer:b.getAttribute('data-buyer'), product:b.getAttribute('data-product'), qty:b.getAttribute('data-qty'), row:row});
+    openShipFlow({request:b.getAttribute('data-req'), buyer:b.getAttribute('data-buyer'), product:b.getAttribute('data-product'), qty:b.getAttribute('data-qty'), row:row, freight:b.getAttribute('data-freight')||'', terms:b.getAttribute('data-terms')||'', wanted:b.getAttribute('data-wanted')||''});
   });
 });
 ['ship-dest','ship-origin','ship-terms','ship-label-status'].forEach(function(id){shipEl(id).addEventListener('change',updateShipLive);});
@@ -462,7 +517,7 @@ shipEl('ship-create-btn').addEventListener('click',function(){
     var tdVal=document.createElement('td');tdVal.className='num';tdVal.textContent=Math.round(goods).toLocaleString('en-CA');
     var tdFreight=document.createElement('td');var sp=document.createElement('span');sp.className='status '+(needsLabel?'st-amber':'st-blue');sp.textContent=needsLabel?'Hold: label':'Booked · '+shipFreight;tdFreight.appendChild(sp);
     var tdCustoms=document.createElement('td');tdCustoms.textContent='Docs generated';
-    var tdPay=document.createElement('td');tdPay.textContent='Escrow requested';
+    var tdPay=document.createElement('td');tdPay.textContent=shipRequestRow?'Escrow funded':'Escrow requested';
     tr.appendChild(tdId);tr.appendChild(tdGoods);tr.appendChild(tdRoute);tr.appendChild(tdVal);tr.appendChild(tdFreight);tr.appendChild(tdCustoms);tr.appendChild(tdPay);
     tbody.insertBefore(tr,tbody.firstChild);
   }

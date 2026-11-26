@@ -837,6 +837,7 @@ body.ws2 .ws-chip .ws-nbadge{width:20px;height:20px;min-width:20px;flex:0 0 auto
 /* Locked fields: pre-filled from profiles. Shown at full strength like any
    other field, in light and dark mode; they simply do not accept input. */
 body.ws2 .ship-field select.locked-field{pointer-events:none}
+body.ws2 .freight-options.locked{pointer-events:none}
 body.ws2 .btn:disabled{opacity:.55;cursor:default}
 /* Compliance "done" icons: in dark mode --green is near-white, which made the
    white check on the disc read as a plain white blob. Flip the glyph dark. */

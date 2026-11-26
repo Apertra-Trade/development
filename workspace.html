@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=26">
+<link rel="stylesheet" href="assets/site.css?v=27">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -653,12 +653,12 @@
 
 <div class="panel" id="incoming-requests-panel">
   <div class="panel-head"><h3>Requests from buyers</h3><span class="status st-amber" id="incoming-count">2 waiting on you</span></div>
-  <div class="panel-body" style="padding-bottom:4px"><p style="margin:0;font-size:14px;color:var(--ink2)">This is how orders start on Apertra. A buyer sends you a request and funds escrow up front. Your only job is to create the shipment for the request: the buyer, goods and delivery location are already filled in, and the documents, freight and clearance are generated from it. Nothing to retype, nothing to chase.</p></div>
+  <div class="panel-body" style="padding-bottom:4px"><p style="margin:0;font-size:14px;color:var(--ink2)">This is how orders start on Apertra. A buyer sends you a request and funds escrow up front, freight included at the speed they chose. Your only job is to create the shipment for the request: the buyer, goods, delivery location, terms and freight are already filled in from it, and the documents and clearance are generated from it. Nothing to retype, nothing to chase.</p></div>
   <div style="overflow-x:auto"><table>
     <thead><tr><th>Request</th><th>Buyer</th><th>Goods</th><th class="num">Escrow funded CAD</th><th>Wanted by</th><th>Status</th><th></th></tr></thead>
     <tbody id="incoming-req-tbody">
-      <tr data-incoming><td class="mono">RB-1043</td><td>Great Lakes Grocery · Chicago</td><td>Maple syrup, 500 ml · 900 cases</td><td class="num">36,000</td><td>Dec 12</td><td><span class="status st-amber inc-status">New request · create the shipment</span></td><td><button type="button" class="btn btn-primary inc-create" data-buyer="greatlakes" data-product="maple" data-qty="900" data-req="RB-1043">Create shipment</button></td></tr>
-      <tr data-incoming><td class="mono">RB-1044</td><td>Borough Pantry · London</td><td>Pantry gift sets · 600 units</td><td class="num">30,540</td><td>Dec 18</td><td><span class="status st-amber inc-status">New request · create the shipment</span></td><td><button type="button" class="btn btn-primary inc-create" data-buyer="borough" data-product="gift" data-qty="600" data-req="RB-1044">Create shipment</button></td></tr>
+      <tr data-incoming><td class="mono">RB-1043</td><td>Great Lakes Grocery · Chicago</td><td>Maple syrup, 500 ml · 900 cases · Standard freight funded</td><td class="num">36,000</td><td>Dec 12</td><td><span class="status st-amber inc-status">New request · create the shipment</span></td><td><button type="button" class="btn btn-primary inc-create" data-buyer="greatlakes" data-product="maple" data-qty="900" data-req="RB-1043" data-freight="standard" data-terms="DAP" data-wanted="Dec 12">Create shipment</button></td></tr>
+      <tr data-incoming><td class="mono">RB-1044</td><td>Borough Pantry · London</td><td>Pantry gift sets · 600 units · Expedited freight funded</td><td class="num">30,540</td><td>Dec 18</td><td><span class="status st-amber inc-status">New request · create the shipment</span></td><td><button type="button" class="btn btn-primary inc-create" data-buyer="borough" data-product="gift" data-qty="600" data-req="RB-1044" data-freight="expedited" data-terms="DAP" data-wanted="Dec 18">Create shipment</button></td></tr>
     </tbody>
   </table></div>
 </div>
@@ -1048,14 +1048,15 @@
       <!-- STEP 4 -->
       <div class="ship-panel" data-ship-panel="4">
         <h4>Freight and payment protection</h4>
-        <p>Pick a freight option from aggregated partners, then confirm how the buyer pays. Funds are held by a regulated partner and released on clearance.</p>
+        <p id="ship-step4-intro">Pick a freight option from aggregated partners, then confirm how the buyer pays. Funds are held by a regulated partner and released on clearance.</p>
         <div class="freight-options" id="ship-freight-options">
           <button type="button" class="freight-opt selected" data-freight="standard"><b>Standard</b><span id="freight-standard-meta">Best balance of cost and speed</span><strong id="freight-standard-price">$0</strong></button>
           <button type="button" class="freight-opt" data-freight="expedited"><b>Expedited</b><span id="freight-expedited-meta">Priority lane, earlier delivery window</span><strong id="freight-expedited-price">$0</strong></button>
           <button type="button" class="freight-opt" data-freight="consolidated"><b>Consolidated</b><span id="freight-consolidated-meta">Share the lane with another exporter, slower</span><strong id="freight-consolidated-price">$0</strong></button>
         </div>
+        <p id="ship-freight-note" style="display:none;font-size:13.5px;color:var(--ink2);margin:10px 0 0;line-height:1.55"></p>
         <div class="ship-doc-list">
-          <div><span class="doc-ic">ESC</span><div><b>Escrow · buyer funds before you ship</b><small id="ship-escrow-line">Buyer funds escrow for the goods value. Release trigger: customs clearance.</small></div><span class="status st-green">Included</span></div>
+          <div><span class="doc-ic">ESC</span><div><b id="ship-escrow-title">Escrow · buyer funds before you ship</b><small id="ship-escrow-line">Buyer funds escrow for the goods value. Release trigger: customs clearance.</small></div><span class="status st-green">Included</span></div>
           <div><span class="doc-ic">FX</span><div><b>FX + escrow combined at 0.75%</b><small>Charged on settlement, not as a separate invoice fee. Bank FX alone averages 2.9%.</small></div><span class="status st-blue">0.75%</span></div>
           <div><span class="doc-ic">INS</span><div><b>Cargo insurance at 0.6% of goods value</b><small>Calculated in your landed cost on the next step.</small></div><span class="status st-blue">Included</span></div>
         </div>
@@ -1104,7 +1105,7 @@
 
 
 </div>
-<script src="assets/site.js?v=9"></script>
+<script src="assets/site.js?v=10"></script>
 
 <script>
 document.querySelectorAll('.ws-chip').forEach(function(c){
@@ -1159,7 +1160,7 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
 
       <div class="ship-panel" data-buy-panel="2">
         <h4>Where is it coming to?</h4>
-        <p>Apertra arranges the freight, prepares the import documents and lodges the customs entry for this corridor. You see one landed price, no surprises at the border.</p>
+        <p>Apertra arranges the freight, prepares the import documents and lodges the customs entry for this corridor. You see one landed price, no surprises at the border. The wanted-by window and delivery terms you pick here are part of the funded deal: the supplier creates the shipment on exactly these terms and cannot change them afterwards.</p>
         <div class="ship-form-grid">
           <div class="ship-field full"><label for="buy-dest">Deliver to</label>
             <select id="buy-dest">
