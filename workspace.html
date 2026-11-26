@@ -25,7 +25,7 @@
       <div class="ws-search-sep"></div>
       <button type="button" class="ws-search-f ws-cat" data-cat="partners"><b>Partners</b><span>Buyers and importers</span></button>
       <div class="ws-search-sep"></div>
-      <button type="button" class="ws-search-f ws-cat" data-cat="corridors"><b>Corridors</b><span>20 directed routes</span></button>
+      <button type="button" class="ws-search-f ws-cat" data-cat="corridors"><b>Corridors</b><span>7 launch corridors</span></button>
       <button type="button" class="ws-search-btn" id="ws-go">Search</button>
     </div>
     
@@ -79,7 +79,7 @@
       <!-- OVERVIEW -->
       <div class="app-pane active" id="pane-overview">
         <div class="app-head">
-          <div><h2>Good morning, Maya</h2><p>Tuesday, November 17, 2026 · Scale plan · 5-region network · CA-US live, Europe expanding, AU/NZ Phase 3</p></div>
+          <div><h2>Good morning, Maya</h2><p>Tuesday, November 17, 2026 · Scale plan · Launch network · 7 corridors live, New Zealand fast-follow</p></div>
           <div class="actions"><button type="button" class="btn btn-ghost" data-pane-link="products">Classify a product</button><button type="button" class="btn btn-primary" data-new-shipment>＋ New shipment</button></div>
         </div>
         <div class="kpis">
@@ -155,7 +155,7 @@
     <div class="ws-card-body">
       <div class="ws-card-top"><b>De Markt BV</b><span class="ws-rate">$71,200 YTD</span></div>
       <p>Rotterdam, Netherlands · Food distribution</p>
-      <p class="ws-note">Growing fast: Europe volume is up 41% since this connection.</p>
+      <p class="ws-note">Growing fast: Netherlands volume is up 41% since this connection.</p>
       <button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button>
     </div>
   </article>
@@ -366,7 +366,7 @@
 
 <!-- CORRIDOR DETAIL -->
 <div class="app-pane" id="pane-corridor">
-  <div class="app-head"><div><h2 id="co-title">Corridor</h2><p>One of 20 directed routes on the Apertra mesh. Every member can ship both ways on their corridors.</p></div><div class="actions"><span class="wsr-agree" id="co-agree" style="font-size:13px"></span><button type="button" class="btn btn-ghost" data-pane-link="overview">Back to overview</button></div></div>
+  <div class="app-head"><div><h2 id="co-title">Corridor</h2><p>One of the seven launch corridors. Exporters ship on live lanes; buyers and importers join from everywhere.</p></div><div class="actions"><span class="wsr-agree" id="co-agree" style="font-size:13px"></span><button type="button" class="btn btn-ghost" data-pane-link="overview">Back to overview</button></div></div>
   <div class="ws-summary" id="co-summary"></div>
   <div class="app-grid">
     <div class="panel"><div class="panel-head"><h3>What this corridor needs</h3></div><div class="panel-body" id="co-reqs"></div></div>
@@ -393,7 +393,7 @@
     </div>
     <div class="plan-card current" data-plan-card="scale">
       <h3>Scale</h3><p class="plan-price"><b>$749</b><span>/month</span></p>
-      <ul><li>All 20 corridors</li><li>Priority clearance and audit trail</li><li>Verified Supplier ranking</li><li>Membership credited against fees</li></ul>
+      <ul><li>All launch corridors</li><li>Priority clearance and audit trail</li><li>Verified Supplier ranking</li><li>Membership credited against fees</li></ul>
       <button type="button" class="btn btn-ghost" disabled>Current plan</button>
     </div>
     <div class="plan-card" data-plan-card="enterprise">
@@ -464,7 +464,7 @@
       </article>
       <article class="ws-card" data-q="de markt rotterdam importer netherlands">
         <div class="ws-card-img"><img src="assets/ship-terminal.jpg" alt="Container terminal at dusk"><span class="ws-badge">Verified importer</span></div>
-        <div class="ws-card-body"><div class="ws-card-top"><b>De Markt BV</b><span class="ws-rate">$71,200 YTD</span></div><p>Rotterdam, Netherlands · Food distribution</p><p class="ws-note">Your Europe volume is up 41% since this connection.</p><button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button></div>
+        <div class="ws-card-body"><div class="ws-card-top"><b>De Markt BV</b><span class="ws-rate">$71,200 YTD</span></div><p>Rotterdam, Netherlands · Food distribution</p><p class="ws-note">Your Netherlands volume is up 41% since this connection.</p><button type="button" class="btn btn-ghost" data-pane-link="network">Open profile</button></div>
       </article>
       <article class="ws-card" data-q="midwest natural foods chicago buyer request">
         <div class="ws-card-img"><img src="assets/ind-owner.jpg" alt="Business owner in his warehouse"><span class="ws-badge warn">Request waiting</span></div>
@@ -476,33 +476,21 @@
   <div class="wsr-group" data-group="corridors">
     <h3 class="ws-sec">Corridors <span class="wsr-count"></span></h3>
     <div class="panel"><div class="panel-body">
+        <div class="wsr-row" data-q="canada domestic toronto montreal vancouver ottawa"><div><b>Canada to Canada</b><small>Road and rail · No border crossing · Domestic movement inside Canada</small></div><span class="wsr-agree">Domestic</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
         <div class="wsr-row" data-q="canada united states toronto chicago new york cusma"><div><b>Canada to United States</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="canada europe rotterdam hamburg ceta"><div><b>Canada to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="canada australia sydney cptpp"><div><b>Canada to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="canada new zealand auckland cptpp"><div><b>Canada to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="united states canada chicago toronto cusma"><div><b>United States to Canada</b><small>Road, rail and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CUSMA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="united states europe mfN"><div><b>United States to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="united states australia ausfta"><div><b>United States to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="united states new zealand mfn"><div><b>United States to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="europe canada rotterdam toronto ceta"><div><b>Europe to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CETA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="europe united states mfn"><div><b>Europe to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="europe australia mfn"><div><b>Europe to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today, FTA in negotiation</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="europe new zealand fta auckland"><div><b>Europe to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="australia canada sydney toronto cptpp"><div><b>Australia to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="australia united states ausfta"><div><b>Australia to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">AUSFTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="australia europe mfn"><div><b>Australia to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN today</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="australia new zealand cer auckland sydney"><div><b>Australia to New Zealand</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="new zealand canada auckland cptpp"><div><b>New Zealand to Canada</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="new zealand united states mfn"><div><b>New Zealand to United States</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">MFN, no FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="new zealand europe fta"><div><b>New Zealand to Europe</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">EU-NZ FTA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
-        <div class="wsr-row" data-q="new zealand australia cer"><div><b>New Zealand to Australia</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">CER</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada united kingdom london tca"><div><b>Canada to United Kingdom</b><small>Ocean and air · Food, farm and manufactured goods move on this corridor</small></div><span class="wsr-agree">Canada-UK TCA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada netherlands rotterdam ceta europe eu"><div><b>Canada to Netherlands</b><small>Ocean and air · The EU gateway corridor, through Rotterdam</small></div><span class="wsr-agree">CETA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada australia sydney cptpp"><div><b>Canada to Australia</b><small>Ocean and air · Biosecurity inspection on arrival for food products</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="canada new zealand auckland cptpp"><div><b>Canada to New Zealand</b><small>Fast-follow corridor · Opens on the Australia playbook, not live yet</small></div><span class="wsr-agree">CPTPP</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="united states canada chicago toronto cusma launch states"><div><b>United States to Canada</b><small>Road, rail and air · For exporters in the US launch states</small></div><span class="wsr-agree">CUSMA</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
+        <div class="wsr-row" data-q="united states domestic chicago new york launch states"><div><b>United States to United States</b><small>Road and air · No border crossing · For exporters in the US launch states</small></div><span class="wsr-agree">Domestic</span><button type="button" class="btn btn-ghost" data-corridor>View corridor</button></div>
       <p style="font-size:13.5px;color:var(--muted);margin:12px 0 0">Duty treatment is indicative for classified food and manufactured goods. Apertra confirms the exact rate per product before you ship.</p>
     </div></div>
   </div>
 
   <div class="wsr-empty" id="wsr-empty" hidden>
     <h3>Nothing matches that yet</h3>
-    <p>Try a shipment ID like AP-2041, a product like maple syrup, a city like Chicago or Rotterdam, or a corridor like Canada to Europe.</p>
+    <p>Try a shipment ID like AP-2041, a product like maple syrup, a city like Chicago or Rotterdam, or a corridor like Canada to Netherlands.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" class="btn btn-ghost" data-pane-link="shipments">Browse shipments</button><button type="button" class="btn btn-ghost" data-pane-link="network">Browse partners</button><a class="btn btn-ghost" href="corridors.html">Browse corridors</a></div>
   </div>
 </div>
@@ -567,7 +555,7 @@
           <label>Phone<input type="text" value="+1 416 555 0132"></label>
           <label class="wide">Warehouse address<input type="text" value="2140 Drew Road, Mississauga, ON"></label>
           <label>Business number<input type="text" value="BN 74120 8853"></label>
-          <label>Home corridor focus<select><option>Canada to US, Europe, UK</option><option>All 20 corridors</option></select></label>
+          <label>Home corridor focus<select><option>Canada to US, Europe, UK</option><option>All launch corridors</option></select></label>
         </div>
         <button type="button" class="btn btn-primary" style="margin-top:14px" data-toast="Profile saved. Your team sees the updated details right away.">Save profile</button>
       </div></div>
@@ -1105,7 +1093,7 @@
 
 
 </div>
-<script src="assets/site.js?v=13"></script>
+<script src="assets/site.js?v=14"></script>
 
 <script>
 document.querySelectorAll('.ws-chip').forEach(function(c){
@@ -1348,6 +1336,6 @@ document.addEventListener('click', function(ev){
   });
 })();
 </script>
-<script src="assets/screens.js?v=4"></script>
+<script src="assets/screens.js?v=5"></script>
 </body>
 </html>

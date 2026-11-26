@@ -128,9 +128,14 @@
 
   /* ---------------- Corridor detail ---------------- */
   var CORRIDORS = {
+    'Canada to Canada': { duty: 'No customs duty, domestic movement', transit: '2 to 5 days, road and rail', volume: '$38,400 in November', count: '6 shipments this quarter', reqs: ['No customs entry, domestic movement', 'GST/HST handled on the supplier invoice', 'Bilingual labels for retail goods'] },
     'Canada to United States': { duty: '0% under CUSMA for most food and farm goods', transit: '2 to 6 days, road and rail', volume: '$231,000 in November', count: '14 shipments this quarter', reqs: ['CUSMA certificate of origin', 'FDA prior notice for food shipments', 'Bilingual labels for retail goods'] },
-    'Canada to Europe': { duty: '0% under CETA for most food and farm goods', transit: '9 to 14 days, ocean', volume: '$118,000 in November', count: '11 shipments this quarter', reqs: ['CETA origin declaration', 'EU importer of record', 'Phytosanitary certificate for plant products'] },
-    'Canada to Australia': { duty: '0% under CPTPP for most food and farm goods', transit: '14 to 21 days, ocean', volume: 'No volume yet this quarter', count: 'New corridor for Northwind', reqs: ['CPTPP origin declaration', 'Australian importer of record and ABN', 'Biosecurity inspection on arrival for food products'] }
+    'Canada to United Kingdom': { duty: '0% under the Canada-UK TCA for most food and farm goods', transit: '10 to 12 days, ocean and air', volume: '$63,800 in November', count: '5 shipments this quarter', reqs: ['TCA origin declaration', 'UK importer of record', 'UK-format nutrition labels'] },
+    'Canada to Netherlands': { duty: '0% under CETA for most food and farm goods', transit: '11 to 14 days, ocean', volume: '$118,000 in November', count: '11 shipments this quarter', reqs: ['CETA origin declaration', 'EU importer of record (Netherlands)', 'Phytosanitary certificate for plant products'] },
+    'Canada to Australia': { duty: '0% under CPTPP for most food and farm goods', transit: '14 to 21 days, ocean', volume: 'No volume yet this quarter', count: 'New corridor for Northwind', reqs: ['CPTPP origin declaration', 'Australian importer of record and ABN', 'Biosecurity inspection on arrival for food products'] },
+    'Canada to New Zealand': { duty: '0% under CPTPP for most food and farm goods', transit: '16 to 23 days, ocean', volume: 'Not open yet', count: 'Fast-follow corridor', reqs: ['CPTPP origin declaration', 'New Zealand importer of record', 'Biosecurity inspection on arrival for food products'] },
+    'United States to Canada': { duty: '0% under CUSMA for most food and farm goods', transit: '2 to 6 days, road and rail', volume: 'No volume yet this quarter', count: 'Open to US launch-state exporters', reqs: ['CUSMA certificate of origin', 'Canadian importer of record', 'Bilingual labels for retail goods'] },
+    'United States to United States': { duty: 'No customs duty, domestic movement', transit: '2 to 5 days, road and air', volume: 'No volume yet this quarter', count: 'Open to US launch-state exporters', reqs: ['No customs entry, domestic movement', 'State sales tax handled on the invoice', 'FDA facility registration for food shipments'] }
   };
   window.openCorridor = function (btn) {
     var row = btn.closest('.wsr-row');
