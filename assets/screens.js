@@ -16,10 +16,10 @@
   var STEPS = ['Booked', 'Documents ready', 'In transit', 'Customs', 'Delivered'];
   var SHIPMENTS = {
     'AP-2041': { goods: 'Maple syrup, 1,200 cases', route: 'Toronto → Chicago', partner: 'Great Lakes Grocery, Chicago', value: 48200, status: 'Action needed', step: 1, hs: '1702.20', weight: '14,400 kg', incoterm: 'DAP Chicago', escrow: 'Funded · releases on delivery', note: 'A revised bilingual nutrition label is required before this shipment can move. Upload it in Documents and freight releases automatically.', freight: 2650, fee: 603 },
-    'AP-2038': { goods: 'Honey jars, 800 cases', route: 'Toronto → Rotterdam', partner: 'De Markt BV, Rotterdam', value: 31600, status: 'In transit', step: 2, hs: '0409.00', weight: '9,600 kg', incoterm: 'DAP Rotterdam', escrow: 'Funded · releases on delivery', note: 'On the water, arriving Rotterdam November 28. Documents pre-lodged with EU customs.', freight: 2210, fee: 395 },
-    'AP-2035': { goods: 'Pantry gift sets, 450 units', route: 'Montreal → London', partner: 'Borough Pantry, London', value: 22900, status: 'Delivered', step: 4, hs: 'Mixed (by component)', weight: '2,850 kg', incoterm: 'DAP London', escrow: 'Releasing November 18', note: 'Cleared UK customs November 16 and delivered the same day. Escrow releases November 18.', freight: 1740, fee: 286 },
-    'AP-2031': { goods: 'Maple syrup, 900 cases', route: 'Toronto → Detroit', partner: 'Great Lakes Grocery, Detroit DC', value: 36400, status: 'Delivered', step: 4, hs: '1702.20', weight: '10,800 kg', incoterm: 'DAP Detroit', escrow: 'Paid out November 10', note: 'Delivered and paid. Full audit trail retained for seven years.', freight: 1980, fee: 455 },
-    'AP-2027': { goods: 'Skincare gift sets (trial)', route: 'Toronto → Detroit', partner: 'Lakeshore Provisions, Detroit', value: 14750, status: 'Delivered', step: 4, hs: '3304.99', weight: '1,120 kg', incoterm: 'DAP Detroit', escrow: 'Paid out October 31', note: 'Trial shipment delivered October 29 and paid October 31.', freight: 1290, fee: 184 }
+    'AP-2038': { goods: 'Honey jars, 800 cases', route: 'Toronto → Rotterdam', partner: 'De Markt BV, Rotterdam', value: 31600, status: 'In transit', step: 2, hs: '0409.00', weight: '9,600 kg', incoterm: 'DAP Rotterdam', escrow: 'Funded · releases on delivery', note: 'On the water, arriving Rotterdam November 28. Documents pre-lodged with EU customs.', freight: 2210, fee: 395, carrier: 'Maersk (ocean)', tracking: 'MAEU 583920-4', trackUrl: 'https://www.maersk.com/tracking/', lastScan: 'Departed Montreal · Nov 21 · ETA Rotterdam Nov 28' },
+    'AP-2035': { goods: 'Pantry gift sets, 450 units', route: 'Montreal → London', partner: 'Borough Pantry, London', value: 22900, status: 'Delivered', step: 4, hs: 'Mixed (by component)', weight: '2,850 kg', incoterm: 'DAP London', escrow: 'Releasing November 18', note: 'Cleared UK customs November 16 and delivered the same day. Escrow releases November 18.', freight: 1740, fee: 286, carrier: 'DHL Global Forwarding (air)', tracking: 'HAWB 123-8841 2205', trackUrl: 'https://www.dhl.com/global-en/home/tracking.html', lastScan: 'Delivered, London · Nov 16' },
+    'AP-2031': { goods: 'Maple syrup, 900 cases', route: 'Toronto → Detroit', partner: 'Great Lakes Grocery, Detroit DC', value: 36400, status: 'Delivered', step: 4, hs: '1702.20', weight: '10,800 kg', incoterm: 'DAP Detroit', escrow: 'Paid out November 10', note: 'Delivered and paid. Full audit trail retained for seven years.', freight: 1980, fee: 455, carrier: 'Day & Ross (road)', tracking: 'PRO 8841 552 901', trackUrl: 'https://dayross.com', lastScan: 'Delivered, Detroit DC · Nov 8' },
+    'AP-2027': { goods: 'Skincare gift sets (trial)', route: 'Toronto → Detroit', partner: 'Lakeshore Provisions, Detroit', value: 14750, status: 'Delivered', step: 4, hs: '3304.99', weight: '1,120 kg', incoterm: 'DAP Detroit', escrow: 'Paid out October 31', note: 'Trial shipment delivered October 29 and paid October 31.', freight: 1290, fee: 184, carrier: 'Day & Ross (road)', tracking: 'PRO 7791 204 558', trackUrl: 'https://dayross.com', lastScan: 'Delivered, Detroit · Oct 29' }
   };
   function money(n) { return '$' + n.toLocaleString('en-CA'); }
   window.openShipment = function (id) {
@@ -29,8 +29,19 @@
     document.getElementById('sh-sub').textContent = s.goods + ' · ' + s.route;
     document.getElementById('sh-status').innerHTML = '<span class="status ' + (s.step >= 4 ? 'st-green' : (s.status === 'Action needed' ? 'st-amber' : 'st-blue')) + '">' + s.status + '</span>';
     document.getElementById('sh-steps').innerHTML = STEPS.map(function (label, i) {
-      return '<div class="apx-step' + (i <= s.step ? ' done' : '') + '"><i></i><span>' + label + '</span></div>';
-    }).join('<div class="apx-link"></div>');
+      return '<div class="apx-step' + (i <= s.step ? ' done' : '') + '"><i></i><b>' + label + '</b></div>';
+    }).join('');
+    var tk = document.getElementById('sh-track');
+    if (s.carrier) {
+      tk.innerHTML =
+        '<div class="ana-line"><span>Carrier</span><b>' + s.carrier + '</b></div>' +
+        '<div class="ana-line"><span>Tracking number</span><b class="mono">' + s.tracking + '</b></div>' +
+        '<div class="ana-line"><span>Last carrier scan</span><b>' + s.lastScan + '</b></div>' +
+        '<p style="margin:10px 0;font-size:13.5px;color:var(--muted)">Carrier scans stream into Apertra automatically; the tracker at the top of this page is the plain-language version of this feed.</p>' +
+        '<a class="btn btn-primary" href="' + s.trackUrl + '" target="_blank" rel="noopener">Track on the carrier\u2019s site</a>';
+    } else {
+      tk.innerHTML = '<p style="margin:0;font-size:14px;color:var(--ink2)">No carrier yet. The freight partner and tracking number are assigned the moment freight books, and for this shipment that is blocked by the label hold.</p>';
+    }
     document.getElementById('sh-note').textContent = s.note;
     document.getElementById('sh-fields').innerHTML =
       '<div class="ana-line"><span>Buyer</span><b>' + s.partner + '</b></div>' +
