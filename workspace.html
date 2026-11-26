@@ -9,7 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=30">
+<link rel="stylesheet" href="assets/site.css?v=31">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -258,6 +259,7 @@
       <div class="panel" style="margin-top:18px"><div class="panel-head"><h3>Carrier tracking</h3></div><div class="panel-body" id="sh-track"></div></div>
     </div>
   </div>
+  <div class="panel"><div class="panel-head"><h3>Route map</h3><span class="status st-blue" id="sh-map-tag" style="margin-left:auto"></span></div><div id="sh-map" role="img" aria-label="Map of the shipment route and last known position"></div><div class="panel-body"><p id="sh-map-note" style="margin:6px 0 0;font-size:14px;color:var(--ink2)"></p></div></div>
 </div>
 
 <!-- PRODUCT FORM -->
@@ -1337,6 +1339,7 @@ document.addEventListener('click', function(ev){
   });
 })();
 </script>
-<script src="assets/screens.js?v=8"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="assets/screens.js?v=9"></script>
 </body>
 </html>

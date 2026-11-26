@@ -22,6 +22,57 @@
     'AP-2027': { goods: 'Skincare gift sets (trial)', route: 'Toronto → Detroit', partner: 'Lakeshore Provisions, Detroit', value: 14750, status: 'Delivered', step: 4, hs: '3304.99', weight: '1,120 kg', incoterm: 'DAP Detroit', escrow: 'Paid out October 31', note: 'Trial shipment delivered October 29 and paid October 31.', freight: 1290, fee: 184, carrier: 'Day & Ross (road)', tracking: 'PRO 7791 204 558', trackUrl: 'https://dayross.com', lastScan: 'Delivered, Detroit · Oct 29' }
   };
   function money(n) { return '$' + n.toLocaleString('en-CA'); }
+
+  /* ---------------- Shipment route map ----------------
+     The map is drawn from the same tracking status the page already shows:
+     origin, destination, and the last carrier scan. Position between scans
+     is the planned route, never a fake live dot. */
+  var CITY = { toronto: [43.65, -79.38], detroit: [42.33, -83.05], chicago: [41.88, -87.63], montreal: [45.5, -73.57], london: [51.51, -0.13], rotterdam: [51.92, 4.48], atlantic: [48.5, -32] };
+  var SHIP_MAP = {
+    'AP-2041': { from: 'toronto', fromName: 'Toronto', to: 'chicago', toName: 'Chicago', scan: 'toronto', scanLabel: 'Awaiting label approval', state: 'blocked', tag: 'Not yet shipped', note: 'The planned route, Toronto to Chicago by road. The position marker stays at origin until the label hold clears and freight books; then carrier scans start moving it.' },
+    'AP-2038': { from: 'toronto', fromName: 'Toronto', to: 'rotterdam', toName: 'Rotterdam', via: ['montreal', 'atlantic'], scan: 'atlantic', scanLabel: 'North Atlantic · last scan Nov 21', state: 'transit', tag: 'In transit · last scan Nov 21', note: 'Last known position from the carrier scan on Nov 21: on the water, North Atlantic, ETA Rotterdam November 28. The solid line is the route already travelled; the dashed line is the planned route ahead. The marker moves when the next scan lands, at port and terminal events.' },
+    'AP-2035': { from: 'montreal', fromName: 'Montreal', to: 'london', toName: 'London', via: ['atlantic'], scan: 'london', scanLabel: 'Delivered · Nov 16', state: 'delivered', tag: 'Delivered', note: 'Route complete. The marker sits at the delivery point in London, where the final carrier scan landed on November 16.' },
+    'AP-2031': { from: 'toronto', fromName: 'Toronto', to: 'detroit', toName: 'Detroit', scan: 'detroit', scanLabel: 'Delivered · Nov 8', state: 'delivered', tag: 'Delivered', note: 'Route complete. Delivered to the Detroit DC on November 8.' },
+    'AP-2027': { from: 'toronto', fromName: 'Toronto', to: 'detroit', toName: 'Detroit', scan: 'detroit', scanLabel: 'Delivered · Oct 29', state: 'delivered', tag: 'Delivered', note: 'Route complete. Delivered in Detroit on October 29, and the escrow paid out on October 31.' }
+  };
+  var shipMap = null, shipMapLayers = null;
+  function pinIcon(dotClass, label) {
+    return L.divIcon({ className: '', html: '<div class="map-pin"><span class="' + dotClass + '"></span><span class="map-lab">' + label + '</span></div>', iconSize: null, iconAnchor: [8, 8] });
+  }
+  function renderShipMap(id) {
+    var m = SHIP_MAP[id]; if (!m) return;
+    document.getElementById('sh-map-tag').textContent = m.tag;
+    document.getElementById('sh-map-note').textContent = m.note;
+    var box = document.getElementById('sh-map');
+    if (!window.L) { box.innerHTML = '<p style="padding:18px;font-size:14px;color:var(--ink2)">The map could not load. Route: ' + m.fromName + ' to ' + m.toName + ' · ' + m.scanLabel + '.</p>'; return; }
+    if (!shipMap) {
+      shipMap = L.map('sh-map', { scrollWheelZoom: false, attributionControl: true });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 10, attribution: '&copy; OpenStreetMap contributors' }).addTo(shipMap);
+      shipMapLayers = L.layerGroup().addTo(shipMap);
+    }
+    shipMapLayers.clearLayers();
+    var from = CITY[m.from], to = CITY[m.to], scan = CITY[m.scan];
+    var path = [from].concat((m.via || []).map(function (v) { return CITY[v]; }), [to]);
+    function idxOf(coord) { for (var i = 0; i < path.length; i++) { if (path[i][0] === coord[0] && path[i][1] === coord[1]) return i; } return -1; }
+    var si = idxOf(scan);
+    var donePath = si >= 0 ? path.slice(0, si + 1) : [from, scan];
+    var restPath = si >= 0 ? path.slice(si) : [scan, to];
+    if (m.state === 'delivered') { L.polyline(path, { color: '#21262e', weight: 3 }).addTo(shipMapLayers); }
+    else if (m.state === 'blocked') { L.polyline(path, { color: '#9aa0a8', weight: 3, dashArray: '4 8' }).addTo(shipMapLayers); }
+    else {
+      L.polyline(donePath, { color: '#21262e', weight: 3 }).addTo(shipMapLayers);
+      L.polyline(restPath, { color: '#9aa0a8', weight: 3, dashArray: '4 8' }).addTo(shipMapLayers);
+    }
+    var fromLabel = m.fromName + (m.state === 'blocked' ? ' · awaiting label approval' : '');
+    L.marker(from, { icon: pinIcon(m.state === 'blocked' ? 'map-scan blocked' : 'map-dot', fromLabel) }).addTo(shipMapLayers);
+    var toLabel = m.toName + (m.state === 'delivered' ? ' · delivered' : '');
+    L.marker(to, { icon: pinIcon('map-dot dest', toLabel) }).addTo(shipMapLayers);
+    if (m.scan !== m.from && m.scan !== m.to) {
+      L.marker(scan, { icon: pinIcon('map-scan', m.scanLabel) }).addTo(shipMapLayers);
+    }
+    shipMap.fitBounds(L.latLngBounds([from, to, scan]).pad(0.22));
+    setTimeout(function () { shipMap.invalidateSize(); }, 80);
+  }
   window.openShipment = function (id) {
     var s = SHIPMENTS[id];
     if (!s) { toast('Shipment ' + id + ' is not part of this demo data set.'); return; }
@@ -56,6 +107,7 @@
       '<div><span>Apertra fee (1.25%)</span><b>' + money(s.fee) + '</b></div>' +
       '<div><span>Landed total</span><b>' + money(s.value + s.freight + s.fee) + '</b></div>';
     go('shipment');
+    renderShipMap(id);
   };
 
   /* ---------------- Product add / edit ---------------- */
