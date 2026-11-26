@@ -525,10 +525,13 @@ function closeShipFlow(){
   document.body.style.overflow='';
 }
 document.querySelectorAll('[data-new-shipment]').forEach(function(b){b.addEventListener('click',function(ev){ev.preventDefault();openShipPicker();});});
-document.querySelectorAll('[data-reqpick-close]').forEach(function(el){el.addEventListener('click',closeShipPicker);});
+/* Delegated: the picker markup sits after this script in the page, so its
+   buttons do not exist yet when the script first runs. */
+document.addEventListener('click',function(ev){
+  if(ev.target.closest('[data-reqpick-close]')){ closeShipPicker(); return; }
+  if(ev.target.closest('[data-reqpick-network]')){ closeShipPicker(); showPaneById('network'); }
+});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeShipPicker();});
-var rpNet=document.querySelector('[data-reqpick-network]');
-if(rpNet) rpNet.addEventListener('click',function(){closeShipPicker();showPaneById('network');});
 document.querySelectorAll('[data-close-ship]').forEach(function(el){el.addEventListener('click',closeShipFlow);});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&shipEl('ship-modal').classList.contains('open'))closeShipFlow();});
 shipEl('ship-next-btn').addEventListener('click',function(){
