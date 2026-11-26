@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=28">
+<link rel="stylesheet" href="assets/site.css?v=29">
 </head>
 <body class="ws2">
 <div class="ws-topbar" style="background:#111;color:#fff;font-family:inherit"> <div style="max-width:1180px;margin:0 auto;padding:0 24px;height:45px;display:flex;justify-content:space-between;align-items:center"> <a href="index.html" style="color:#fff;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:15px">APERTRA</a> <span style="display:flex;gap:18px;align-items:center"><span style="opacity:.65;font-size:13.5px">Northwind Foods Co.</span><button type="button" id="topbar-notif" data-pane-link="notifications" style="background:none;border:0;color:#fff;opacity:.85;font:inherit;font-size:13.5px;cursor:pointer;padding:0">Notifications · 3</button><a href="index.html" style="color:#fff;text-decoration:none;opacity:.85;font-size:13.5px">Sign out</a></span> </div> </div>
@@ -868,7 +868,7 @@
 
 
 <!-- DOCUMENT VIEWER -->
-<div class="ship-modal" id="doc-modal" role="dialog" aria-modal="true">
+<div class="ship-modal modal-center" id="doc-modal" role="dialog" aria-modal="true">
   <div class="ship-modal-card">
     <div class="ship-modal-head"><h3 id="doc-title">Document</h3><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
     <div class="ship-modal-body"><div class="doc-paper" id="doc-paper"></div></div>
@@ -877,7 +877,7 @@
 </div>
 
 <!-- INVITE -->
-<div class="ship-modal" id="invite-modal" role="dialog" aria-modal="true">
+<div class="ship-modal modal-center" id="invite-modal" role="dialog" aria-modal="true">
   <div class="ship-modal-card invite-card">
     <div class="ship-modal-head"><div><h3>Invite a teammate</h3><p class="invite-sub">They join Northwind Foods Co. with the role you pick.</p></div><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
     <div class="ship-modal-body">
@@ -889,7 +889,7 @@
 </div>
 
 <!-- PARTNER INVITE -->
-<div class="ship-modal" id="pinvite-modal" role="dialog" aria-modal="true">
+<div class="ship-modal modal-center" id="pinvite-modal" role="dialog" aria-modal="true">
   <div class="ship-modal-card invite-card">
     <div class="ship-modal-head"><div><h3>Invite a partner</h3><p class="invite-sub">Invite a business to join Apertra and connect with Northwind Foods Co. They verify once, then you can trade on shared shipment records.</p></div><button type="button" class="ship-x" data-modal-close aria-label="Close">✕</button></div>
     <div class="ship-modal-body">
@@ -1105,7 +1105,7 @@
 
 
 </div>
-<script src="assets/site.js?v=12"></script>
+<script src="assets/site.js?v=13"></script>
 
 <script>
 document.querySelectorAll('.ws-chip').forEach(function(c){
@@ -1230,7 +1230,7 @@ document.querySelectorAll('[data-pane-link]').forEach(function(el){
   </div>
 </div>
 
-<div class="ship-modal" id="reqpick-modal" role="dialog" aria-modal="true" aria-labelledby="reqpick-title" aria-hidden="true">
+<div class="ship-modal modal-center" id="reqpick-modal" role="dialog" aria-modal="true" aria-labelledby="reqpick-title" aria-hidden="true">
   <div class="ship-modal-backdrop" data-reqpick-close></div>
   <div class="ship-modal-card" style="max-width:580px">
     <div class="ship-modal-head"><div><h3 id="reqpick-title">Create a shipment</h3><p class="invite-sub">Shipments start from funded buy requests. Pick the request you are fulfilling and everything fills in from it: buyer, goods, delivery terms and freight, locked to what the buyer paid for.</p></div><button type="button" class="ship-x" data-reqpick-close aria-label="Close">✕</button></div>

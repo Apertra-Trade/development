@@ -11,6 +11,10 @@ function showView(v){
 function showPaneById(id){
   document.querySelectorAll('.app-pane').forEach(function(p){p.classList.remove('active')});
   var pane=document.getElementById('pane-'+id); if(pane) pane.classList.add('active');
+  /* Switching sections starts at the top. Without this the old scroll
+     position carried over and the new pane's heading landed hidden
+     behind the sticky bars (seen on Settings > Security). */
+  try{ window.scrollTo(0,0); }catch(e){}
   document.querySelectorAll('.side-nav button').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-pane')===id); });
   var _va=document.getElementById('view-app'); if(_va && !_va.classList.contains('active')) showView('app');
 }
@@ -294,7 +298,8 @@ function applyShipBuyer(){
   if(loc){ document.getElementById('ship-dest').value=loc.dest; document.getElementById('ship-dest-city').value=loc.city; }
   var destSel=document.getElementById('ship-dest');
   destSel.classList.add('locked-field'); destSel.setAttribute('tabindex','-1'); destSel.setAttribute('aria-readonly','true');
-  document.getElementById('ship-dest-city').readOnly=true;
+  var destCity=document.getElementById('ship-dest-city');
+  destCity.readOnly=true; destCity.classList.add('locked-field');
   updateShipPartnerPreview();
   if(typeof updateShipLive==='function') updateShipLive();
 }
@@ -319,6 +324,8 @@ function setShipGoodsLock(locked){
   else { prod.removeAttribute('tabindex'); prod.removeAttribute('aria-readonly'); }
   shipEl('ship-qty').readOnly=locked;
   shipEl('ship-unit').readOnly=locked;
+  shipEl('ship-qty').classList.toggle('locked-field',locked);
+  shipEl('ship-unit').classList.toggle('locked-field',locked);
   var note=shipEl('ship-goods-note');
   if(note) note.style.display=locked?'':'none';
 }
