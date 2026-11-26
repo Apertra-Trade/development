@@ -26,16 +26,16 @@
         scallops: { label: 'Sea scallops, 5 kg cases', unit: 268.00, unitLabel: 'per case', hs: '0307.22' }
       }
     },
-    alpine: {
-      name: 'Alpine Pantry GmbH', loc: 'Munich, Europe', corridor: 'Europe to Canada · CETA',
-      route: 'Munich to Toronto · Europe to Canada corridor · CETA · 12 to 16 days ocean and rail · Customs entry pre-lodged by Apertra',
-      freightRate: 0.115, freightMin: 340, taxRate: 0.05,
-      dutyNote: 'CETA gives 0% duty on these lines into Canada. The 5% GST shown is collected at entry and is recoverable as an input tax credit, so it is a cash-flow item, not a cost.',
-      note: 'Verified exporter · Identity, banking and EU export record checked · Typically confirms within 1 business day',
+    lakeshore: {
+      name: 'Lakeshore Provisions', loc: 'Detroit, US', corridor: 'United States to Canada · CUSMA',
+      route: 'Detroit to Toronto · United States to Canada corridor · CUSMA · 2 to 4 days by road · Customs entry pre-lodged by Apertra',
+      freightRate: 0.07, freightMin: 240, taxRate: 0.05,
+      dutyNote: 'CUSMA gives 0% duty on these lines into Canada. The 5% GST shown is collected at entry and is recoverable as an input tax credit, so it is a cash-flow item, not a cost.',
+      note: 'Verified exporter · Identity, banking and US export record checked · Typically confirms within 1 business day',
       products: {
-        cheese: { label: 'Alpine cheese selection, 12 kg cases', unit: 236.00, unitLabel: 'per case', hs: '0406.90' },
+        cheese: { label: 'Artisan cheese selection, 12 kg cases', unit: 236.00, unitLabel: 'per case', hs: '0406.90' },
         meats:  { label: 'Cured meats assortment, 10 kg cases', unit: 198.00, unitLabel: 'per case', hs: '0210.19' },
-        choc:   { label: 'Swiss-style chocolate, 8 kg cases', unit: 164.00, unitLabel: 'per case', hs: '1806.32' }
+        choc:   { label: 'Premium chocolate assortment, 8 kg cases', unit: 164.00, unitLabel: 'per case', hs: '1806.32' }
       }
     }
   };
